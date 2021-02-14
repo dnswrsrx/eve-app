@@ -3,6 +3,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../../store/reducers/rootReducer';
 import { Redirect } from 'react-router-dom';
 import AccountForm from './AccountForm/AccountForm';
+import SubscriptionForm from './SubscriptionForm/SubscriptionForm';
 import './MyAccount.scss';
 
 const MyAccount = (): JSX.Element => {
@@ -25,6 +26,7 @@ const MyAccount = (): JSX.Element => {
           </p>
         </div>
         <AccountForm auth={auth} />
+        <SubscriptionForm auth={auth}/>
       </div>
     </section>
   )

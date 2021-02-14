@@ -1,0 +1,26 @@
+@import '../../../../style/theme.scss';
+
+.subscription {
+  @include card-styling;
+  @include center-container(1100px);
+  @include grid-list(1fr);
+  padding: 2rem;
+
+  &__product-container {
+    @include grid-list(1fr 1fr);
+  }
+
+  &__description {
+    height: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  &__subscribe {
+    @include primary-button;
+  }
+
+  &__col {
+    @include secondary-card;
+    @include grid-list(1fr);
+  }
+}
