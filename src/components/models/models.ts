@@ -206,9 +206,10 @@ export interface Definitions {
   definitions: Definition[],
 }
 
-export interface Product {
-  name: string,
+export interface Price {
+  id: string,
+  currency: string,
   description: string,
-  stripe_metadata_price: string,
-  stripe_metadata_price_id: string,
+  interval: string,
+  unit_amount: number,
 }

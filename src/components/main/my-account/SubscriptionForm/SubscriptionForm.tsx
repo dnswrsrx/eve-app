@@ -4,7 +4,7 @@ import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-fire
 
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
-import { CollectionNames, Product } from '../../../models/models';
+import { CollectionNames, Price } from '../../../models/models';
 import '../SubscriptionForm/SubscriptionForm.scss';
 import Subscribe from './Subscribe';
 
@@ -12,31 +12,35 @@ interface SubscriptionFormProps {
   auth: FirebaseReducer.AuthState,
 }
 
+const generalSubscriptions = 'prod_IoVR4WqzEfaXiT';
+
 const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,
+    doc: generalSubscriptions,
+    subcollections: [{ collection: 'prices' }]
   }]);
   const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
+  const prices: Price[] = products ? products[0].prices : [];
 
   const [error, setError] = useState('');
   const [loadingCheckout, setLoadingCheckout] = useState(false);
 
   const checkout_sessions = firebase.firestore().collection('users').doc(auth.uid).collection('checkout_sessions');
 
-  const handleClick = async (price_id: string) => {
+  const handleClick = (priceId: string, priceDescription: string) => {
 
     setLoadingCheckout(true);
 
     // Set up a checkout session that is inserted into Firestore.
     const session: Promise<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>> = checkout_sessions.add({
-      price: price_id,
+      price: priceId,
       customerEmail: auth.email,
       mode: 'subscription',
-      successUrl: window.location.href,
       success_url: window.location.href,
-      cancelUrl: window.location.href,
       cancel_url: window.location.href,
+      metadata: { subscription: priceDescription }
     })
 
     // Once in Firestore, it'll ping Stripe to verify.
@@ -75,11 +79,11 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     {/* replace with auth.emailVerified when ready */}
       { !auth.emailVerified ?
           (
-            !isLoaded(products)
+            !isLoaded(products) && prices
               ? <p>Loading...</p>
               : <div className="subscription__product-container">
-                  {products.map((p: Product, index: number) => {
-                    return <Subscribe key={index} product={p} handleClick={handleClick} loadingCheckout={loadingCheckout} />
+                  {prices.map((p: Price, index: number) => {
+                    return <Subscribe key={index} price={p} handleClick={handleClick} loadingCheckout={loadingCheckout} />
                   })}
                 </div>
           )
