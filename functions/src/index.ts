@@ -64,3 +64,26 @@ exports.onGroupDelete = functions.firestore.document('subcategories/{subcategory
 
 //   return Promise.all(updatePromises);
 // });
+
+exports.onSubscriptionWrite = functions.firestore.document('users/{userID}/subscriptions/{subscriptionID}').onWrite(
+  async (snap, context) => {
+
+    const userID = context.params.userID;
+    const subscription = snap.after.data();
+
+    if (subscription) {
+
+      const userDoc = await admin.firestore().collection('users').doc(userID).get();
+
+      if (userDoc) {
+        if (subscription.status === 'canceled') {
+          return Promise.resolve(userDoc.ref.update({ main: admin.firestore.FieldValue.delete() }));
+        } else {
+          if (['General Vocabulary', 'General Vocabulary and Academic Writing'].includes(subscription.metadata.subscription)) {
+            return Promise.resolve(userDoc.ref.update({ main: subscription.metadata.subscription }));
+          }
+        }
+      }
+    }
+    return null;
+  })
