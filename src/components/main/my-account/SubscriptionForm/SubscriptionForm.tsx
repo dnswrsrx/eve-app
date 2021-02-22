@@ -34,24 +34,23 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     setLoadingCheckout(true);
 
     // Set up a checkout session that is inserted into Firestore.
-    const session: Promise<firebase.firestore.DocumentReference<firebase.firestore.DocumentData>> = checkout_sessions.add({
+    // Once session is in Firestore, it'll ping Stripe to verify.
+    checkout_sessions.add({
       price: priceId,
       customerEmail: auth.email,
       mode: 'subscription',
       success_url: window.location.href,
       cancel_url: window.location.href,
       metadata: { subscription: priceDescription }
-    })
-
-    // Once in Firestore, it'll ping Stripe to verify.
-    Promise.resolve(session).then((snap: firebase.firestore.DocumentData) => {
+    }).then((snap: firebase.firestore.DocumentData) => {
 
       snap.onSnapshot((snapshot: firebase.firestore.DocumentSnapshot) => {
 
-        // If verification successful, Stripe will insert a sessionId into Firestore where this session is.
+        // If verification successful, Stripe will insert a sessionId into this checkout_session document.
         const sessionId: string = snapshot?.data()?.sessionId;
 
         // Using that sessionId, we redirect to Stripe's checkout page.
+        // User can supply the card details for the subscription.
         if (sessionId) {
           stripePromise.then(stripe => {
             stripe?.redirectToCheckout({sessionId})
