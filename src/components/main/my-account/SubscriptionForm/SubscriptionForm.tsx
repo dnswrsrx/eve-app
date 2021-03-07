@@ -4,44 +4,39 @@ import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-fire
 
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
-import { CollectionNames, Price } from '../../../models/models';
+import { CollectionNames, Product } from '../../../models/models';
 import '../SubscriptionForm/SubscriptionForm.scss';
 import Subscribe from './Subscribe';
+
 
 interface SubscriptionFormProps {
   auth: FirebaseReducer.AuthState,
 }
 
-const generalSubscriptions = 'prod_IoVR4WqzEfaXiT';
 
 const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
-  useFirestoreConnect([{
-    collection: CollectionNames.Products,
-    doc: generalSubscriptions,
-    subcollections: [{ collection: 'prices' }]
-  }]);
+  useFirestoreConnect([{ collection: CollectionNames.Products}]);
   const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
-  const prices: Price[] = products ? products[0].prices : [];
 
   const [error, setError] = useState('');
   const [loadingCheckout, setLoadingCheckout] = useState(false);
 
-  const checkout_sessions = firebase.firestore().collection('users').doc(auth.uid).collection('checkout_sessions');
+  const user = firebase.firestore().collection('users').doc(auth.uid);
 
-  const handleClick = (priceId: string, priceDescription: string) => {
+  const handleClick = (priceId: string, productName: string) => {
 
     setLoadingCheckout(true);
 
     // Set up a checkout session that is inserted into Firestore.
     // Once session is in Firestore, it'll ping Stripe to verify.
-    checkout_sessions.add({
+    user.collection('checkout_sessions').add({
       price: priceId,
       customerEmail: auth.email,
       mode: 'subscription',
       success_url: window.location.href,
       cancel_url: window.location.href,
-      metadata: { subscription: priceDescription }
+      metadata: { subscription: productName }
     }).then((snap: firebase.firestore.DocumentData) => {
 
       snap.onSnapshot((snapshot: firebase.firestore.DocumentSnapshot) => {
@@ -72,22 +67,29 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     <div className="subscription">
       <h2 className="subscription__heading">Subscription</h2>
 
-      {loadingCheckout && <p>Cart loading...</p>}
+      {loadingCheckout && <p>Loading cart...</p>}
       {error && <p className="error">Error creating a cart. Please refresh the page and try again.</p>}
 
-    {/* replace with auth.emailVerified when ready */}
-      { !auth.emailVerified ?
-          (
-            !isLoaded(products) && prices
-              ? <p>Loading...</p>
-              : <div className="subscription__product-container">
-                  {prices.map((p: Price, index: number) => {
-                    return <Subscribe key={index} price={p} handleClick={handleClick} loadingCheckout={loadingCheckout} />
-                  })}
-                </div>
+
+      {/* replace with auth.emailVerified when ready */}
+      { !auth.emailVerified
+          ? (isLoaded(products)
+              ? (
+               <div className="subscription__product-container">
+                 {products.map((p: Product, index: number) => {
+                   return <Subscribe
+                     key={index}
+                     product={p}
+                     handleClick={handleClick}
+                     disable={loadingCheckout || p.name === subscription}
+                   />
+                 })}
+               </div>
+              )
+              : <p>Loading...</p>
           )
           : <p>Your email has not been verified yet. Please check your email for a verification link to do so.</p>
-      }
+    }
     </div>
   )
 }

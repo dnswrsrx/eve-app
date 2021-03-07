@@ -1,27 +1,28 @@
 import React from 'react';
 
-import { Price } from '../../../models/models';
+import { Product } from '../../../models/models';
+
 import '../SubscriptionForm/SubscriptionForm.scss';
 
 interface SubscribeProps {
-  price: Price,
+  product: Product,
   handleClick: Function,
-  loadingCheckout: boolean,
+  disable: boolean,
 }
 
-const Subscribe = ({ price, handleClick, loadingCheckout }: SubscribeProps) => {
+const Subscribe = ({ product, handleClick, disable }: SubscribeProps) => {
 
-  return (
-    <div className="subscription__col">
-      <h3>{price.description}</h3>
-      <button
-          className="subscription__subscribe"
-          onClick={() => handleClick(price.id, price.description)}
-          disabled={loadingCheckout}
-      >
-        Subscribe for {price.unit_amount / 100} {price.currency.toUpperCase()}/{price.interval}
-      </button>
-    </div>
+    return (
+      <div className="subscription__col">
+        <h3>{product.name}</h3>
+        <button
+            className="subscription__subscribe"
+            onClick={() => handleClick(product.stripe_metadata_price_id, product.name)}
+            disabled={disable}
+        >
+          Subscribe for {product.stripe_metadata_price} CAD/year
+        </button>
+      </div>
   )
 }
 
