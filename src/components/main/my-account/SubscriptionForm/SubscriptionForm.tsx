@@ -63,12 +63,24 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     })
   }
 
+
+  const [subscription, setSubscription] = useState(null);
+
+  user.get().then(u => {
+    setSubscription(u?.data()?.main);
+  })
+
   return (
     <div className="subscription">
       <h2 className="subscription__heading">Subscription</h2>
 
       {loadingCheckout && <p>Loading cart...</p>}
       {error && <p className="error">Error creating a cart. Please refresh the page and try again.</p>}
+
+      { subscription
+        ? <p>You are currently subscribed to { subscription }.</p>
+        : <p>You currently do not have a subscription.</p>
+      }
 
 
       {/* replace with auth.emailVerified when ready */}
