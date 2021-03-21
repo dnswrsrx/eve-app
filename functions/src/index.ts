@@ -79,8 +79,11 @@ exports.onSubscriptionWrite = functions.firestore.document('users/{userID}/subsc
         if (subscription.status === 'canceled') {
           return Promise.resolve(userDoc.ref.update({ main: admin.firestore.FieldValue.delete() }));
         } else {
-          if (['General Vocabulary', 'General Vocabulary and Academic Writing'].includes(subscription.metadata.subscription)) {
-            return Promise.resolve(userDoc.ref.update({ main: subscription.metadata.subscription }));
+
+          const productName = subscription.items[0].price.product.name;
+
+          if (['General Vocabulary', 'General Vocabulary and Academic English'].includes(productName)) {
+            return Promise.resolve(userDoc.ref.update({ main: productName }));
           }
         }
       }

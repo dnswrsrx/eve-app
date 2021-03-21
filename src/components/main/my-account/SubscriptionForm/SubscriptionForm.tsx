@@ -36,7 +36,6 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
       mode: 'subscription',
       success_url: window.location.href,
       cancel_url: window.location.href,
-      metadata: { subscription: productName }
     }).then((snap: firebase.firestore.DocumentData) => {
 
       snap.onSnapshot((snapshot: firebase.firestore.DocumentSnapshot) => {
