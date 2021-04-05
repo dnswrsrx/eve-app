@@ -10,11 +10,6 @@
     @include grid-list(1fr 1fr);
   }
 
-  &__description {
-    height: 2rem;
-    margin-bottom: 1rem;
-  }
-
   &__subscribe {
     @include primary-button;
   }
