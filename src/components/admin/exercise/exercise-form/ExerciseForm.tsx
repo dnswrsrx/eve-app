@@ -93,7 +93,14 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
       (file as any).text().then((res: string) => {
         const exerciseHtml = document.createElement("html");
         exerciseHtml.innerHTML = res;
-        const questionRows = exerciseHtml.querySelectorAll('#Questions tr');
+
+        let questionRows = exerciseHtml.querySelectorAll('#Questions tr');
+
+        // Later HTM exports use MatchItems instead of Questions
+        // for the ID of the tbody containing the exercises.
+        if (!questionRows.length) {
+          questionRows = exerciseHtml.querySelectorAll('#MatchItems tr');
+        }
 
         if(!questionRows.length) {
           setSuccessMessage('');
