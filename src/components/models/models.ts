@@ -7,7 +7,7 @@ export enum CategoryTypes {
 }
 
 export enum PageTypes {
-  Language = 'Languages',
+  Language = 'Language',
   Contact = 'Contact',
   Page = 'Private Pages',
 }
