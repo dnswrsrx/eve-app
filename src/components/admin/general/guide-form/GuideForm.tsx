@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CollectionNames, DefaultStudyGuide, StudyGuideDocument, StudyGuide } from '../../../models/models';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import firebase from '../../../../config/firebaseConfig';
@@ -15,14 +15,16 @@ const GuideForm = ({ guideId, guide }: GuideFormProps): JSX.Element => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [submitError, setSubmitError] = useState<string>('');
-  const [generalVocabContent, setGeneralVocabContent] = useState<string>(guide?.generalVocabContent || DefaultStudyGuide.GeneralVocab);
-  const [academicVocabContent, setAcademicVocabContent] = useState<string>(guide?.academicVocabContent || DefaultStudyGuide.AcademicVocab);
-  const [readingContent, setReadingContent] = useState<string>(guide?.readingContent || DefaultStudyGuide.Reading);
-  const [listeningContent, setListeningContent] = useState<string>(guide?.listeningContent || DefaultStudyGuide.Listening);
-  const [pronunciationContent, setPronunciationContent] = useState<string>(guide?.pronunciationContent || DefaultStudyGuide.Pronunciation);
-  const [grammarContent, setGrammarContent] = useState<string>(guide?.grammarContent || DefaultStudyGuide.Grammar);
-  const [speakingContent, setSpeakingContent] = useState<string>(guide?.speakingContent || DefaultStudyGuide.Speaking);
-  const [testPrepContent, setTestPrepContent] = useState<string>(guide?.testPrepContent || DefaultStudyGuide.TestPrep);
+
+  const generalVocabContent = useRef<string>(guide?.generalVocabContent || DefaultStudyGuide.GeneralVocab);
+  const academicVocabContent = useRef<string>(guide?.academicVocabContent || DefaultStudyGuide.AcademicVocab);
+  const readingContent = useRef<string>(guide?.readingContent || DefaultStudyGuide.Reading);
+  const listeningContent = useRef<string>(guide?.listeningContent || DefaultStudyGuide.Listening);
+  const pronunciationContent = useRef<string>(guide?.pronunciationContent || DefaultStudyGuide.Pronunciation);
+  const grammarContent = useRef<string>(guide?.grammarContent || DefaultStudyGuide.Grammar);
+  const speakingContent = useRef<string>(guide?.speakingContent || DefaultStudyGuide.Speaking);
+  const testPrepContent = useRef<string>(guide?.testPrepContent || DefaultStudyGuide.TestPrep);
+
   const [datesSelected, setDatesSelected] = useState<any>({
     from: guide?.startDate.toDate(),
     to: guide?.endDate.toDate(),
@@ -102,14 +104,14 @@ const GuideForm = ({ guideId, guide }: GuideFormProps): JSX.Element => {
       const studyGuideFields: StudyGuideDocument = {
         startDate: datesSelected.from,
         endDate: datesSelected.to,
-        generalVocabContent,
-        academicVocabContent,
-        readingContent,
-        listeningContent,
-        pronunciationContent,
-        grammarContent,
-        speakingContent,
-        testPrepContent,
+        generalVocabContent : generalVocabContent.current,
+        academicVocabContent : academicVocabContent.current,
+        readingContent : readingContent.current,
+        listeningContent : listeningContent.current,
+        pronunciationContent : pronunciationContent.current,
+        grammarContent : grammarContent.current,
+        speakingContent : speakingContent.current,
+        testPrepContent : testPrepContent.current
       }
       let docRef;
 
@@ -120,7 +122,7 @@ const GuideForm = ({ guideId, guide }: GuideFormProps): JSX.Element => {
       else {
         docRef = studyGuideCollection.doc(guideId);
       }
-        
+
       docRef.set(studyGuideFields).then((): void => {
         setSuccessMessage('Weekly study guide has been saved.');
         setSubmitError('');
@@ -138,14 +140,14 @@ const GuideForm = ({ guideId, guide }: GuideFormProps): JSX.Element => {
   }
 
   const resetContents = (): void => {
-    setGeneralVocabContent(DefaultStudyGuide.GeneralVocab);
-    setAcademicVocabContent(DefaultStudyGuide.AcademicVocab);
-    setReadingContent(DefaultStudyGuide.Reading);
-    setListeningContent(DefaultStudyGuide.Listening);
-    setPronunciationContent(DefaultStudyGuide.Pronunciation);
-    setGrammarContent(DefaultStudyGuide.Grammar);
-    setSpeakingContent(DefaultStudyGuide.Speaking);
-    setTestPrepContent(DefaultStudyGuide.TestPrep);
+    generalVocabContent.current = DefaultStudyGuide.GeneralVocab;
+    academicVocabContent.current = DefaultStudyGuide.AcademicVocab;
+    readingContent.current = DefaultStudyGuide.Reading;
+    listeningContent.current = DefaultStudyGuide.Listening;
+    pronunciationContent.current = DefaultStudyGuide.Pronunciation;
+    grammarContent.current = DefaultStudyGuide.Grammar;
+    speakingContent.current = DefaultStudyGuide.Speaking;
+    testPrepContent.current = DefaultStudyGuide.TestPrep;
   }
 
   return (
@@ -167,35 +169,35 @@ const GuideForm = ({ guideId, guide }: GuideFormProps): JSX.Element => {
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">General Vocabulary Content: </h3>
-        <CustomEditor content={generalVocabContent} setContent={setGeneralVocabContent} height={300} />
+        <CustomEditor contentReference={generalVocabContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Academic Vocabulary Content: </h3>
-        <CustomEditor content={academicVocabContent} setContent={setAcademicVocabContent} height={300} />
+        <CustomEditor contentReference={academicVocabContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Reading Content: </h3>
-        <CustomEditor content={readingContent} setContent={setReadingContent} height={300} />
+        <CustomEditor contentReference={readingContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Listening Content: </h3>
-        <CustomEditor content={listeningContent} setContent={setListeningContent} height={300} />
+        <CustomEditor contentReference={listeningContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Pronunciation Content: </h3>
-        <CustomEditor content={pronunciationContent} setContent={setPronunciationContent} height={300} />
+        <CustomEditor contentReference={pronunciationContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Grammar Content: </h3>
-        <CustomEditor content={grammarContent} setContent={setGrammarContent} height={300} />
+        <CustomEditor contentReference={grammarContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Speaking Content: </h3>
-        <CustomEditor content={speakingContent} setContent={setSpeakingContent} height={300} />
+        <CustomEditor contentReference={speakingContent} height={300} />
       </div>
       <div className="add-guide-form__field-row">
         <h3 className="add-guide-form__subheading">Test Preparation Content: </h3>
-        <CustomEditor content={testPrepContent} setContent={setTestPrepContent} height={300} />
+        <CustomEditor contentReference={testPrepContent} height={300} />
       </div>
       { submitError && <p className="add-guide-form__error error">{ submitError }</p> }
       { successMessage && <p className="add-guide-form__success-message success">{ successMessage }</p> }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { HomeLanguage, PageTypes } from '../../../models/models';
 import { getCollectionName } from '../../../../utils/utils';
@@ -14,27 +14,31 @@ interface SinglePageFormProps {
 
 const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Element => {
   const [successMessage, setSuccessMessage] = useState<string>('');
-  const [mainContent, setMainContent] = useState<string>(page.mainContent || '');
+
+  const mainContent = useRef(page.mainContent || '');
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
+
   const { register, handleSubmit } = useForm();
+
   const collectionName = getCollectionName(type);
   const pageCollection = firebase.firestore().collection(collectionName).doc(pageId);
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
+
     let updatedDoc;
     if(type === PageTypes.Language) {
       updatedDoc = {
         bannerHeading: data['banner-heading'],
         bannerText: data['banner-text'],
-        mainContent: mainContent,
+        mainContent: mainContent.current,
       }
     }
     else {
       updatedDoc = {
-        mainContent: mainContent,
-      }   
+        mainContent: mainContent.current,
+      }
     }
     pageCollection.update(updatedDoc).then((): void => {
       setSuccessMessage(`${page.name} page has been saved.`);
@@ -46,7 +50,7 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
       setSubmitting(false);
     });
   }
-  
+
   return (
     <form className="single-page-form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="single-page-form__heading">Edit Fields</h2>
@@ -79,7 +83,7 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
       }
       <div className="single-page-form__form-row">
         <h3 className="single-page-form__label">Main Content: </h3>
-        <CustomEditor content={mainContent} setContent={setMainContent} height={450} />
+        <CustomEditor contentReference={mainContent} height={450} />
       </div>
       { submitError && <p className="single-page-form__error error">{ submitError }</p> }
       { successMessage && <p className="single-page-form__success-message success">{ successMessage }</p> }

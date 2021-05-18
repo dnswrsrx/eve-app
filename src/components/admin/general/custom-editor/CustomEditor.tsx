@@ -1,22 +1,21 @@
-import React from 'react';
-import { Editor } from '@tinymce/tinymce-react'; 
+import React, { MutableRefObject } from 'react';
+import { Editor } from '@tinymce/tinymce-react';
 
 interface CustomEditorProps {
-  content: string,
-  setContent: React.Dispatch<React.SetStateAction<string>>,
+  contentReference: MutableRefObject<string>,
   height: number,
 }
 
-const CustomEditor = ({ content, setContent, height }: CustomEditorProps): JSX.Element => {
+const CustomEditor = ({ contentReference, height }: CustomEditorProps): JSX.Element => {
   return (
     <Editor
       apiKey={process.env.REACT_APP_TINY_MCE_KEY}
-      initialValue={content}
+      initialValue={contentReference.current}
       init={{
         height,
         menubar: true,
         plugins: [
-          'advlist autolink lists link image', 
+          'advlist autolink lists link image',
           'charmap print preview anchor help',
           'searchreplace visualblocks code',
           'insertdatetime media table paste wordcount'
@@ -24,7 +23,7 @@ const CustomEditor = ({ content, setContent, height }: CustomEditorProps): JSX.E
         toolbar:
           'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | image link | bullist numlist outdent indent | help'
       }}
-      onEditorChange={(content: string) => setContent(content)}
+    onEditorChange={(editorContent: string) => contentReference.current = editorContent}
     />
   );
 }

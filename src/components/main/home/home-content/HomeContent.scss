@@ -23,7 +23,7 @@
     width: 100%;
     top: 5px;
     @include background-image;
-    
+
     &:after {
       @include image-overlay(rgba(255, 255, 255, 0.35));
     }
@@ -35,7 +35,7 @@
     padding: 2rem 12rem 0 12rem;
     justify-content: center;
     height: 100%;
-    text-align: center;
+    text-align: left;
     margin: auto;
 
     > * {
@@ -46,6 +46,7 @@
 
   &__banner-heading {
     font-size: $xl-font;
+    text-align: center;
   }
 
   &__banner-content {

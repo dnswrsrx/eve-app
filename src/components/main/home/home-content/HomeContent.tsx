@@ -27,7 +27,7 @@ const HomeContent = ({ homeLanguages }: HomeContentProps): JSX.Element => {
         <div className="home-content-container__background-image" style={{ backgroundImage: 'url(/images/banner.svg)' }} />
         <div className="home-content-container__banner-wrapper page-wrapper">
           <h1 className="home-content-container__banner-heading">{ activeLanguage.bannerHeading }</h1>
-          <p className="home-content-container__banner-text">{ activeLanguage.bannerText }</p>
+          <div className="home-content-container__banner-text" dangerouslySetInnerHTML={{ __html: activeLanguage.bannerText }}></div>
           <div className="home-content-container__language-buttons">
             { renderLanguages() }
           </div>
