@@ -16,6 +16,8 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
   const [successMessage, setSuccessMessage] = useState<string>('');
 
   const mainContent = useRef(page.mainContent || '');
+  const bannerText = useRef(page.bannerText || '');
+
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
 
@@ -31,7 +33,7 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
     if(type === PageTypes.Language) {
       updatedDoc = {
         bannerHeading: data['banner-heading'],
-        bannerText: data['banner-text'],
+        bannerText: bannerText.current,
         mainContent: mainContent.current,
       }
     }
@@ -69,14 +71,8 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
                 />
               </div>
               <div className="single-page-form__form-row">
-                <label className="single-page-form__label" htmlFor={'banner-text'}>Banner Text: </label>
-                <textarea
-                  id="banner-text"
-                  name="banner-text"
-                  className="single-page-form__field"
-                  ref={register()}
-                  defaultValue={page.bannerText || ''}
-                />
+                <h3 className="single-page-form__label">Banner Text: </h3>
+                <CustomEditor contentReference={bannerText} height={300} />
               </div>
             </>
           : <></>

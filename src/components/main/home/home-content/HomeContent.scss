@@ -68,6 +68,11 @@
     }
   }
 
+  &__banner-text {
+    @include grid-list(1fr);
+    @include wysiwyg-content;
+  }
+
   &__main-content {
     @include grid-list(1fr);
     @include wysiwyg-content;
