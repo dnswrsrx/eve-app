@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ import DeleteButton from '../../general/delete-button/DeleteButton';
 import DefinitionBox from './definitions/DefinitionBox';
 import firebase from '../../../../config/firebaseConfig';
 import './WordForm.scss';
+import CustomEditor from '../../general/custom-editor/CustomEditor';
 
 interface WordFormProps {
   word: string,
@@ -22,12 +23,15 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
   const [definitions, setDefinitions] = useState<Definitions[] | null>(null);
+
+  const customDefinition = useRef<string>(wordList[word].customDefinition || '');
+
   const { register, handleSubmit, errors, getValues, reset, setValue } = useForm();
   const groupCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups).doc(groupId);
 
   const updateGroupCollection = (data: any, newWord: string, wordListCopy: WordList, successMessage: string): void => {
     wordListCopy[newWord] = {
-      customDefinition: data['custom-definition'],
+      customDefinition: customDefinition.current,
       dictionaryUrl: data['dictionary-url'],
       apiDefinitions: definitions,
     };
@@ -58,7 +62,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         if(data.length) {
           reset({
             word: getValues('word'),
-            'custom-definition': getValues('custom-definition'),
+            'custom-definition': customDefinition.current,
             'dictionary-url': getValues('dictionary-url'),
           });
           setDefinitions(formatDictionaryResults(data));
@@ -128,10 +132,13 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
   useEffect(() => {
     setValue('word', word);
     if(wordList[word]) {
-      setDefinitions(wordList[word].apiDefinitions || null);
+      const _word = wordList[word];
+      setDefinitions(_word?.apiDefinitions || null);
+      customDefinition.current = _word?.customDefinition || '';
     }
     else {
       setDefinitions(null);
+      customDefinition.current = '';
     }
     setSubmitError('');
   }, [word, wordList]);
@@ -158,13 +165,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
       { submitError && <p className="category-edit__error error">{ submitError }</p> }
       <div className="word-form__field-row">
         <label htmlFor="custom-definition">Custom Definition: </label>
-        <textarea
-          id="custom-definition"
-          name="custom-definition"
-          className={`word-form__field ${errors['custom-definition'] ? 'error' : ''}`}
-          ref={register()}
-          defaultValue={wordList[word] && wordList[word].customDefinition}
-        />
+        <CustomEditor contentReference={customDefinition} height={250} />
       </div>
       <div className="word-form__field-row">
         <label htmlFor="dictionary-url">Dictionary URL: </label>

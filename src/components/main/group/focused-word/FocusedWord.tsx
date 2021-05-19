@@ -97,7 +97,12 @@ const FocusedWord = ({ word, wordInfo }: FocusedWordProps) => {
             Merriam Webster Dictionary <FontAwesomeIcon icon={faExternalLinkAlt} />
           </a>
         </div>
-        { wordInfo[word].customDefinition && <p className="focused-word__custom-definition">Definition: { wordInfo[word].customDefinition }</p> }
+        { wordInfo[word].customDefinition && (
+          <>
+            <h2>Definition:</h2>
+            <div className="focused-word__definition-wrapper" dangerouslySetInnerHTML={{ __html: wordInfo[word].customDefinition }}></div>
+          </>
+        )}
         {
           wordInfo[word].dictionaryUrl
             && <div className="focused-word__custom-dictionary-link-container">

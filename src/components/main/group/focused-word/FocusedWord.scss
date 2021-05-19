@@ -12,6 +12,10 @@
     font-size: $medium-font;
   }
 
+  &__custom-definition-container {
+    @include wysiwyg-content;
+  }
+
   &__definition-box {
     @include grid-list(1fr);
   }
