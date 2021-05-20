@@ -75,7 +75,7 @@ $small-radius: 6px;
 
 @mixin primary-button {
   padding: 0.25rem 1rem;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease;
   border: 0;
   border-radius: $large-radius;
   background-color: $primary-color;
@@ -115,7 +115,7 @@ $small-radius: 6px;
 
 @mixin primary-link {
   position: relative;
-  transition: 0.3s color ease;
+  transition: 0.1s color ease;
   color: $link-color;
   font-weight: bold;
 
