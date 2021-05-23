@@ -24,7 +24,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
   const [submitError, setSubmitError] = useState<string>('');
   const [definitions, setDefinitions] = useState<Definitions[] | null>(null);
 
-  const customDefinition = useRef<string>(wordList[word].customDefinition || '');
+  const customDefinition = useRef<string>(wordList[word]?.customDefinition || '');
 
   const { register, handleSubmit, errors, getValues, reset, setValue } = useForm();
   const groupCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups).doc(groupId);
