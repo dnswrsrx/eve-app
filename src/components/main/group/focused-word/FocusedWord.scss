@@ -4,7 +4,7 @@
   @include center-container(900px);
   margin-top: 1rem;
 
-  &__word, &__heading {
+  &__word {
     font-size: $large-font;
   }
 
@@ -12,15 +12,7 @@
     font-size: $medium-font;
   }
 
-  &__custom-definition-container {
-    @include wysiwyg-content;
-  }
-
   &__definition-box {
-    @include grid-list(1fr);
-  }
-  
-  &__definition-section {
     @include grid-list(1fr);
   }
 
