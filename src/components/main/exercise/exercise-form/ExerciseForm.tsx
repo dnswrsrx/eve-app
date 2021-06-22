@@ -3,15 +3,15 @@ import { useForm } from 'react-hook-form';
 import { QuestionList, Question } from '../../../models/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrinBeam, faFrownOpen, faMeh } from '@fortawesome/free-regular-svg-icons';
+import { shuffle } from 'lodash';
 import './ExerciseForm.scss';
 
 interface ExerciseFormProps {
   exerciseId: string,
-  shuffledWords: number[],
   questions: QuestionList,
 }
 
-const ExerciseForm = ({ exerciseId, shuffledWords, questions}: ExerciseFormProps): JSX.Element => {
+const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [result, setResult] = useState<number | null>(null);
   const [resultArray, setResultArray] = useState<(boolean|undefined)[]>([]);
@@ -23,11 +23,11 @@ const ExerciseForm = ({ exerciseId, shuffledWords, questions}: ExerciseFormProps
     let correctCounter = 0;
     const newResultArray: (boolean|undefined)[] = []
 
-    shuffledWords.forEach((questionIndex: number, index: number) => {
+    questions.forEach(({ answer }, index: number) => {
       const submittedAnswer = data[`field-${index}`];
       if(submittedAnswer === ''){
         newResultArray[index] = undefined;
-      } else if(submittedAnswer === questions[questionIndex].answer) {
+      } else if(submittedAnswer === answer) {
         correctCounter++;
         newResultArray[index] = true;
       } else {
@@ -35,26 +35,16 @@ const ExerciseForm = ({ exerciseId, shuffledWords, questions}: ExerciseFormProps
       }
     });
 
-    const score = Math.round(correctCounter * 100 / shuffledWords.length);
+    const score = Math.round(correctCounter * 100 / questions.length);
     setResult(score);
     setResultArray(newResultArray);
 
     setSubmitting(false);
   }
 
-  const renderOptions = (): JSX.Element[] => {
-    const seen: string[] = [];
-    const options: JSX.Element[] = [];
-
-    questions.forEach((questionObj: Question, index: number) => {
-      if (!seen.includes(questionObj.answer)) {
-        seen.push(questionObj.answer);
-        options.push(<option key={index} value={questionObj.answer}>{questionObj.answer}</option>);
-      }
-    })
-
-    return options;
-  }
+  const options = shuffle(
+    Array.from(new Set(questions.map(({ answer }) => answer)))
+  ).map((a: string, index: number) => <option key={index} value={a}>{a}</option>);
 
   const restartExercise = (): void => {
     setSubmitting(false);
@@ -102,7 +92,7 @@ const ExerciseForm = ({ exerciseId, shuffledWords, questions}: ExerciseFormProps
   return (
     <form key={exerciseId} className="exercise-form-main" onSubmit={handleSubmit(onSubmit)}>
       <h2>Questions:</h2>
-      { result !== null && 
+      { result !== null &&
           <div className="exercise-form-main__result">
             <div className="exercise-form-main__result-image" style={{ backgroundImage: `url(${result > 50 ? '/images/exercise-success.svg' : '/images/exercise-fail.svg'})` }} />
             <div className="exercise-form-main__result-content">
@@ -115,10 +105,10 @@ const ExerciseForm = ({ exerciseId, shuffledWords, questions}: ExerciseFormProps
       }
       <div className="exercise-form-main__form-body">
         {
-          shuffledWords.map((word: number, index: number) => (
+          questions.map(({ question }, index: number) => (
             <div key={index} className={`exercise-form-main__form-row ${getResultClass(index)}`}>
               <div className="exercise-form-main__field-container">
-                <label htmlFor={`field-${index}`}>{ (index + 1) + '. ' + questions[word].question }</label>
+                <label htmlFor={`field-${index}`}>{ (index + 1) + '. ' + question }</label>
                 <select
                   name={`field-${index}`}
                   id={`field-${index}`}
@@ -127,7 +117,7 @@ const ExerciseForm = ({ exerciseId, shuffledWords, questions}: ExerciseFormProps
                   ref={register()}
                 >
                   <option value="" disabled>Select a Word</option>
-                  { renderOptions() }
+                  { options }
                 </select>
               </div>
               { errors[`field-${index}`] && <p className="exercise-form-main__error error">{ errors[`field-${index}`].message }</p> }

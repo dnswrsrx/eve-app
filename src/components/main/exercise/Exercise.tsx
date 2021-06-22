@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps } from '../../models/models';
 import { useSelector } from 'react-redux';
-import { shuffle, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 
@@ -25,10 +25,8 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
   ]);
 
   const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId], isEqual);
-  
-  if(!isLoaded(exercise)) return <Loading />;
 
-  const shuffledWords = shuffle(Object.keys(exercise.questions).map(index => parseInt(index)));
+  if(!isLoaded(exercise)) return <Loading />;
 
   return (
     <section className="group">
@@ -45,8 +43,8 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
           Please select the words that best complete the following sentences.
         </p>
         {
-          shuffledWords.length
-            ? <ExerciseForm exerciseId={exerciseId} shuffledWords={shuffledWords} questions={exercise.questions} />
+          exercise.questions.length
+            ? <ExerciseForm exerciseId={exerciseId} questions={exercise.questions} />
             : <p>No questions have been added to this exercise yet.</p>
         }
       </div>
