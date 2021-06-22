@@ -20,7 +20,13 @@
     @include grid-list(1fr 1fr);
   }
 
-  &__upload-button, &__form-submit, &__save-button {
+  &__preview-title {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+
+  &__upload-button, &__form-submit, &__save-button, &__randomise {
     @include primary-button;
   }
 

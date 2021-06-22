@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { shuffle } from 'lodash';
 import { CollectionNames, Exercise, QuestionList, Question } from '../../../models/models';
 import firebase from '../../../../config/firebaseConfig';
 import './ExerciseForm.scss';
@@ -124,6 +125,10 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
     }
   }
 
+  const randomiseOrder = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setQuestionList(shuffle(questionList));
+  }
+
   return (
     <div className="exercise-content">
       <div className="exercise-content__form-container">
@@ -150,16 +155,18 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
         { successMessage && <h3 className="exercise-content__success success">{ successMessage }</h3> }
         { submitError && <h3 className="exercise-content__error error">{ submitError }</h3> }
 
+        <div className="exercise-content__preview-title">
           <h2>Preview</h2>
-          {
-            Object.keys(questionList).length
-              ? <ExerciseEdit
-                questionList={questionList}
-                setQuestionList={setQuestionList}
-              />
-              : <p>This exercise is currently empty.</p>
-          }
+          <button className="exercise-content__randomise" onClick={randomiseOrder}>Randomise Order</button>
         </div>
+        {
+          Object.keys(questionList).length
+          ? <ExerciseEdit
+          questionList={questionList}
+          setQuestionList={setQuestionList}
+          />
+          : <p>This exercise is currently empty.</p>
+        }
 
       </div>
     </div>
