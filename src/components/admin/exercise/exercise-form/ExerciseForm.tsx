@@ -150,7 +150,6 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
         { successMessage && <h3 className="exercise-content__success success">{ successMessage }</h3> }
         { submitError && <h3 className="exercise-content__error error">{ submitError }</h3> }
 
-        <div className="exercise-content__preview-container">
           <h2>Preview</h2>
           {
             Object.keys(questionList).length

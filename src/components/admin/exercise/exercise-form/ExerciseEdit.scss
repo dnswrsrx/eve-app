@@ -4,6 +4,14 @@ textarea {
   resize: none;
 }
 
+.exercise-content {
+  @include grid-list(1fr, 3rem);
+
+  &__preview-container {
+    @include grid-list(1fr);
+  }
+}
+
 .exercise-container {
   @include grid-list(1fr, 2em);
 

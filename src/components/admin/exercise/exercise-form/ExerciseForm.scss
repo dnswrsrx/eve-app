@@ -3,7 +3,7 @@
 .exercise-content {
   @include grid-list(1fr, 3rem);
 
-  &__form-container, &__preview-container {
+  &__form-container {
     @include grid-list(1fr);
   }
 
