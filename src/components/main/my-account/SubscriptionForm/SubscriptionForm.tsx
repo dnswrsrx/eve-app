@@ -20,13 +20,27 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
   const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
 
   const [error, setError] = useState('');
-  const [loadingCheckout, setLoadingCheckout] = useState(false);
+  const [loading, setLoading] = useState<'cart'|'portal'|null>(null)
 
   const user = firebase.firestore().collection('users').doc(auth.uid);
 
+  const customerPortal = () => {
+    const getPortalLink = firebase.app().functions('us-central1').httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
+
+    setLoading('portal');
+
+    getPortalLink({ returnUrl: window.location.origin }).then(({data}) => {
+      window.location.assign(data.url);
+    }).catch(e => {
+      console.log(e);
+      setError('Failed to load customer portal. Please retry.');
+      setLoading(null);
+    })
+  }
+
   const handleClick = (priceId: string, productName: string) => {
 
-    setLoadingCheckout(true);
+    setLoading('cart')
 
     // Set up a checkout session that is inserted into Firestore.
     // Once session is in Firestore, it'll ping Stripe to verify.
@@ -50,7 +64,7 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
             stripe?.redirectToCheckout({sessionId})
           }).catch(e => {
             setError(e);
-            setLoadingCheckout(false);
+            setLoading(null);
           })
         }
       }, (e: string) => {
@@ -58,7 +72,7 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
       })
     }).catch(e => {
       setError(e);
-      setLoadingCheckout(false);
+      setLoading(null);
     })
   }
 
@@ -73,8 +87,17 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     <div className="subscription">
       <h2 className="subscription__heading">Subscription</h2>
 
-      {loadingCheckout && <p>Loading cart...</p>}
+      {loading && <p>Loading {loading === 'cart' ? 'cart' : 'customer portal'}...</p>}
       {error && <p className="error">Error creating a cart. Please refresh the page and try again.</p>}
+
+      <button
+        className="subscription__subscribe"
+        onClick={customerPortal}
+        disabled={Boolean(loading)}
+      >
+        Manage your subscription and billing details
+      </button>
+
 
       { subscription
         ? <p>You are currently subscribed to { subscription }.</p>
@@ -92,7 +115,7 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
                      key={index}
                      product={p}
                      handleClick={handleClick}
-                     disable={loadingCheckout || p.name === subscription}
+                     disable={Boolean(loading) || p.name === subscription}
                    />
                  })}
                </div>
