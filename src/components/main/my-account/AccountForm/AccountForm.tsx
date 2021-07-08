@@ -54,7 +54,7 @@ const AccountForm = ({ auth }: AccountFormProps): JSX.Element => {
             id="changePassword"
             className={ errors.changePassword ? 'account-form__input error' : 'account-form__input' }
             name="changePassword"
-            type="text"
+            type="password"
             ref={register()}
           />
           { errors.changePassword && <p className="account-form__error error">{ errors.changePassword.message }</p> }
@@ -65,7 +65,7 @@ const AccountForm = ({ auth }: AccountFormProps): JSX.Element => {
             id="confirmPassword"
             className={ errors.confirmPassword ? 'account-form__input error' : 'account-form__input' }
             name="confirmPassword"
-            type="text"
+            type="password"
             ref={register({ validate: (value) => value === getValues('changePassword') || 'Please enter matching passwords.' })}
           />
           { errors.confirmPassword && <p className="account-form__error error">{ errors.confirmPassword.message }</p> }
