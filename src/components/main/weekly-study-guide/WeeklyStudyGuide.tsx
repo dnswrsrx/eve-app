@@ -6,7 +6,6 @@ import { isEqual } from 'lodash';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { studyGuideSections } from '../../../config/studyGuideConfig';
 import Loading from '../../general/loading/Loading';
-import moment from 'moment';
 import './WeeklyStudyGuide.scss';
 
 interface WeeklyStudyGuideProps {
@@ -39,8 +38,8 @@ const WeeklyStudyGuide = ({ match }: WeeklyStudyGuideProps): JSX.Element => {
     )
   }
 
-  const formattedStartDate = moment(guide.startDate.toDate()).format('MMMM Do, YYYY');
-  const formattedEndDate = moment(guide.endDate.toDate()).format('MMMM Do, YYYY');
+  const formattedStartDate = guide.startDate.toDate().toDateString();
+  const formattedEndDate = guide.endDate.toDate().toDateString();
 
   const renderStudyGuideSections = (): JSX.Element[] => {
     return studyGuideSections.reduce((result: JSX.Element[], section: StudyGuideSection, index: number): JSX.Element[] => {

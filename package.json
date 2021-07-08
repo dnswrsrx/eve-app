@@ -22,7 +22,6 @@
     "@types/react-redux": "^7.1.11",
     "@types/react-router-dom": "^5.1.6",
     "firebase": "^7.24.0",
-    "moment": "^2.29.1",
     "owlbot-js": "^2.0.0",
     "react": "^16.14.0",
     "react-beautiful-dnd": "^13.1.0",

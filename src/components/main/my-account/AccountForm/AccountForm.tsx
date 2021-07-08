@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FirebaseReducer } from 'react-redux-firebase';
 import firebase from '../../../../config/firebaseConfig';
-import moment from 'moment';
 import './AccountForm.scss';
 
 interface AccountFormProps {
@@ -27,7 +26,7 @@ const AccountForm = ({ auth }: AccountFormProps): JSX.Element => {
       <div className="account-form__field-containers">
         <div className="account-form__row">
           <h3 className="account-form__row-heading">Member Since:</h3>
-          <p>{moment(createdDate).format('LLLL')}</p>
+          <p>{createdDate.toDateString()}</p>
         </div>
         <div className="account-form__row">
           <h3 className="account-form__row-heading">Email Verified:</h3>

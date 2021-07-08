@@ -1,7 +1,6 @@
 import React from 'react';
 import { StudyGuide } from '../../../models/models';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import './GuideList.scss';
 
 interface GuideListProps {
@@ -11,8 +10,8 @@ interface GuideListProps {
 const GuideList = ({ studyGuides }: GuideListProps): JSX.Element => {
   const renderGuides = (): JSX.Element[] => {
     return studyGuides.map((guide: StudyGuide): JSX.Element => {
-      const formattedStartDate = moment(guide.startDate.toDate()).format('MMMM Do, YYYY');
-      const formattedEndDate = moment(guide.endDate.toDate()).format('MMMM Do, YYYY');
+      const formattedStartDate = guide.startDate.toDate().toDateString();
+      const formattedEndDate = guide.endDate.toDate().toDateString();
 
       return (
         <li key={guide.id} className="guide-list__item">

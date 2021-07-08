@@ -3,7 +3,6 @@ import { CollectionNames, StudyGuide } from '../../../models/models';
 import { Link } from 'react-router-dom';
 import DeleteButton from '../../general/delete-button/DeleteButton';
 import firebase from '../../../../config/firebaseConfig';
-import moment from 'moment';
 import './GuideCard.scss';
 
 interface GuideCardProps {
@@ -14,8 +13,8 @@ interface GuideCardProps {
 const GuideCard = ({ guide, setSuccessMessage }: GuideCardProps): JSX.Element => {
   const [deleting, setDeleting] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const formattedStartDate = moment(guide.startDate.toDate()).format('MMMM Do, YYYY');
-  const formattedEndDate = moment(guide.endDate.toDate()).format('MMMM Do, YYYY');
+  const formattedStartDate = guide.startDate.toDate().toDateString();
+  const formattedEndDate = guide.endDate.toDate().toDateString();
   const studyGuideDocument = firebase.firestore().collection(CollectionNames.StudyGuides).doc(guide.id);
 
   const deleteStudyGuide = (): void => {
