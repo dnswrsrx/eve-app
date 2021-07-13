@@ -1,0 +1,11 @@
+@import '../../../style/theme.scss';
+
+.privacy-policy {
+  &__wrapper {
+    @include admin-wrapper;
+  }
+
+  &__heading {
+    font-size: $large-font;
+  }
+}

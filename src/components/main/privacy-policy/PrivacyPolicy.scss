@@ -1,0 +1,13 @@
+@import '../../../style/theme.scss';
+
+.privacy-policy {
+  &__wrapper {
+    padding: 2rem;
+  }
+
+  &__main-content {
+    @include grid-list(1fr);
+    @include wysiwyg-content;
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,14 @@
+@import '../../../../style/theme.scss';
+
+.privacy-policy-form {
+  @include grid-list(1fr);
+
+  &__submit-row {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__submit-button {
+    @include primary-button;
+  }
+}

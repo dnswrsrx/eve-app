@@ -25,6 +25,10 @@ const Home = (): JSX.Element => {
             <div className="admin-home__card-image" style={{ backgroundImage: 'url(/images/private.svg)' }} />
             <h2 className="admin-home__card-heading">Private Pages</h2>
           </Link>
+          <Link className="admin-home__link-card" to="/admin-dashboard/privacy-policy">
+            <div className="admin-home__card-image" style={{ backgroundImage: 'url(/images/privacy_policy.svg)' }}></div>
+            <h2 className="admin-home__card-heading">Privacy Policy</h2>
+          </Link>
         </div>
       </div>
     </section>
