@@ -6,8 +6,12 @@
   @include grid-list(1fr);
   padding: 2rem;
 
-  &__field-containers {
+  &__containers {
     @include grid-list(1fr 1fr);
+  }
+
+  &__container {
+    @include grid-list(1fr);
   }
 
   &__row {
@@ -19,16 +23,11 @@
     max-width: 15rem;
   }
 
-  &__submit-row {
-    display: flex;
-    justify-content: flex-end;
-  }
-
   &__submit {
     @include primary-button;
-    width: 150px;
+    max-width: 15rem;
   }
-  
+
   &__row-heading, label {
     font-family: $heading-font;
     font-size: 1rem;
@@ -43,7 +42,7 @@
   }
 
   @include breakpoint($sm) {
-    &__field-containers {
+    &__containers {
       @include grid-list(1fr);
     }
   }
