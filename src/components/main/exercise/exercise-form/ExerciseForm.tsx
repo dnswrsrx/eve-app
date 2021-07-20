@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { QuestionList } from '../../../models/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +23,6 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     const newResultArray: (boolean|undefined)[] = []
 
     questions.forEach(({ answer }, index: number) => {
@@ -48,8 +47,9 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
     setResult(null);
     setResultArray([]);
     reset();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [result]);
 
   const getResultClass = (index: number): string => {
     if(resultArray.length) {
