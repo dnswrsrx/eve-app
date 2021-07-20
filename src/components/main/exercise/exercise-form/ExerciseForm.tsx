@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { QuestionList, Question } from '../../../models/models';
+import { QuestionList } from '../../../models/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrinBeam, faFrownOpen, faMeh } from '@fortawesome/free-regular-svg-icons';
 import { shuffle } from 'lodash';
@@ -15,12 +15,15 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [result, setResult] = useState<number | null>(null);
   const [resultArray, setResultArray] = useState<(boolean|undefined)[]>([]);
+  const options = useRef<JSX.Element[]>(
+    shuffle(Array.from(new Set(questions.map(({ answer }) => answer))))
+      .map((a: string, index: number) => <option key={index} value={a}>{a}</option>)
+  );
   const { register, handleSubmit, errors, reset } = useForm();
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    let correctCounter = 0;
     const newResultArray: (boolean|undefined)[] = []
 
     questions.forEach(({ answer }, index: number) => {
@@ -28,29 +31,24 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
       if(submittedAnswer === ''){
         newResultArray[index] = undefined;
       } else if(submittedAnswer === answer) {
-        correctCounter++;
         newResultArray[index] = true;
       } else {
         newResultArray[index] = false;
       }
     });
 
-    const score = Math.round(correctCounter * 100 / questions.length);
-    setResult(score);
+    const correctCounter = newResultArray.filter(i => i).length
+    setResult(Math.round(correctCounter * 100 / questions.length));
     setResultArray(newResultArray);
-
     setSubmitting(false);
   }
-
-  const options = shuffle(
-    Array.from(new Set(questions.map(({ answer }) => answer)))
-  ).map((a: string, index: number) => <option key={index} value={a}>{a}</option>);
 
   const restartExercise = (): void => {
     setSubmitting(false);
     setResult(null);
     setResultArray([]);
     reset();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   const getResultClass = (index: number): string => {
@@ -117,7 +115,7 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
                   ref={register()}
                 >
                   <option value="" disabled>Select a Word</option>
-                  { options }
+                  { options.current }
                 </select>
               </div>
               { errors[`field-${index}`] && <p className="exercise-form-main__error error">{ errors[`field-${index}`].message }</p> }
@@ -133,11 +131,11 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
       <div className="exercise-form-main__button-row">
         <button
           type="button"
-          className="exercise-form-main__reset"
-          onClick={reset}
+          className="exercise-form-main__restart-button"
+          onClick={restartExercise}
           disabled={submitting}
         >
-          Reset
+          Restart
         </button>
         <button
           type="submit"
