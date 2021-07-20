@@ -49,7 +49,7 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
     reset();
   }
 
-  useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [result]);
+  useEffect(() => window.scrollTo({ top: 0, behavior: 'smooth' }), [resultArray]);
 
   const getResultClass = (index: number): string => {
     if(resultArray.length) {
