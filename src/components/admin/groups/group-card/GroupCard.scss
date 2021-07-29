@@ -16,7 +16,7 @@
     li {
       @include small-card;
       margin: 0.5rem 1rem 0.5rem 0;
-      
+
       &:last-child {
         margin-right: 0;
       }
@@ -31,10 +31,14 @@
     row-gap: 0.5rem;
   }
 
+  &__free-button {
+    @include primary-inverse-button;
+  }
+
   &__edit-button {
     @include primary-button;
   }
-  
+
   .delete-button {
     @include secondary-button;
   }

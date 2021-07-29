@@ -110,6 +110,7 @@ export interface Exercise {
 export interface Group {
   id?: string,
   words: WordList,
+  free?: boolean,
   createdAt: firebase.firestore.Timestamp,
 }
 

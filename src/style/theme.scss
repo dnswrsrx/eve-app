@@ -103,6 +103,18 @@ $small-radius: 6px;
   }
 }
 
+@mixin primary-inverse-button {
+  @include primary-button;
+  border: 2px solid $primary-color;
+  background-color: $background-color;
+  color: black;
+
+  &:hover {
+    background-color: #c0c0c0;
+    color: black;
+  }
+}
+
 @mixin secondary-button {
   @include primary-button;
   background-color: $error-color;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Flipped } from "react-flip-toolkit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { CollectionNames, Group } from '../../../models/models';
 import { Link } from 'react-router-dom';
 import DeleteButton from '../../general/delete-button/DeleteButton';
@@ -14,9 +16,12 @@ interface GroupCardProps {
 }
 
 const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCardProps): JSX.Element => {
-  const [deleting, setDeleting] = useState<boolean>(false);
   const groupsCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups);
 
+  const [free, setFree] = useState<boolean>(Boolean(group.free));
+  const toggleFree = () => groupsCollection.doc(group.id).update({free: !free}).then(() => setFree(!free));
+
+  const [deleting, setDeleting] = useState<boolean>(false);
   const deleteGroup = (): void => {
     setDeleting(true);
     groupsCollection.doc(group.id).delete().then((): void => {
@@ -50,6 +55,7 @@ const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCar
                 : <p>No words have been added to this group yet.</p>
             }
             <div className="group-card__button-container">
+              <button className="group-card__free-button" onClick={toggleFree}><FontAwesomeIcon icon={free ? faCheck : faTimes} /> Free</button>
               <Link to={`/admin-dashboard/group/${subcategoryId}/${group.id}`} className="group-card__edit-button">
                 View/Edit Group
               </Link>
