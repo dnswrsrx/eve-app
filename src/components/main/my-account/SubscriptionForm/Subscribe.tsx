@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
-import { Product } from '../../../models/models';
+import { CollectionNames, Product } from '../../../models/models';
 
 import '../SubscriptionForm/SubscriptionForm.scss';
 
@@ -12,17 +14,31 @@ interface SubscribeProps {
 
 const Subscribe = ({ product, handleClick, disable }: SubscribeProps) => {
 
-    return (
-      <div className="subscription__col">
-        <h3>{product.name}</h3>
-        <button
+  useFirestoreConnect([{
+    collection: CollectionNames.Products,
+    where: ['active', '==', true],
+    doc: product.id,
+    storeAs: `prices-${product.id}`,
+    subcollections: [{ collection: 'prices' }]
+  }]);
+
+  const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`])
+  const priceKey = isLoaded(prices) && Object.keys(prices).length ? Object.keys(prices)[0] : null;
+  const price = priceKey ? prices[priceKey] : null;
+
+  return (
+    <div className="subscription__col">
+      <h3>{product.name}</h3>
+      { priceKey && price &&
+          <button
             className="subscription__subscribe"
-            onClick={() => handleClick(product.stripe_metadata_price_id, product.name)}
+            onClick={() => handleClick(priceKey, product.name)}
             disabled={disable}
-        >
-          Subscribe for {product.stripe_metadata_price} CAD/year
-        </button>
-      </div>
+          >
+            Subscribe for {price.unit_amount / 100} CAD/year
+          </button>
+      }
+    </div>
   )
 }
 

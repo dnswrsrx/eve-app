@@ -16,7 +16,7 @@ interface SubscriptionFormProps {
 
 const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
-  useFirestoreConnect([{ collection: CollectionNames.Products}]);
+  useFirestoreConnect([{ collection: CollectionNames.Products, where: ['active', '==', true]}]);
   const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
 
   const [error, setError] = useState('');
