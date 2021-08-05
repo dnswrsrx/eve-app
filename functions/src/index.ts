@@ -76,15 +76,12 @@ exports.onSubscriptionWrite = functions.firestore.document('users/{userID}/subsc
       const userDoc = await admin.firestore().collection('users').doc(userID).get();
 
       if (userDoc) {
-        if (subscription.status === 'canceled') {
-          return Promise.resolve(userDoc.ref.update({ main: admin.firestore.FieldValue.delete() }));
-        } else {
+        if (subscription.status !== 'active') return Promise.resolve(userDoc.ref.update({ main: admin.firestore.FieldValue.delete() }));
 
-          const productName = subscription.items[0].price.product.name;
+        const productName = subscription.items[0].price.product.name;
 
-          if (['General Vocabulary', 'General Vocabulary and Academic English'].includes(productName)) {
-            return Promise.resolve(userDoc.ref.update({ main: productName }));
-          }
+        if (['General Vocabulary', 'General Vocabulary and Academic English'].includes(productName)) {
+          return Promise.resolve(userDoc.ref.update({ main: productName }));
         }
       }
     }
