@@ -32,7 +32,7 @@
     padding: 0.25rem 0.5rem;
     @include svg-button;
     @include secondary-link;
-    
+
     &:hover {
       svg {
         color: #fff;

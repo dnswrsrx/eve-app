@@ -12,10 +12,8 @@ import Loading from '../../general/loading/Loading';
 const Header = (): JSX.Element => {
   const history = useHistory()
   const menuRef = createRef<HTMLElement>();
-  const firstLinkRef = createRef<HTMLAnchorElement>();
   const mobileOverlay = createRef<HTMLDivElement>();
   const currentPath = window.location.pathname.split('/')[1] || null;
-  const homePaths: (string | null)[] = [null];
   const wordCategoryPaths: (string | null)[] = ['word-categories', 'subcategories', 'groups', 'group', 'exercise'];
   // const studyGuidePaths: (string | null)[] = ['weekly-study-guides', 'weekly-study-guide'];
   const accountPaths: (string | null)[] = ['login', 'register', 'my-account'];
@@ -30,7 +28,6 @@ const Header = (): JSX.Element => {
   const toggleMobileMenu = (): void => {
     menuRef.current?.classList.toggle('show');
     mobileOverlay.current?.classList.toggle('show');
-    if(menuRef.current?.classList.contains('show')) firstLinkRef.current?.focus();
   }
 
   const hideMobileMenu = useCallback((): void => {
@@ -78,9 +75,6 @@ const Header = (): JSX.Element => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="header__nav-list">
-            <li>
-              <Link to="/" ref={firstLinkRef} className={checkCurrentPath(homePaths)}>Home</Link>
-            </li>
             <li>
               <Link to="/word-categories" className={checkCurrentPath(wordCategoryPaths)}>Word Categories</Link>
             </li>
