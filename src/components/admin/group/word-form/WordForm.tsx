@@ -30,11 +30,14 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
   const groupCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups).doc(groupId);
 
   const updateGroupCollection = (data: any, newWord: string, wordListCopy: WordList, successMessage: string): void => {
+    if (word !== newWord) setSelectedWord(newWord);
+
     wordListCopy[newWord] = {
       customDefinition: customDefinition.current,
       dictionaryUrl: data['dictionary-url'],
       apiDefinitions: definitions,
     };
+
     groupCollection.update({ words: wordListCopy }).then((): void => {
       setSuccessMessage(successMessage);
       setSubmitting(false);
