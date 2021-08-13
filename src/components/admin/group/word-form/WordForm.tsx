@@ -26,8 +26,10 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
 
   const customDefinition = useRef<string>(wordList[word]?.customDefinition || '');
 
-  const { register, handleSubmit, errors, getValues, reset, setValue } = useForm();
+  const { register, handleSubmit, errors, getValues, reset, setValue, watch } = useForm();
   const groupCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups).doc(groupId);
+
+  const formWord = watch('word');
 
   const updateGroupCollection = (data: any, newWord: string, wordListCopy: WordList, successMessage: string): void => {
     if (word !== newWord) setSelectedWord(newWord);
@@ -189,23 +191,23 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         />
       </div>
       <div className="word-form__submit-row">
-        <button disabled={submitting} className="word-form__def-button" type="button" onClick={searchDefinitions}>
+        <button disabled={!formWord || submitting} className="word-form__def-button" type="button" onClick={searchDefinitions}>
           Get Definitions
         </button>
-        <button disabled={!definitions || submitting} className="word-form__save-button" type="submit">
+        <button disabled={!formWord || submitting} className="word-form__save-button" type="submit">
           { word ? 'Save' : 'Add' }
         </button>
-        { word && <DeleteButton disabled={!definitions || submitting} deleteFunction={deleteWord} text="Delete" /> }
+        { word && <DeleteButton disabled={!formWord || submitting} deleteFunction={deleteWord} text="Delete" /> }
       </div>
 
       { definitions && <DefinitionBox definitions={definitions} setDefinitions={setDefinitions} /> }
 
       { definitions && definitions.length > 0 &&
         <div className="word-form__submit-row">
-          <button disabled={!definitions || submitting} className="word-form__save-button" type="submit">
+          <button disabled={!formWord || submitting} className="word-form__save-button" type="submit">
             { word ? 'Save' : 'Add' }
           </button>
-          { word && <DeleteButton disabled={!definitions || submitting} deleteFunction={deleteWord} text="Delete" /> }
+          { word && <DeleteButton disabled={!formWord || submitting} deleteFunction={deleteWord} text="Delete" /> }
         </div>
       }
     </form>
