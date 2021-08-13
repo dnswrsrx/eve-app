@@ -90,6 +90,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
+    setSubmitError('');
     const wordListCopy = { ...wordList }
     const newWord = data.word.trim();
 
