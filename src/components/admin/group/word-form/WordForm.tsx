@@ -46,16 +46,22 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
   }
 
   const searchDefinitions = (): void => {
-    const word = getValues('word');
+    const formWord = getValues('word');
 
-    if(!word) {
+    if (word && formWord !== word) {
+      setSubmitError(`The word entered does not match the word you selected from the list: ${word}`);
+      setSuccessMessage('');
+      return;
+    }
+
+    if(!formWord) {
       setSubmitError('Please enter a word first');
       setSuccessMessage('');
       return;
     }
 
     setSubmitting(true);
-    fetch(`https://api.dictionaryapi.dev/api/v1/entries/en/${word}`).then(response => {
+    fetch(`https://api.dictionaryapi.dev/api/v1/entries/en/${formWord}`).then(response => {
       response.json().then((data: any) => {
         setSubmitError('');
         setSuccessMessage('');
