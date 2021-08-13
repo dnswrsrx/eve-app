@@ -34,7 +34,7 @@ const WordList = ({ words, setSuccessMessage, subcategoryId, groupId }: WordList
         { renderWordList() }
       </ul>
       {
-        selectedWord !== null && 
+        selectedWord !== null &&
           <WordForm
             word={selectedWord}
             setSelectedWord={setSelectedWord}
