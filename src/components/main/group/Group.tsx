@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps } from '../../models/models';
+import firebase from '../../../config/firebaseConfig';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
+import useSubscription from '../../../utils/userSubscription';
 import Loading from '../../general/loading/Loading';
 import WordList from './word-list/WordList';
 import ExerciseList from './exercise-list/ExerciseList';
@@ -12,6 +14,7 @@ import './Group.scss';
 interface GroupProps {
   match: MatchProps,
 }
+
 
 const Group = ({ match }: GroupProps): JSX.Element => {
   const subcategoryId = match.params.subcategoryId;
@@ -32,6 +35,18 @@ const Group = ({ match }: GroupProps): JSX.Element => {
   const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
   const group = useSelector(({ firestore: { data } }: any) => data[groupId], isEqual);
   const exercises = useSelector(({ firestore: { ordered } }: any) => ordered[`exercises-${groupId}`], isEqual);
+
+  const [category, setCategory] = useState(null);
+  useEffect(() => {
+    if (subcategory && subcategory.parent) {
+      firebase.firestore().collection(CollectionNames.Categories).doc(subcategory.parent)
+        .onSnapshot(observer => {
+          setCategory(observer.data()?.name)
+        })
+    }
+  }, [subcategory])
+
+  const isSubscribed = useSubscription(category);
 
   if(!isLoaded(subcategory) || !isLoaded(group) || !isLoaded(exercises)) return <Loading />;
 
@@ -65,9 +80,12 @@ const Group = ({ match }: GroupProps): JSX.Element => {
             Back to {subcategory.name}
           </Link>
         </div>
-        <p className="group__description">
-          Please select a word to learn more about it, or select an exercise below to test how well you know these words.
-        </p>
+        <p>Select a word to learn more about it, or select an exercise to test your vocabulary!</p>
+        { isSubscribed ||
+          <p>
+            Consider subscribing to get access to the other groups and subcategories of {category}.
+          </p>
+        }
         {
           wordList.length
             ? <WordList wordInfo={group.words} wordList={wordList} />
