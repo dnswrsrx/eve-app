@@ -5,6 +5,8 @@ import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-fire
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
 import { CollectionNames, Product } from '../../../models/models';
+import useSubscription from '../../../../utils/userSubscription';
+
 import '../SubscriptionForm/SubscriptionForm.scss';
 import Subscribe from './Subscribe';
 
@@ -76,12 +78,7 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     })
   }
 
-
-  const [subscription, setSubscription] = useState(null);
-
-  user.get().then(u => {
-    setSubscription(u?.data()?.main);
-  })
+  const subscription = useSubscription();
 
   return (
     <div className="subscription">
