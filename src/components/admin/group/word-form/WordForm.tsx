@@ -153,7 +153,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
       customDefinition.current = '';
     }
     setSubmitError('');
-  }, [word, wordList]);
+  }, [word, wordList, setValue]);
 
   return (
     <form key={word} className="word-form" onSubmit={handleSubmit(onSubmit)}>
