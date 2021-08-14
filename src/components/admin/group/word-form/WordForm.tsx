@@ -195,7 +195,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
           Get Definitions
         </button>
         <button disabled={!formWord || submitting} className="word-form__save-button" type="submit">
-          { word ? 'Save' : 'Add' }
+          { word ? (word !== formWord ? 'Change Word' : 'Save') : 'Add' }
         </button>
         { word && <DeleteButton disabled={!formWord || submitting} deleteFunction={deleteWord} text="Delete" /> }
       </div>
@@ -205,7 +205,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
       { definitions && definitions.length > 0 &&
         <div className="word-form__submit-row">
           <button disabled={!formWord || submitting} className="word-form__save-button" type="submit">
-            { word ? 'Save' : 'Add' }
+            { word ? (word !== formWord ? 'Change Word' : 'Save') : 'Add' }
           </button>
           { word && <DeleteButton disabled={!formWord || submitting} deleteFunction={deleteWord} text="Delete" /> }
         </div>
