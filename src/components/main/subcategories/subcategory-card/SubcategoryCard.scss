@@ -2,6 +2,9 @@
 
 .subcategory-card {
   display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
   @include secondary-card;
   padding: 1rem;
   transition: all 0.1s ease;
@@ -11,5 +14,10 @@
     margin: auto;
     text-align: center;
     font-size: $small-font;
+
+    > span {
+      color: $primary-highlight-color;
+      margin-left: 0.5rem;
+    }
   }
 }

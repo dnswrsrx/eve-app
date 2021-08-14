@@ -5,7 +5,12 @@ import { CollectionNames, MatchProps, Category } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import { RootState } from '../../../store/reducers/rootReducer';
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
+
 import Loading from '../../general/loading/Loading';
+import useSubscription from '../../../utils/userSubscription';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
 import './Subcategories.scss';
 
@@ -23,6 +28,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
 
   const topLevelCategory = useSelector(({ firestore: { data } }: any) => data[categoryId], isEqual);
   const subcategories = useSelector(({ firestore: { ordered } }: any) => ordered[`subcategories-${categoryId}`], isEqual);
+  const isSubscribed = useSubscription(topLevelCategory && topLevelCategory.name);
 
   const auth = useSelector(( state: RootState  ) => state.firebase.auth);
 
@@ -34,7 +40,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
       .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
       .map((subcategory: Category): JSX.Element => (
         <li key={subcategory.id}>
-          <SubcategoryCard subcategory={subcategory} />
+          <SubcategoryCard subcategory={subcategory} notSubscribed={!isSubscribed} />
         </li>
       ));
   }
@@ -67,9 +73,14 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
             Back to Word Categories
           </Link>
         </div>
-        <p className="subcategories__description">
-          Please select a subcategory to view.
-        </p>
+        { isSubscribed ? <p>Select a subcategory!.</p>
+          : <>
+              <p>
+                Only subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups as you are not subscribed to {topLevelCategory.name}.
+                Click on a subcategory to explore the groups, each containing words and their definitions along with exercises.
+              </p>
+            </>
+        }
         {
           subcategories.length
             ? <ul className="subcategories__list">
