@@ -16,16 +16,27 @@ interface GroupCardProps {
 }
 
 const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCardProps): JSX.Element => {
-  const groupsCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups);
+  const subcategory = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId);
+  const groupsCollection = subcategory.collection(CollectionNames.Groups);
+
+  const updateNumberFree = () => {
+    groupsCollection.onSnapshot(observer => {
+      subcategory.update({ numberOfFreeGroups: (observer.docs.filter(g => (g.get('free'))).length) });
+    })
+  }
 
   const [free, setFree] = useState<boolean>(Boolean(group.free));
-  const toggleFree = () => groupsCollection.doc(group.id).update({free: !free}).then(() => setFree(!free));
+  const toggleFree = () => {
+    groupsCollection.doc(group.id).update({free: !free}).then(() => setFree(!free));
+    updateNumberFree();
+  }
 
   const [deleting, setDeleting] = useState<boolean>(false);
   const deleteGroup = (): void => {
     setDeleting(true);
     groupsCollection.doc(group.id).delete().then((): void => {
       setSuccessMessage(`Group ${number} has been deleted, other groups have been renamed accordingly.`);
+      updateNumberFree();
     }).catch((error: {message: string}) => {
       setSuccessMessage(error.message);
     });

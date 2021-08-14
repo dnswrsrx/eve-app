@@ -60,6 +60,7 @@ export interface Category {
   name: string,
   createdAt: firebase.firestore.Timestamp,
   parent?: string,
+  numberOfFreeGroups?: number,
 }
 
 export interface CategoryDocument {
