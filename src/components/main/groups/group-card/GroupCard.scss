@@ -8,10 +8,20 @@
   transition: all 0.1s ease;
   height: 100%;
 
-  &__heading {
+  &__card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &__heading, &__free {
     font-size: $small-font;
     color: $secondary-color;
     padding-bottom: 1rem;
+  }
+
+  &__free {
+    color: $primary-highlight-color;
   }
 
   &__word-list {

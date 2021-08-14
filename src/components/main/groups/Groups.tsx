@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps, Group } from '../../models/models';
+import useSubscription from '../../../utils/userSubscription';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import Loading from '../../general/loading/Loading';
 import GroupCard from './group-card/GroupCard';
 import './Groups.scss';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 interface SubcategoriesProps {
   match: MatchProps,
@@ -16,6 +19,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   const subcategoryId = match.params.subcategoryId;
 
   useFirestoreConnect([
+    { collection: 'top-level-categories', storeAs: 'topLevels' },
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: subcategoryId },
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `groups-${subcategoryId}`,
       subcollections: [{
@@ -27,16 +31,11 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
 
   const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
   const groups = useSelector(({ firestore: { ordered } }: any) => ordered[`groups-${subcategoryId}`], isEqual);
+  const topLevels = useSelector(( {firestore: { data }}: any ) => data['topLevels']);
+  const topLevelName = subcategory && topLevels && topLevels[subcategory.parent]?.name;
+  const isSubscribed = useSubscription(topLevelName);
 
-  if(!isLoaded(subcategory) || !isLoaded(groups)) return <Loading />;
-
-  const renderGroups = (): JSX.Element[] => {
-    return groups.map((group: Group, index: number): JSX.Element => (
-      <li key={group.id}>
-        <GroupCard number={index + 1} subcategoryId={subcategoryId} group={group} />
-      </li>
-    ));
-  }
+  if ([subcategory, groups, topLevels].some(v => !isLoaded(v))) return <Loading />;
 
   if(!subcategory) {
     return (
@@ -55,6 +54,17 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
     )
   }
 
+  const renderGroups = (): JSX.Element => {
+    return groups.map((group: Group, index: number): JSX.Element => (
+      <GroupCard
+        number={index + 1}
+        subcategoryId={subcategoryId}
+        group={group}
+        notSubscribed={!isSubscribed}
+        key={group.id}
+      />
+    ))
+  }
   return (
     <section className="groups">
       <div className="groups__wrapper page-wrapper">
@@ -66,16 +76,20 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
             Back to Subcategories
           </Link>
         </div>
-        <p className="groups__description">
-          Please select a group to view its words and exercises.
-        </p>
         {
-          groups.length
-            ? <ul className="groups__list">
-                { renderGroups() }
-              </ul>
-            : <p>There are no groups to display.</p>
+          isSubscribed
+          ? <p>Select a group!</p>
+          : <>
+              <p>
+                Only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available as you are not subscribed to {topLevelName}.
+                The groups contain words and definitions along with exercises.
+              </p>
+            </>
         }
+          { groups.length
+            ? <ul className="groups__list">{ renderGroups() }</ul>
+            : <p>There are no groups to display.</p>
+          }
       </div>
     </section>
   )

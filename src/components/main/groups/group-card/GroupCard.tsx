@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
 import { Group } from '../../../models/models';
 import './GroupCard.scss';
 
@@ -7,9 +11,10 @@ interface GroupCardProps {
   number: number,
   subcategoryId: string,
   group: Group,
+  notSubscribed: boolean
 }
 
-const GroupCard = ({ number, subcategoryId, group }: GroupCardProps) => {
+const GroupCard = ({ number, subcategoryId, group, notSubscribed }: GroupCardProps) => {
   const wordList = Object.keys(group.words).sort();
 
   const renderWords = (): JSX.Element[] => {
@@ -18,19 +23,36 @@ const GroupCard = ({ number, subcategoryId, group }: GroupCardProps) => {
     ));
   }
 
+  const renderCard = (): JSX.Element => {
+    return (
+      <>
+        <div className="group-card-main__card-header">
+          <h2 className="group-card-main__heading">
+            Group {number}
+          </h2>
+          { notSubscribed && group.free &&
+            <h2 className="group-card-main__free"><FontAwesomeIcon icon={faStar} /> Free</h2>
+          }
+        </div>
+        {
+          wordList.length
+            ? <ul className="group-card-main__word-list">
+                { renderWords() }
+              </ul>
+            : <p>No words have been added to this list yet.</p>
+        }
+      </>
+    )
+  }
+
   return (
-    <Link to={`/group/${subcategoryId}/${group.id}`} className="group-card-main">
-      <h2 className="group-card-main__heading">
-        Group {number}
-      </h2>
+    <li>
       {
-        wordList.length
-          ? <ul className="group-card-main__word-list">
-              { renderWords() }
-            </ul>
-          : <p>No words have been added to this list yet.</p>
+        notSubscribed && !group.free
+          ? <div className="group-card-main">{ renderCard() }</div>
+          : <Link to={`/group/${subcategoryId}/${group.id}`} className="group-card-main">{ renderCard() }</Link>
       }
-    </Link>
+    </li>
   )
 }
 
