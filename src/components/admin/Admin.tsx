@@ -24,7 +24,7 @@ import Loading from '../general/loading/Loading';
 
 const Admin = (): JSX.Element => {
   const auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
-  
+
   if(!auth.isLoaded) {
     return (
       <section className="admin-dashboard">
