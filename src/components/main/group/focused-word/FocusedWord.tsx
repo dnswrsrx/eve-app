@@ -1,5 +1,5 @@
 import React from 'react';
-import { WordList, Definitions, Phonetic, Definition } from '../../../models/models';
+import { WordList, Definitions, Definition } from '../../../models/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import './FocusedWord.scss';
