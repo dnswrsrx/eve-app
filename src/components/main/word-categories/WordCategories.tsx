@@ -9,13 +9,13 @@ import './WordCategories.scss';
 
 const WordCategories = (): JSX.Element => {
   useFirestoreConnect([
-    { collection: CollectionNames.Categories, orderBy: ['createdAt', 'asc'] },
+    { collection: CollectionNames.Categories, orderBy: ['name', 'desc'] },
   ]);
 
   const topLevelCategories = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Categories], isEqual);
 
   if(!isLoaded(topLevelCategories)) return <Loading />;
-  
+
   const renderCategories = (): JSX.Element[] => {
     return topLevelCategories.map((category: Category): JSX.Element => (
       <li key={category.id}>

@@ -17,7 +17,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
 
   useFirestoreConnect([
     { collection: CollectionNames.Categories, doc: categoryId, storeAs: categoryId },
-    { collection: CollectionNames.Subcategories, orderBy: ['createdAt', 'asc'], where: ['parent', '==', categoryId], storeAs: `subcategories-${categoryId}` }
+    { collection: CollectionNames.Subcategories, orderBy: ['name', 'asc'], where: ['parent', '==', categoryId], storeAs: `subcategories-${categoryId}` }
   ]);
 
   const topLevelCategory = useSelector(({ firestore: { data } }: any) => data[categoryId], isEqual);
