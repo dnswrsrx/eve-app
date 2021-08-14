@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CollectionNames } from '../../../models/models';
+import { useHistory } from 'react-router-dom';
 import { CollectionNames, Exercise } from '../../../models/models';
 import firebase from '../../../../config/firebaseConfig';
 
@@ -15,6 +15,8 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId }: ExerciseAddP
   const exercisesCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId)
     .collection(CollectionNames.Groups).doc(groupId).collection(CollectionNames.Exercises);
 
+  const history = useHistory();
+
   const addExercise = (): void => {
     setSubmitting(true);
 
@@ -23,10 +25,11 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId }: ExerciseAddP
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
     }
 
-    exercisesCollection.doc().set(newDocument).then((): void => {
+    exercisesCollection.add(newDocument).then((newExerciseRef): void => {
       setSubmitting(false);
       setAddError('');
       setSuccessMessage('New exercise added');
+      history.push(`/admin-dashboard/exercise/${subcategoryId}/${groupId}/${newExerciseRef.id}`);
     }).catch((error: {message: string}) => {
       setSubmitting(false);
       setAddError(error.message);
