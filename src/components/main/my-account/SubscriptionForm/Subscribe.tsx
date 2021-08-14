@@ -32,7 +32,7 @@ const Subscribe = ({ product, handleClick, disable }: SubscribeProps) => {
       { priceKey && price &&
           <button
             className="subscription__subscribe"
-            onClick={() => handleClick(priceKey, product.name)}
+            onClick={() => handleClick(priceKey)}
             disabled={disable}
           >
             Subscribe for {price.unit_amount / 100} CAD/year

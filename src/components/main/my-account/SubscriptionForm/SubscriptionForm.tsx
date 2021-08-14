@@ -38,7 +38,7 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     })
   }
 
-  const handleClick = (priceId: string, productName: string) => {
+  const handleClick = (priceId: string) => {
 
     setLoading('cart')
 
