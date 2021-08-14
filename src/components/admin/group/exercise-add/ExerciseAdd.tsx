@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CollectionNames } from '../../../models/models';
+import { CollectionNames, Exercise } from '../../../models/models';
 import firebase from '../../../../config/firebaseConfig';
 
 interface ExerciseAddProps {
@@ -17,9 +18,9 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId }: ExerciseAddP
   const addExercise = (): void => {
     setSubmitting(true);
 
-    const newDocument = {
-      questions: {},
-      createdAt: new Date(),
+    const newDocument: Exercise = {
+      questions: [],
+      createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
     }
 
     exercisesCollection.doc().set(newDocument).then((): void => {
