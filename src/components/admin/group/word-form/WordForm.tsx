@@ -191,7 +191,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         />
       </div>
       <div className="word-form__submit-row">
-        <button disabled={!formWord || submitting} className="word-form__def-button" type="button" onClick={searchDefinitions}>
+        <button disabled={!formWord || (word && word !== formWord) || submitting} className="word-form__def-button" type="button" onClick={searchDefinitions}>
           Get Definitions
         </button>
         <button disabled={!formWord || submitting} className="word-form__save-button" type="submit">
