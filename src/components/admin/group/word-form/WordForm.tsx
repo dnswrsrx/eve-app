@@ -163,7 +163,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         </button>
       </div>
       <div className="word-form__field-row">
-        <label htmlFor="name">Word: </label>
+        <label htmlFor="word">Word: </label>
         <input
           id="word"
           name="word"
