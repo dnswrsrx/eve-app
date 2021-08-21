@@ -190,14 +190,8 @@ $small-radius: 6px;
 }
 
 @mixin colored-bullets {
-  list-style: none;
-
-  &::before {
-    content: "\2022";
+  &::marker {
     color: $primary-color;
-    display: inline-block;
-    width: 1rem;
-    font-weight: bold;
   }
 }
 
