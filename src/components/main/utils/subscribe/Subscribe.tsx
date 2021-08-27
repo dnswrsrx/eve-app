@@ -24,8 +24,8 @@ const Subscribe = (): JSX.Element => {
 
   const user = auth.isLoaded && !auth.isEmpty && firebase.firestore().collection('users').doc(auth.uid);
 
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState<'cart'|'portal'|null>(null);
+  const [error, setError] = useState<'cart'|'portal'|null>(null);
 
   const subscription = useSubscription();
 
@@ -40,8 +40,8 @@ const Subscribe = (): JSX.Element => {
       window.location.assign(data.url);
     }).catch(e => {
       console.log(e);
-      setError('Failed to load customer portal. Please retry.');
       setLoading(null);
+      setError('portal');
     })
   }
 
@@ -71,16 +71,16 @@ const Subscribe = (): JSX.Element => {
             stripePromise.then(stripe => {
               stripe?.redirectToCheckout({sessionId})
             }).catch(e => {
-              setError(e);
               setLoading(null);
+              setError('cart');
             })
           }
         }, (e: string) => {
-          setError(e);
+          setError('cart');
         })
       }).catch(e => {
-        setError(e);
         setLoading(null);
+        setError('cart');
       })
     }
   }
@@ -96,9 +96,7 @@ const Subscribe = (): JSX.Element => {
   return (
     <div className="subscribe">
 
-      {loading && <p>Loading {loading === 'cart' ? 'cart' : 'customer portal'}...</p>}
-
-      {error && <p className="error">Error creating a cart. Please refresh the page and try again.</p>}
+      {error && <p className="error">Error creating the {error}. Please refresh the page and try again.</p>}
 
       <div className="subscribe__products">
         { products.map((p: Product, index: number) => {
