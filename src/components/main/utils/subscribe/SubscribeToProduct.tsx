@@ -26,8 +26,8 @@ const SubscribeToProduct = ({ product, cartOrPortal, loading, auth }: SubscribeT
   }]);
 
   const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`])
-  const priceKey = isLoaded(prices) && Object.keys(prices).length ? Object.keys(prices)[0] : null;
-  const price = priceKey ? prices[priceKey] : null;
+  const priceID = isLoaded(prices) && Object.keys(prices).length ? Object.keys(prices)[0] : null;
+  const price = priceID ? prices[priceID] : null;
   const amount = price && price.unit_amount / 100;
 
   const subscription = useSubscription();
@@ -37,11 +37,11 @@ const SubscribeToProduct = ({ product, cartOrPortal, loading, auth }: SubscribeT
     <div className="subscribe__col">
       <h3>{product.name}</h3>
       { window.location.pathname.includes('/subscription') && product.description && <p>{product.description}</p> }
-      { priceKey && price &&
+      { priceID && price &&
           <button
             className="subscribe__subscribe"
-            onClick={() => cartOrPortal(priceKey)}
             disabled={Boolean(loading) || !auth.uid || !auth.emailVerified || isSubscribed}
+            onClick={() => cartOrPortal(priceID)}
           >
             { subscription
               ? ( isSubscribed

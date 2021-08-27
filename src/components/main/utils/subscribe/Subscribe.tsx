@@ -45,7 +45,7 @@ const Subscribe = (): JSX.Element => {
     })
   }
 
-  const _checkout = (priceId: string) => {
+  const _checkout = (priceID: string) => {
 
     if (user) {
       setLoading('cart')
@@ -53,7 +53,7 @@ const Subscribe = (): JSX.Element => {
       // Set up a checkout session that is inserted into Firestore.
       // Once session is in Firestore, it'll ping Stripe to verify.
       user.collection('checkout_sessions').add({
-        price: priceId,
+        price: priceID,
         customerEmail: auth.email,
         mode: 'subscription',
         success_url: window.location.href,
