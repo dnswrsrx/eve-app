@@ -1,0 +1,34 @@
+@import '../../../../style/theme.scss';
+
+.subscribe {
+  @include center-container(1100px);
+
+  &__products {
+    @include grid-list(1fr 1fr, $gap: 2rem);
+
+    @include breakpoint($md) {
+      @include grid-list(1fr);
+    }
+  }
+
+  &__col {
+    @include secondary-card;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    > h3 {
+      font-size: $medium-font;
+      margin-bottom: 0.25rem;
+    }
+
+    > p {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__subscribe {
+    @include primary-button;
+    margin-top: 0.5rem;
+  }
+}

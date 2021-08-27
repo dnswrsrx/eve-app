@@ -5,16 +5,15 @@ import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-fire
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
 import { CollectionNames, Product } from '../../../models/models';
+import Subscribe from '../../utils/subscribe/Subscribe';
 import useSubscription from '../../../../utils/userSubscription';
 
 import '../SubscriptionForm/SubscriptionForm.scss';
-import Subscribe from './Subscribe';
 
 
 interface SubscriptionFormProps {
   auth: FirebaseReducer.AuthState,
 }
-
 
 const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
@@ -104,23 +103,9 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
       {/* replace with auth.emailVerified when ready */}
       { !auth.emailVerified
-          ? (isLoaded(products)
-              ? (
-               <div className="subscription__product-container">
-                 {products.map((p: Product, index: number) => {
-                   return <Subscribe
-                     key={index}
-                     product={p}
-                     handleClick={handleClick}
-                     disable={Boolean(loading) || p.name === subscription}
-                   />
-                 })}
-               </div>
-              )
-              : <p>Loading...</p>
-          )
+          ? <Subscribe />
           : <p>Your email has not been verified yet. Please check your email for a verification link to do so.</p>
-    }
+      }
     </div>
   )
 }
