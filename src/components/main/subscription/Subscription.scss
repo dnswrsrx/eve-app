@@ -9,6 +9,13 @@
     font-size: $large-font;
   }
 
+  .how.register {
+    @include grid-list(1.75fr 1fr);
+    @include breakpoint($md) {
+      @include grid-list(1fr);
+    }
+  }
+
   ul {
     margin-left: 1rem;
   }

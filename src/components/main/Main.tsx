@@ -4,7 +4,6 @@ import Header from './header/Header';
 import Footer from './footer/Footer';
 import PrivacyPolicy from './privacy-policy/PrivacyPolicy';
 import UserLogin from './login/Login';
-import Register from './register/Register';
 import ForgotPassword from './forgot-password/ForgotPassword';
 import MyAccount from './my-account/MyAccount';
 import Subscription from './subscription/Subscription';
@@ -27,7 +26,6 @@ const Main = (): JSX.Element => {
         <Route exact path="/" component={Home} />
         <Route exact path="/privacy-policy" component={PrivacyPolicy} />
         <Route exact path="/login" component={UserLogin} />
-        <Route exact path="/register" component={Register} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
         <Route exact path="/my-account" component={MyAccount} />
         <Route exact path="/subscription" component={Subscription} />

@@ -3,6 +3,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../../store/reducers/rootReducer';
 
 import Loading from '../../general/loading/Loading';
+import RegisterForm from './RegisterForm/RegisterForm';
 
 import Subscribe from '../utils/subscribe/Subscribe';
 import './Subscription.scss'
@@ -21,7 +22,7 @@ const Subscription = (): JSX.Element => {
         <Subscribe />
         <hr />
 
-        <div className="how">
+        <div className={"how" + (!auth.uid && " register")}>
           <div>
             <h2>How It Works</h2>
             <ul>
@@ -51,6 +52,7 @@ const Subscription = (): JSX.Element => {
               </li>
             </ul>
           </div>
+          {!auth.uid && <RegisterForm /> }
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import firebase from '../../../../config/firebaseConfig';
 import './RegisterForm.scss';
@@ -60,7 +61,10 @@ const RegisterForm = (): JSX.Element => {
         { submitting && <span className="register-form__spinner" aria-hidden="true"></span> }
         <button className="register-form__submit" type="submit" disabled={submitting}>Register</button>
       </div>
-    </form>
+      <div className="register-form__login">
+        <Link to="/login">Already have an account? Log in here.</Link>
+      </div>
+      </form>
   )
 }
 
