@@ -85,7 +85,7 @@ const Subscribe = (): JSX.Element => {
     }
   }
 
-  const handleClick = (productName: string): Function => {
+  const cartOrPortal = (productName: string): Function => {
     // flip !emailVerified to emailVerified
     if (user && auth.uid && !auth.emailVerified) {
       if (!subscription) return _checkout;
@@ -106,7 +106,7 @@ const Subscribe = (): JSX.Element => {
           return <SubscribeToProduct
             key={index}
             product={p}
-            handleClick={handleClick(p.name)}
+            cartOrPortal={cartOrPortal(p.name)}
             // flip emailVerified to !emailVerified
             disabled={Boolean(loading) || !auth.uid || auth.emailVerified}
           />

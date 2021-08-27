@@ -10,11 +10,11 @@ import './Subscribe.scss';
 
 interface SubscribeToProductProps {
   product: Product,
-  handleClick: Function,
+  cartOrPortal: Function,
   disabled: boolean,
 }
 
-const SubscribeToProduct = ({ product, handleClick, disabled }: SubscribeToProductProps) => {
+const SubscribeToProduct = ({ product, cartOrPortal, disabled }: SubscribeToProductProps) => {
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,
@@ -39,7 +39,7 @@ const SubscribeToProduct = ({ product, handleClick, disabled }: SubscribeToProdu
       { priceKey && price &&
           <button
             className="subscribe__subscribe"
-            onClick={() => handleClick(priceKey)}
+            onClick={() => cartOrPortal(priceKey)}
             disabled={disabled || isSubscribed}
           >
             { subscription
