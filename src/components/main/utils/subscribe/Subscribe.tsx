@@ -86,8 +86,7 @@ const Subscribe = (): JSX.Element => {
   }
 
   const cartOrPortal = (productName: string): Function => {
-    // flip !emailVerified to emailVerified
-    if (user && auth.uid && !auth.emailVerified) {
+    if (user && auth.uid && auth.emailVerified) {
       if (!subscription) return _checkout;
       if (subscription !== productName) return _customerPortal;
     }
