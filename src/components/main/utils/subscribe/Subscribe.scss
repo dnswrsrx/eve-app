@@ -27,6 +27,12 @@
     }
   }
 
+  &__text {
+    color: $primary-color;
+    font-size: $medium-font;
+    margin: 0.25rem auto;
+  }
+
   &__subscribe {
     @include primary-button;
     margin-top: 0.5rem;

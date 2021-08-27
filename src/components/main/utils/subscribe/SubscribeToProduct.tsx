@@ -47,19 +47,22 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
       <h3>{product.name}</h3>
       { window.location.pathname.includes('/subscription') && product.description && <p>{product.description}</p> }
       { priceID && price &&
-          <button
-            className="subscribe__subscribe"
-            onClick={() => manageSubscription(priceID)}
-            disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed}
-          >
-            { subscription
-              ? ( isSubscribed
-                    ? `Currently subscribed (${amount} CAD/year)`
-                    : loading ? 'Loading portal...' : `Update subscription ($${amount} CAD/year)`
-                )
-              : loading ? 'Loading cart...' : `Subscribe for $${amount} CAD/year`
-            }
-          </button>
+          ( auth.uid
+            ? <button
+                className="subscribe__subscribe"
+                onClick={() => manageSubscription(priceID)}
+                disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed}
+              >
+                { subscription
+                  ? ( isSubscribed
+                        ? `Currently subscribed (${amount} CAD/year)`
+                        : loading ? 'Loading portal...' : `Update subscription ($${amount} CAD/year)`
+                    )
+                  : loading ? 'Loading cart...' : `Subscribe for $${amount} CAD/year`
+                }
+              </button>
+            : <p className="subscribe__text bold">${amount} CAD/year</p>
+          )
       }
     </div>
   )
