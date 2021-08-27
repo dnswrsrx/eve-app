@@ -37,7 +37,6 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     <div className="subscription">
       <h2 className="subscription__heading">Subscription</h2>
 
-      {loadingPortal && <p>Loading portal...</p>}
       {portalError && <p className="error">Failed to load customer portal. Please refresh the page and try again.</p>}
 
       <button
@@ -45,7 +44,10 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
         onClick={customerPortal}
         disabled={loadingPortal}
       >
-        Manage your subscription and billing details
+        { loadingPortal
+          ? 'Loading portal...'
+          : 'Manage your subscription and billing details'
+        }
       </button>
 
       { subscription
