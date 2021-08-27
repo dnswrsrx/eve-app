@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { isEqual } from 'lodash';
 import { useSelector } from 'react-redux';
-import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
