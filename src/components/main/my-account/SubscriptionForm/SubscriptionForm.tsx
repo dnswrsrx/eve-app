@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { FirebaseReducer } from 'react-redux-firebase';
 
 import firebase from '../../../../config/firebaseConfig';
-import stripePromise from '../../../../config/stripeConfig';
-import { CollectionNames, Product } from '../../../models/models';
 import Subscribe from '../../utils/subscribe/Subscribe';
 import useSubscription from '../../../../utils/userSubscription';
 
@@ -17,63 +14,20 @@ interface SubscriptionFormProps {
 
 const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
-  useFirestoreConnect([{ collection: CollectionNames.Products, where: ['active', '==', true]}]);
-  const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
-
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState<'cart'|'portal'|null>(null)
-
-  const user = firebase.firestore().collection('users').doc(auth.uid);
+  const [portalError, setPortalError] = useState(false);
+  const [loadingPortal, setLoadingPortal] = useState(false);
 
   const customerPortal = () => {
     const getPortalLink = firebase.app().functions('us-central1').httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
 
-    setLoading('portal');
+    setLoadingPortal(true);
 
     getPortalLink({ returnUrl: window.location.origin }).then(({data}) => {
       window.location.assign(data.url);
     }).catch(e => {
       console.log(e);
-      setError('Failed to load customer portal. Please retry.');
-      setLoading(null);
-    })
-  }
-
-  const handleClick = (priceId: string) => {
-
-    setLoading('cart')
-
-    // Set up a checkout session that is inserted into Firestore.
-    // Once session is in Firestore, it'll ping Stripe to verify.
-    user.collection('checkout_sessions').add({
-      price: priceId,
-      customerEmail: auth.email,
-      mode: 'subscription',
-      success_url: window.location.href,
-      cancel_url: window.location.href,
-    }).then((snap: firebase.firestore.DocumentData) => {
-
-      snap.onSnapshot((snapshot: firebase.firestore.DocumentSnapshot) => {
-
-        // If verification successful, Stripe will insert a sessionId into this checkout_session document.
-        const sessionId: string = snapshot?.data()?.sessionId;
-
-        // Using that sessionId, we redirect to Stripe's checkout page.
-        // User can supply the card details for the subscription.
-        if (sessionId) {
-          stripePromise.then(stripe => {
-            stripe?.redirectToCheckout({sessionId})
-          }).catch(e => {
-            setError(e);
-            setLoading(null);
-          })
-        }
-      }, (e: string) => {
-        setError(e);
-      })
-    }).catch(e => {
-      setError(e);
-      setLoading(null);
+      setPortalError(true);
+      setLoadingPortal(false);
     })
   }
 
@@ -83,29 +37,28 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     <div className="subscription">
       <h2 className="subscription__heading">Subscription</h2>
 
-      {loading && <p>Loading {loading === 'cart' ? 'cart' : 'customer portal'}...</p>}
-      {error && <p className="error">Error creating a cart. Please refresh the page and try again.</p>}
+      {loadingPortal && <p>Loading portal...</p>}
+      {portalError && <p className="error">Failed to load customer portal. Please refresh the page and try again.</p>}
 
       <button
         className="subscription__subscribe"
         onClick={customerPortal}
-        disabled={Boolean(loading)}
+        disabled={loadingPortal}
       >
         Manage your subscription and billing details
       </button>
-
 
       { subscription
         ? <p>You are currently subscribed to { subscription }.</p>
         : <p>You currently do not have a subscription.</p>
       }
 
-
       {/* replace with auth.emailVerified when ready */}
-      { !auth.emailVerified
-          ? <Subscribe />
-          : <p>Your email has not been verified yet. Please check your email for a verification link to do so.</p>
+      { !auth.emailVerified &&
+        <p>Your email has not been verified yet. Please check your email for the verification link. Once you're verified, you may subscribe!</p>
       }
+
+      <Subscribe />
     </div>
   )
 }
