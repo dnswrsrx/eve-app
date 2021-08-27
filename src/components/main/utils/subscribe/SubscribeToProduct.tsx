@@ -55,9 +55,9 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
             { subscription
               ? ( isSubscribed
                     ? `Currently subscribed (${amount} CAD/year)`
-                    : loading ? 'Loading portal...' : `Update subscription (${amount} CAD/year)`
+                    : loading ? 'Loading portal...' : `Update subscription ($${amount} CAD/year)`
                 )
-              : loading ? 'Loading cart...' : `Subscribe for ${amount} CAD/year`
+              : loading ? 'Loading cart...' : `Subscribe for $${amount} CAD/year`
             }
           </button>
       }
