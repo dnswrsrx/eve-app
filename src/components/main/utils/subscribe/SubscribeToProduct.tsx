@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
@@ -11,11 +11,11 @@ import './Subscribe.scss';
 interface SubscribeToProductProps {
   product: Product,
   cartOrPortal: Function,
-  loading: string|null,
+  loadingCartPortal: string|null,
   auth: FirebaseReducer.AuthState,
 }
 
-const SubscribeToProduct = ({ product, cartOrPortal, loading, auth }: SubscribeToProductProps) => {
+const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: SubscribeToProductProps) => {
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,
@@ -33,6 +33,15 @@ const SubscribeToProduct = ({ product, cartOrPortal, loading, auth }: SubscribeT
   const subscription = useSubscription();
   const isSubscribed = Boolean(subscription && subscription === product.name);
 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {if (loadingCartPortal === null) setLoading(false)}, [loadingCartPortal]);
+
+  const manageSubscription = (priceID: string) => {
+    setLoading(true);
+    cartOrPortal(priceID);
+  }
+
   return (
     <div className="subscribe__col">
       <h3>{product.name}</h3>
@@ -40,15 +49,15 @@ const SubscribeToProduct = ({ product, cartOrPortal, loading, auth }: SubscribeT
       { priceID && price &&
           <button
             className="subscribe__subscribe"
-            disabled={Boolean(loading) || !auth.uid || !auth.emailVerified || isSubscribed}
-            onClick={() => cartOrPortal(priceID)}
+            onClick={() => manageSubscription(priceID)}
+            disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed}
           >
             { subscription
               ? ( isSubscribed
                     ? `Currently subscribed (${amount} CAD/year)`
-                    : `Update subscription (${amount} CAD/year)`
+                    : loading ? 'Loading portal...' : `Update subscription (${amount} CAD/year)`
                 )
-              : `Subscribe for ${amount} CAD/year`
+              : loading ? 'Loading cart...' : `Subscribe for ${amount} CAD/year`
             }
           </button>
       }

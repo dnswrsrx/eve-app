@@ -24,8 +24,8 @@ const Subscribe = (): JSX.Element => {
 
   const user = auth.isLoaded && !auth.isEmpty && firebase.firestore().collection('users').doc(auth.uid);
 
-  const [loading, setLoading] = useState<'cart'|'portal'|null>(null);
   const [error, setError] = useState<'cart'|'portal'|null>(null);
+  const [loadingCartPortal, setLoadingCartPortal] = useState<'cart'|'portal'|null>(null);
 
   const subscription = useSubscription();
 
@@ -34,21 +34,21 @@ const Subscribe = (): JSX.Element => {
   const _customerPortal = () => {
     const getPortalLink = firebase.app().functions('us-central1').httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
 
-    setLoading('portal');
+    setLoadingCartPortal('portal');
 
     getPortalLink({ returnUrl: window.location.origin }).then(({data}) => {
       window.location.assign(data.url);
     }).catch(e => {
       console.log(e);
-      setLoading(null);
       setError('portal');
+      setLoadingCartPortal(null);
     })
   }
 
   const _checkout = (priceID: string) => {
 
     if (user) {
-      setLoading('cart')
+      setLoadingCartPortal('cart');
 
       // Set up a checkout session that is inserted into Firestore.
       // Once session is in Firestore, it'll ping Stripe to verify.
@@ -62,6 +62,7 @@ const Subscribe = (): JSX.Element => {
 
         snap.onSnapshot((snapshot: firebase.firestore.DocumentSnapshot) => {
 
+
           // If verification successful, Stripe will insert a sessionId into this checkout_session document.
           const sessionId: string = snapshot?.data()?.sessionId;
 
@@ -71,16 +72,16 @@ const Subscribe = (): JSX.Element => {
             stripePromise.then(stripe => {
               stripe?.redirectToCheckout({sessionId})
             }).catch(e => {
-              setLoading(null);
               setError('cart');
+              setLoadingCartPortal(null);
             })
           }
         }, (e: string) => {
           setError('cart');
         })
       }).catch(e => {
-        setLoading(null);
         setError('cart');
+        setLoadingCartPortal(null);
       })
     }
   }
@@ -104,7 +105,7 @@ const Subscribe = (): JSX.Element => {
             key={index}
             product={p}
             cartOrPortal={cartOrPortal(p.name)}
-            loading={loading}
+            loadingCartPortal={loadingCartPortal}
             auth={auth}
           />
         })}
