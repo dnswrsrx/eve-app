@@ -1,0 +1,19 @@
+@import '../../../style/theme.scss';
+
+.subscription-page {
+  &__wrapper {
+    @include admin-wrapper;
+  }
+
+  &__heading {
+    font-size: $large-font;
+  }
+
+  ul {
+    margin-left: 1rem;
+  }
+
+  li {
+    @include colored-bullets;
+  }
+}

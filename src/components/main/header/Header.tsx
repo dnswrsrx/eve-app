@@ -17,6 +17,7 @@ const Header = (): JSX.Element => {
   const wordCategoryPaths: (string | null)[] = ['word-categories', 'subcategories', 'groups', 'group', 'exercise'];
   // const studyGuidePaths: (string | null)[] = ['weekly-study-guides', 'weekly-study-guide'];
   const accountPaths: (string | null)[] = ['login', 'register', 'my-account'];
+  const subscriptionPath: (string | null)[] = ['subscription'];
 
   const auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
 
@@ -75,6 +76,9 @@ const Header = (): JSX.Element => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="header__nav-list">
+            <li>
+              <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>Subscription</Link>
+            </li>
             <li>
               <Link to="/word-categories" className={checkCurrentPath(wordCategoryPaths)}>Word Categories</Link>
             </li>
