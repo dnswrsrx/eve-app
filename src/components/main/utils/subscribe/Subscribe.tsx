@@ -106,8 +106,8 @@ const Subscribe = (): JSX.Element => {
             key={index}
             product={p}
             cartOrPortal={cartOrPortal(p.name)}
-            // flip emailVerified to !emailVerified
-            disabled={Boolean(loading) || !auth.uid || auth.emailVerified}
+            loading={loading}
+            auth={auth}
           />
         })}
       </div>

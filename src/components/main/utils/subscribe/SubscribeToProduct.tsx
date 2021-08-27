@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
 import { CollectionNames, Product } from '../../../models/models';
 
@@ -11,10 +11,11 @@ import './Subscribe.scss';
 interface SubscribeToProductProps {
   product: Product,
   cartOrPortal: Function,
-  disabled: boolean,
+  loading: string|null,
+  auth: FirebaseReducer.AuthState,
 }
 
-const SubscribeToProduct = ({ product, cartOrPortal, disabled }: SubscribeToProductProps) => {
+const SubscribeToProduct = ({ product, cartOrPortal, loading, auth }: SubscribeToProductProps) => {
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,
@@ -40,7 +41,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, disabled }: SubscribeToProd
           <button
             className="subscribe__subscribe"
             onClick={() => cartOrPortal(priceKey)}
-            disabled={disabled || isSubscribed}
+            disabled={Boolean(loading) || !auth.uid || !auth.emailVerified || isSubscribed}
           >
             { subscription
               ? ( isSubscribed
