@@ -25,6 +25,7 @@
   &__submit {
     @include primary-button;
     width: 150px;
+    align-self: flex-end;
   }
 
   &__spinner {
@@ -36,6 +37,7 @@
 
   &__login {
     margin-top: auto;
+    align-self: flex-end;
   }
 
 }
