@@ -86,7 +86,7 @@ const Header = (): JSX.Element => {
               <Link to="/weekly-study-guides" className={checkCurrentPath(studyGuidePaths)}>Weekly Study Guides</Link>
             </li> */}
             <li>
-              <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Login'}</Link>
+              <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
             </li>
             {
               auth.uid
