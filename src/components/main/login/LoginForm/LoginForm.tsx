@@ -46,7 +46,7 @@ const LoginForm = (): JSX.Element => {
       { authError && <p className="login-form__error error">{ authError }</p> }
       <div className="login-form__row">
         { submitting && <span className="login-form__spinner" aria-hidden="true"></span> }
-        <button className="login-form__submit" type="submit" disabled={submitting}>Log in</button>
+        <button className="login-form__submit" type="submit" disabled={submitting}>Log In</button>
       </div>
     </form>
   )
