@@ -5,12 +5,6 @@
     @include admin-wrapper;
   }
 
-  &__heading {
-    padding-bottom: 1rem;
-    text-align: center;
-    font-size: 30px;
-  }
-
   &__link-container {
     @include center-container(500px);
     @include grid-list(1fr, 0.5rem);

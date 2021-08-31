@@ -19,7 +19,6 @@ const Register = (): JSX.Element => {
   return (
     <section className="register-page">
       <div className="register-page__wrapper page-wrapper">
-        <h1 className="register-page__heading">English Vocabulary Exercises - Reset Password</h1>
         <RegisterForm />
         <div className="register-page__register-container">
           <Link to="/login">Know you password? Log in here.</Link>

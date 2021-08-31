@@ -19,7 +19,6 @@ const Login = (): JSX.Element => {
   return (
     <section className="login-page">
       <div className="login-page__wrapper page-wrapper">
-        <h1 className="login-page__heading">English Vocabulary Exercises - Login</h1>
         <LoginForm />
         <div className="login-page__link-container">
           <div className="login-page__link">
