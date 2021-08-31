@@ -21,7 +21,7 @@ const Register = (): JSX.Element => {
       <div className="register-page__wrapper page-wrapper">
         <RegisterForm />
         <div className="register-page__register-container">
-          <Link to="/login">Know you password? Log in here.</Link>
+          <Link to="/login">Know your password? Log in here.</Link>
         </div>
       </div>
     </section>
