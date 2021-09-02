@@ -144,15 +144,6 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
   const clearDefinitions = () => setDefinitions(null);
 
   useEffect(() => {
-    if (definitions === null) {
-      setSubmitting(true);
-      const wordListCopy = { ...wordList };
-      updateGroupCollection(word, wordListCopy, 'Definitions and phonetics cleared.')
-      setSubmitting(false)
-    }
-  }, [definitions])
-
-  useEffect(() => {
     setValue('word', word);
     if(wordList[word]) {
       const _word = wordList[word];
