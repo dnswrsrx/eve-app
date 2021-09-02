@@ -31,12 +31,12 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
 
   const formWord = watch('word');
 
-  const updateGroupCollection = (data: any, newWord: string, wordListCopy: WordList, successMessage: string): void => {
+  const updateGroupCollection = (newWord: string, wordListCopy: WordList, successMessage: string): void => {
     if (word !== newWord) setSelectedWord(newWord);
 
     wordListCopy[newWord] = {
       customDefinition: customDefinition.current,
-      dictionaryUrl: data['dictionary-url'],
+      dictionaryUrl: getValues('dictionary-url'), // get dictionary url value from form
       apiDefinitions: definitions,
     };
 
@@ -101,7 +101,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
 
     // Updating an existing word
     if(word === newWord) {
-      updateGroupCollection(data, newWord, wordListCopy, `Updated word: ${newWord}`);
+      updateGroupCollection(newWord, wordListCopy, `Updated word: ${newWord}`);
     }
     else {
       // If new word already exists
@@ -115,11 +115,11 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
       // Replacing an existing word
       if(word && word !== newWord) {
         delete wordListCopy[word];
-        updateGroupCollection(data, newWord, wordListCopy, `${word} removed, ${newWord} added`);
+        updateGroupCollection(newWord, wordListCopy, `${word} removed, ${newWord} added`);
       }
       // Adding a completely new word
       else {
-        updateGroupCollection(data, newWord, wordListCopy, `Added new word: ${newWord}`);
+        updateGroupCollection(newWord, wordListCopy, `Added new word: ${newWord}`);
       }
     }
   }
