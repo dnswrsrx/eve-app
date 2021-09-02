@@ -30,8 +30,12 @@
   }
 
   &__submit-row {
-    @include grid-list(auto auto auto);
+    @include grid-list(auto auto auto auto);
     justify-content: flex-end;
+  }
+
+  &__clear-definitions {
+    @include secondary-button;
   }
 
   &__close-container {
