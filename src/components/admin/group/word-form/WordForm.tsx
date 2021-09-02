@@ -156,7 +156,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
     }
     setSuccessMessage('');
     setSubmitError('');
-  }, [word, wordList, setValue]);
+  }, [word, wordList, setValue, setSuccessMessage, setSubmitError]);
 
   return (
     <form key={word} className="word-form" onSubmit={handleSubmit(onSubmit)}>
