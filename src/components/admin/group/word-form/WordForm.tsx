@@ -154,6 +154,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
       setDefinitions(null);
       customDefinition.current = '';
     }
+    setSuccessMessage('');
     setSubmitError('');
   }, [word, wordList, setValue]);
 
