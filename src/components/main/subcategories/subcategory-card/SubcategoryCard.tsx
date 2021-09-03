@@ -17,7 +17,7 @@ const SubcategoryCard = ({ subcategory, notSubscribed }: SubcategoryCardProps) =
     <Link to={`/groups/${subcategory.id}`} className="subcategory-card">
       <h2 className="subcategory-card__heading">
         {subcategory.name}
-        { notSubscribed && subcategory.numberOfFreeGroups &&
+        { notSubscribed && (subcategory?.numberOfFreeGroups || 0) > 0 &&
           <span><FontAwesomeIcon icon={faStar} /></span>
         }
       </h2>
