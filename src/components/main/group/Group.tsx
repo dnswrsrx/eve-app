@@ -80,12 +80,13 @@ const Group = ({ match }: GroupProps): JSX.Element => {
             Back to {subcategory.name}
           </Link>
         </div>
-        <p>Select a word to learn more about it, or select an exercise to test your vocabulary!</p>
-        { isSubscribed ||
-          <p>
-            Consider subscribing to get access to the other groups and subcategories of {category}.
-          </p>
-        }
+        <p>
+          Select a word to learn more about it, or select an exercise to test your vocabulary!
+          { isSubscribed ||
+            ` Consider subscribing for full access to ${category}.`
+          }
+        </p>
+        
         {
           wordList.length
             ? <WordList wordInfo={group.words} wordList={wordList} />
