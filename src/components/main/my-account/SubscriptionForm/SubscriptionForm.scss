@@ -10,6 +10,14 @@
     @include grid-list(1fr 1fr);
   }
 
+  &__spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: auto 0.5rem auto 1rem;
+    @include spinner(5px, $primary-color, 1s);
+  }
+
   &__subscribe {
     @include primary-button;
   }

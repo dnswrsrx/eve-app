@@ -60,6 +60,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
                     )
                   : loading ? 'Loading cart...' : `Subscribe for $${amount} CAD/year`
                 }
+                { loading && <span className="subscribe__spinner"></span> }
               </button>
             : <p className="subscribe__text bold">${amount} CAD/year</p>
           )

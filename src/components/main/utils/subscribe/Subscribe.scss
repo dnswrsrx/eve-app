@@ -37,4 +37,12 @@
     @include primary-button;
     margin-top: 0.5rem;
   }
+
+  &__spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: auto 0.5rem auto 1rem;
+    @include spinner(5px, $primary-color, 1s);
+  }
 }

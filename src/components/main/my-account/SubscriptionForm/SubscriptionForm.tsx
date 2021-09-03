@@ -48,6 +48,7 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
           ? 'Loading portal...'
           : 'Manage your subscription and billing details'
         }
+        { loadingPortal && <span className="subscription__spinner"></span>}
       </button>
 
       { subscription
