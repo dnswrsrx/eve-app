@@ -81,8 +81,8 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
           ? <p>Select a group!</p>
           : <>
               <p>
-                Only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available as you are not subscribed to {topLevelName}.
-                The groups contain words and definitions along with exercises.
+                As you are not subscribed to {topLevelName}, only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available.
+                Each group contains words, their definitions, and exercises.
               </p>
             </>
         }
