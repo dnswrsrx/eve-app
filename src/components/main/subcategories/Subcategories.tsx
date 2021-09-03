@@ -76,8 +76,8 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
         { isSubscribed ? <p>Select a subcategory!.</p>
           : <>
               <p>
-                Only subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups as you are not subscribed to {topLevelCategory.name}.
-                Click on a subcategory to explore the groups, each containing words and their definitions along with exercises.
+                As you are not subscribed to {topLevelCategory.name}, only the subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups.
+                Explore the subcategories: each contains groups of words, their definitions, and exercises.
               </p>
             </>
         }
