@@ -33,6 +33,10 @@
 
   &__free-button {
     @include primary-inverse-button;
+
+    > span {
+      margin-left: 0.25rem;
+    }
   }
 
   &__edit-button {
