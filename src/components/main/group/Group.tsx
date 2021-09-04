@@ -67,6 +67,9 @@ const Group = ({ match }: GroupProps): JSX.Element => {
     )
   }
 
+  // Redirect back to groups if viewing a non-free group as an unsubscribed user
+  if (isSubscribed === false && !group.free) window.location.assign(`/groups/${subcategoryId}`);
+
   const wordList = Object.keys(group.words).sort();
 
   return (

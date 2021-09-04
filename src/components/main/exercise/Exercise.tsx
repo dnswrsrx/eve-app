@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
+import firebase from '../../../config/firebaseConfig';
+import useSubscription from '../../../utils/userSubscription';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 
@@ -17,6 +19,10 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
   const exerciseId = match.params.exerciseId;
 
   useFirestoreConnect([
+    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: subcategoryId },
+    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: groupId,
+      subcollections: [{ collection: CollectionNames.Groups, doc: groupId }]
+    },
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
       subcollections: [{ collection: CollectionNames.Groups, doc: groupId,
         subcollections: [{ collection: CollectionNames.Exercises, doc: exerciseId }]
@@ -24,9 +30,26 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
     }
   ]);
 
+  const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
+  const group = useSelector(({ firestore: { data } }: any) => data[groupId], isEqual);
   const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId], isEqual);
 
-  if(!isLoaded(exercise)) return <Loading />;
+  const [category, setCategory] = useState(null);
+  useEffect(() => {
+    if (subcategory && subcategory.parent) {
+      firebase.firestore().collection(CollectionNames.Categories).doc(subcategory.parent)
+        .onSnapshot(observer => {
+          setCategory(observer.data()?.name)
+        })
+    }
+  }, [subcategory])
+
+  const isSubscribed = useSubscription(category);
+
+  if (!isLoaded(exercise)) return <Loading />;
+
+  // Redirect back to groups if viewing an exercise of a non-free group
+  if (isSubscribed === false && !group.free) window.location.assign(`/groups/${subcategoryId}`);
 
   return (
     <section className="group">
