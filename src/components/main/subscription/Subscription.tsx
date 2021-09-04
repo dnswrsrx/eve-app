@@ -43,9 +43,8 @@ const Subscription = (): JSX.Element => {
                 <strong> Note:</strong> if you switch to a tier with a lower rate, the prorated difference will be stored on your Stripe customer account. This difference will then be applied on your next payment.
               </li>
               <li>
-                You may cancel your subscription on the customer portal or by contacting us.
-                Canceling on the customer portal informs Stripe not to renew your subscription when the next payment is due.
-                Contacting us will allow us to cancel your subscription immediately and issue a prorated refund.
+                You may cancel your subscription on the customer portal.
+                This will inform Stripe to not renew your subscription when the next payment is due.
               </li>
               <li>
                 Your billing history is available for you to view on the customer portal.
