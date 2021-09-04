@@ -77,7 +77,9 @@ const Header = (): JSX.Element => {
           </button>
           <ul className="header__nav-list">
             <li>
-              <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>Subscription</Link>
+              <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>
+                { auth.uid ? 'Subscription' : 'Register and Subscribe' }
+              </Link>
             </li>
             <li>
               <Link to="/word-categories" className={checkCurrentPath(wordCategoryPaths)}>Word Categories</Link>
