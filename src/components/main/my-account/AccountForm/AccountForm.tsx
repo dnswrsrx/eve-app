@@ -64,24 +64,24 @@ const AccountForm = ({ auth }: AccountFormProps): JSX.Element => {
   return (
     <div className="account-form">
       <h2 className="account-form__heading">Account Details</h2>
-      <div className="account-form__containers">
+      <form className="account-form__containers" onSubmit={handleSubmit(onSubmit)}>
 
         <div className="account-form__container">
           <div className="account-form__row">
-            <h3 className="account-form__row-heading">Member Since:</h3>
-            <p>{createdDate.toDateString()}</p>
+            <h3 className="account-form__row-heading">Email:</h3>
+            <p>{auth.email}</p>
           </div>
           <div className="account-form__row">
             <h3 className="account-form__row-heading">Email Verified:</h3>
             <p>{auth.emailVerified ? 'Verified' : 'Not Verified'}</p>
           </div>
           <div className="account-form__row">
-            <h3 className="account-form__row-heading">Email:</h3>
-            <p>{auth.email}</p>
+            <h3 className="account-form__row-heading">Member Since:</h3>
+            <p>{createdDate.toDateString()}</p>
           </div>
         </div>
 
-        <form className="account-form__container" onSubmit={handleSubmit(onSubmit)}>
+        <div className="account-form__container" onSubmit={handleSubmit(onSubmit)}>
           <div className="account-form__row">
           <label className="account-form__form-label" htmlFor="displayName">Current Password:</label>
             <input
@@ -121,10 +121,9 @@ const AccountForm = ({ auth }: AccountFormProps): JSX.Element => {
               { authError && <p className="account-form__error error">{ authError }</p> }
               { authSuccess && <p className="account-form__success success">{ authSuccess }</p> }
               { submitting && <span className="account-form__spinner" aria-hidden="true"></span> }
-              <button className="account-form__submit" type="submit" disabled={submitting || !password || !newPassword || !confirmation }>Update Password</button>
-        </form>
-
-      </div>
+        </div>
+        <button className="account-form__submit" type="submit" disabled={submitting || !password || !newPassword || !confirmation }>Update Password</button>
+      </form>
     </div>
   )
 }
