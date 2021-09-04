@@ -20,6 +20,10 @@ const Subscription = (): JSX.Element => {
         <h1 className="subscription-page__heading">Subscription</h1>
         <p>We currently offer the following subscription tiers.</p>
         <Subscribe />
+        { !auth.emailVerified &&
+          <h3>Your email has not been verified yet. Please check your email for the verification link. Once you're verified, you may subscribe!</h3>
+        }
+
         <hr />
 
         <div className={"how" + (!auth.uid && " register")}>

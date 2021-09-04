@@ -56,7 +56,6 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
         : <p>You currently do not have a subscription.</p>
       }
 
-      {/* replace with auth.emailVerified when ready */}
       { !auth.emailVerified &&
         <p>Your email has not been verified yet. Please check your email for the verification link. Once you're verified, you may subscribe!</p>
       }
