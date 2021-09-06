@@ -51,7 +51,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
             ? <button
                 className="subscribe__subscribe"
                 onClick={() => manageSubscription(priceID)}
-                disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed}
+                disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed || !['Yj929Tkf8jaUf1rgam2zBvaNvii1'].includes(auth.uid)}
               >
                 { subscription
                   ? ( isSubscribed
