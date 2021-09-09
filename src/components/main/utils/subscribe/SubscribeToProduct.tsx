@@ -47,7 +47,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
       <h3>{product.name}</h3>
       { window.location.pathname.includes('/subscription') && product.description && <p>{product.description}</p> }
       { priceID && price &&
-          ( auth.uid
+          ( auth.uid && auth.email
             ? <button
                 className="subscribe__subscribe"
                 onClick={() => manageSubscription(priceID)}
