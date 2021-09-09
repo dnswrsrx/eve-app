@@ -35,7 +35,7 @@ const Subscription = (): JSX.Element => {
                 You may subscribe once you sign up and verify the email address provided.
               </li>
               <li>
-                Stripe will securely store the information that you provide for the subscription: your email, billing address, and credit card details. You may update these details on the customer portal.
+                Stripe will securely store your credit card details that you provide for the subscription. You may update these details on the customer portal.
               </li>
               <li>
                 Every year while you are subscribed, Stripe will charge the credit card on your account.
