@@ -19,7 +19,6 @@ const useSubscription = (wordCategory: string|null = null): string|boolean|null 
         .onSnapshot(observer => setSubscription(observer?.data()?.main || ''))
     }
   }, [user])
-  console.log(subscription);
 
   if (!user || !user.uid) return false;
 
