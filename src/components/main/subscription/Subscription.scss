@@ -9,6 +9,10 @@
     font-size: $large-font;
   }
 
+  &__unverified {
+    color: $primary-highlight-color;
+  }
+
   .how.register {
     @include grid-list(1.75fr 1fr);
     @include breakpoint($md) {

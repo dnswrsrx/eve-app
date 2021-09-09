@@ -37,6 +37,10 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
     <div className="subscription">
       <h2 className="subscription__heading">Subscription</h2>
 
+      { auth.uid && !auth.emailVerified &&
+        <h3 className="subscription__unverified">You are now signed up! Please go to your email and click on the verification link.</h3>
+      }
+
       {portalError && <p className="error">Failed to load customer portal. Please refresh the page and try again.</p>}
 
       <button
@@ -54,10 +58,6 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
       { subscription
         ? <p>You are currently subscribed to { subscription }.</p>
         : <p>You currently do not have a subscription.</p>
-      }
-
-      { !auth.emailVerified &&
-        <p>Your email has not been verified yet. Please check your email for the verification link. Once you're verified, you may subscribe!</p>
       }
 
       <Subscribe />

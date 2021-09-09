@@ -6,6 +6,10 @@
   @include grid-list(1fr);
   padding: 2rem;
 
+  &__unverified {
+    color: $primary-highlight-color;
+  }
+
   &__product-container {
     @include grid-list(1fr 1fr);
   }
