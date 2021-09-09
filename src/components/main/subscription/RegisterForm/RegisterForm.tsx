@@ -22,7 +22,7 @@ const RegisterForm = (): JSX.Element => {
 
   return (
     <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="register-form__heading">Register</h2>
+      <h2 className="register-form__heading">Sign Up</h2>
       <div className="register-form__row">
         <label htmlFor="email">Email:</label>
         <input
@@ -59,7 +59,7 @@ const RegisterForm = (): JSX.Element => {
       { authError && <p className="register-form__error error">{ authError }</p> }
       <div className="register-form__row">
         { submitting && <span className="register-form__spinner" aria-hidden="true"></span> }
-        <button className="register-form__submit" type="submit" disabled={submitting}>Register</button>
+        <button className="register-form__submit" type="submit" disabled={submitting}>Sign Up</button>
       </div>
       <div className="register-form__login">
         <Link to="/login">Already have an account? Log in here.</Link>

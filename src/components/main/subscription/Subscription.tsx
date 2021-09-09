@@ -32,7 +32,7 @@ const Subscription = (): JSX.Element => {
             <ul>
               <li>
                 We use Stripe Billing to manage subscriptions and process payments.
-                You may subscribe once you register and verify the email address provided.
+                You may subscribe once you sign up and verify the email address provided.
               </li>
               <li>
                 Stripe will securely store the information that you provide for the subscription: your email, billing address, and credit card details. You may update these details on the customer portal.

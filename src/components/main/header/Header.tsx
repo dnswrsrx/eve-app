@@ -78,7 +78,7 @@ const Header = (): JSX.Element => {
           <ul className="header__nav-list">
             <li>
               <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>
-                { auth.uid ? 'Subscription' : 'Register and Subscribe' }
+                { auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
               </Link>
             </li>
             <li>
