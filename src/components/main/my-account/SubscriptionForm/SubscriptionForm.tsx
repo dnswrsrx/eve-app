@@ -16,22 +16,23 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
   const [portalError, setPortalError] = useState(false);
   const [loadingPortal, setLoadingPortal] = useState(false);
+  const subscription = useSubscription();
 
   const customerPortal = () => {
-    const getPortalLink = firebase.app().functions('us-central1').httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
+    if (subscription) {
+      const getPortalLink = firebase.app().functions('us-central1').httpsCallable('ext-firestore-stripe-subscriptions-createPortalLink');
 
-    setLoadingPortal(true);
+      setLoadingPortal(true);
 
-    getPortalLink({ returnUrl: window.location.origin }).then(({data}) => {
-      window.location.assign(data.url);
-    }).catch(e => {
-      console.log(e);
-      setPortalError(true);
-      setLoadingPortal(false);
-    })
+      getPortalLink({ returnUrl: window.location.origin }).then(({data}) => {
+        window.location.assign(data.url);
+      }).catch(e => {
+        console.log(e);
+        setPortalError(true);
+        setLoadingPortal(false);
+      })
+    }
   }
-
-  const subscription = useSubscription();
 
   return (
     <div className="subscription">
@@ -43,17 +44,19 @@ const SubscriptionForm = ({ auth }: SubscriptionFormProps): JSX.Element => {
 
       {portalError && <p className="error">Failed to load customer portal. Please refresh the page and try again.</p>}
 
-      <button
-        className="subscription__subscribe"
-        onClick={customerPortal}
-        disabled={loadingPortal}
-      >
-        { loadingPortal
-          ? 'Loading portal...'
-          : 'Manage your subscription and billing details'
-        }
-        { loadingPortal && <span className="subscription__spinner"></span>}
-      </button>
+      { subscription &&
+        <button
+          className="subscription__subscribe"
+          onClick={customerPortal}
+          disabled={loadingPortal}
+        >
+          { loadingPortal
+            ? 'Loading portal...'
+            : 'Manage your subscription and billing details'
+          }
+          { loadingPortal && <span className="subscription__spinner"></span>}
+        </button>
+      }
 
       { subscription
         ? <p>You are currently subscribed to { subscription }.</p>
