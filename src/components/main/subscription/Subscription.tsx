@@ -5,12 +5,15 @@ import { RootState } from '../../../store/reducers/rootReducer';
 import Loading from '../../general/loading/Loading';
 import RegisterForm from './RegisterForm/RegisterForm';
 
+import useSubscription from '../../../utils/userSubscription';
+
 import Subscribe from '../utils/subscribe/Subscribe';
 import './Subscription.scss'
 
 const Subscription = (): JSX.Element => {
 
   const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
+  const subscription  = useSubscription();
 
   if (!auth.isLoaded) return <Loading />;
 
@@ -21,6 +24,8 @@ const Subscription = (): JSX.Element => {
         { auth.uid && !auth.emailVerified &&
           <h3 className="subscription-page__unverified">You are now signed up! Please go to your email and click on the verification link.</h3>
         }
+        { auth.uid && subscription && <h3 className="success">You are currently subscribed to {subscription}.</h3> }
+
         <p>We currently offer the following subscription tiers.</p>
         <Subscribe />
 
