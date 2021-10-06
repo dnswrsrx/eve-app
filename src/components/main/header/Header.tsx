@@ -4,7 +4,7 @@ import { RootState } from '../../../store/reducers/rootReducer';
 import { isEqual } from 'lodash';
 import { Link, useHistory  } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faDoorOpen, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import firebase from '../../../config/firebaseConfig';
 import './Header.scss';
 import Loading from '../../general/loading/Loading';
@@ -90,15 +90,7 @@ const Header = (): JSX.Element => {
             <li>
               <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
             </li>
-            {
-              auth.uid
-                ? <li>
-                    <button className="admin-header__logout-button" onClick={logOut} title="Log Out">
-                      <FontAwesomeIcon icon={faDoorOpen} />
-                    </button>
-                  </li>
-                : <></>
-            }
+            { auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
           </ul>
         </nav>
         <button className="header__burger-button" onClick={toggleMobileMenu}>
