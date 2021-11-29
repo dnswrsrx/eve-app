@@ -80,7 +80,7 @@ exports.onSubscriptionWrite = functions.firestore.document('users/{userID}/subsc
 
         const productName = subscription.items[0].price.product.name;
 
-        if (['General Vocabulary', 'General Vocabulary and Academic Vocabulary'].includes(productName)) {
+        if (['General Vocabulary', 'General Vocabulary + Academic Vocabulary'].includes(productName)) {
           return Promise.resolve(userDoc.ref.update({ main: productName }));
         }
       }
