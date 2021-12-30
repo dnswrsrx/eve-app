@@ -23,7 +23,8 @@ const Header = (): JSX.Element => {
 
   const logOut = (): void => {
     firebase.auth().signOut();
-    history.push('/')
+    history.push('/');
+    window.location.reload();
   }
 
   const toggleMobileMenu = (): void => {
