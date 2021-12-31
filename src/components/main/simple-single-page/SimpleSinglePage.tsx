@@ -8,11 +8,14 @@ import PageNotFound from '../../general/404/PageNotFound';
 import {CollectionNames} from '../../models/models';
 import {useSelector} from 'react-redux';
 
-import './PrivacyPolicy.scss'
+import './SimpleSinglePage.scss'
 
-const PrivacyPolicy = (): JSX.Element => {
+const SimpleSinglePage = (): JSX.Element => {
+
+  const page = window.location.pathname.includes('/privacy-policy') ? 'Privacy Policy' : window.location.pathname.includes('/teacher-notes') ? 'Note to Teachers' : '';
+
   useFirestoreConnect([
-    { collection:  CollectionNames.Pages, where:['name', '==', 'Privacy Policy'], storeAs: 'page' }
+    { collection:  CollectionNames.Pages, where:['name', '==', page], storeAs: 'page' }
   ])
 
   const pageContent = useSelector(({ firestore: { ordered } }: any) => ordered['page'], isEqual);
@@ -22,12 +25,12 @@ const PrivacyPolicy = (): JSX.Element => {
   if (!pageContent || !pageContent[0]) return <PageNotFound />;
 
   return (
-    <div className="privacy-policy">
-      <div className="privacy-policy__wrapper page-wrapper">
-        <div className="privacy-policy__main-content" dangerouslySetInnerHTML={{ __html: pageContent[0].mainContent }}></div>
+    <div className="ssp">
+      <div className="ssp__wrapper page-wrapper">
+        <div className="ssp__main-content" dangerouslySetInnerHTML={{ __html: pageContent[0].mainContent }}></div>
       </div>
     </div>
   )
 }
 
-export default PrivacyPolicy;
+export default SimpleSinglePage;

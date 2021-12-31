@@ -6,7 +6,8 @@ const Footer = (): JSX.Element => {
     <footer className="main-footer">
       <div className="main-footer__wrapper page-wrapper">
         <div className="main-footer__link-container">
-          <a rel="noopener noreferrer" target="_blank" className="main-footer__link" href="/privacy-policy">Privacy Policy</a>
+          <a rel="noopener noreferrer" className="main-footer__link" href="/privacy-policy">Privacy Policy</a>
+          <a rel="noopener noreferrer" className="main-footer__link" href="/teacher-notes">Note to Teachers</a>
         </div>
         <div className="main-footer__link-container">
           <a rel="noopener noreferrer" target="_blank" className="main-footer__link" href="http://www.cpr4esl.com/">Gerry's Vocabulary Teacher</a>

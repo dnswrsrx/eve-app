@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import PrivacyPolicy from './privacy-policy/PrivacyPolicy';
+import SimpleSinglePage from './simple-single-page/SimpleSinglePage';
 import UserLogin from './login/Login';
 import ForgotPassword from './forgot-password/ForgotPassword';
 import MyAccount from './my-account/MyAccount';
@@ -24,7 +24,8 @@ const Main = (): JSX.Element => {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/privacy-policy" component={PrivacyPolicy} />
+        <Route exact path="/privacy-policy" component={SimpleSinglePage} />
+        <Route exact path="/teacher-notes" component={SimpleSinglePage} />
         <Route exact path="/login" component={UserLogin} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
         <Route exact path="/my-account" component={MyAccount} />
