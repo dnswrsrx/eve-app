@@ -8,7 +8,7 @@ import Header from './header/Header';
 import Home from './home/Home';
 import EditHome from './edit-home/EditHome';
 import SinglePage from './single-page/SinglePage';
-import PrivacyPolicy from './privacy-policy/PrivacyPolicy';
+import SimpleSinglePage from './simple-single-page/SimpleSinglePage';
 import WordCategories from './word-categories/WordCategories';
 import Subcategories from './subcategories/Subcategories';
 import Groups from './groups/Groups';
@@ -47,7 +47,8 @@ const Admin = (): JSX.Element => {
         <Route exact path="/admin-dashboard" component={Home} />
         <Route exact path="/admin-dashboard/home-languages" component={EditHome} />
         <Route exact path="/admin-dashboard/word-categories" component={WordCategories} />
-        <Route exact path="/admin-dashboard/privacy-policy" component={PrivacyPolicy} />
+        <Route exact path="/admin-dashboard/privacy-policy" component={SimpleSinglePage} />
+        <Route exact path="/admin-dashboard/teacher-notes" component={SimpleSinglePage} />
         <Route exact path="/admin-dashboard/top-level-categories/:categoryId" component={Subcategories} />
         <Route exact path="/admin-dashboard/subcategories/:subcategoryId" component={Groups} />
         <Route exact path="/admin-dashboard/group/:subcategoryId/:groupId" component={Group} />

@@ -3,17 +3,26 @@ import { useForm } from 'react-hook-form';
 import firebase from '../../../../config/firebaseConfig';
 import { CollectionNames } from '../../../models/models';
 import CustomEditor from '../../general/custom-editor/CustomEditor';
-import './PrivacyPolicyForm.scss';
+import './SSPForm.scss';
 
-interface PrivacyPolicyFormProps {
-  content: string,
-  docID: string
+interface Page {
+  mainContent: string,
+  id: string,
+  name: string,
 }
 
-const PrivacyPolicyForm = ({ content, docID }: PrivacyPolicyFormProps): JSX.Element => {
+interface SSPFormProp {
+  page: Page;
+}
+
+const SSPForm = ({ page }: SSPFormProp): JSX.Element => {
+
+  const content = page.mainContent;
+  const docID = page.id;
+  const name = page.name
 
   const text = useRef<string>(content || '');
-  const policy = firebase.firestore().collection(CollectionNames.Pages).doc(docID);
+  const currentPage = firebase.firestore().collection(CollectionNames.Pages).doc(docID);
 
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -23,8 +32,8 @@ const PrivacyPolicyForm = ({ content, docID }: PrivacyPolicyFormProps): JSX.Elem
 
   const onSubmit = (): void => {
     setSubmitting(true);
-    policy.update({mainContent: text.current}).then((): void => {
-      setSuccessMessage('Privacy Policy updated.')
+    currentPage.update({mainContent: text.current}).then((): void => {
+      setSuccessMessage(`${name} updated.`)
       setErrorMessage('');
       setSubmitting(false);
     }).catch((error: { message: string }): void => {
@@ -36,17 +45,17 @@ const PrivacyPolicyForm = ({ content, docID }: PrivacyPolicyFormProps): JSX.Elem
 
   return (
 
-    <form className="privacy-policy-form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="privacy-policy-form__row">
+    <form className="ssp-form" onSubmit={handleSubmit(onSubmit)}>
+      <div className="ssp-form__row">
         <CustomEditor contentReference={text} height={700} />
       </div>
-      { errorMessage && <p className="privacy-policy-form__error error">{ errorMessage }</p> }
-      { successMessage && <p className="privacy-policy-form__success-message success">{ successMessage }</p> }
-      <div className="privacy-policy-form__submit-row">
-        <button type="submit" className="privacy-policy-form__submit-button" disabled={submitting}>Save</button>
+      { errorMessage && <p className="ssp-form__error error">{ errorMessage }</p> }
+      { successMessage && <p className="ssp-form__success-message success">{ successMessage }</p> }
+      <div className="ssp-form__submit-row">
+        <button type="submit" className="ssp-form__submit-button" disabled={submitting}>Save</button>
       </div>
     </form>
   )
 }
 
-export default PrivacyPolicyForm;
+export default SSPForm;
