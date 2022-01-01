@@ -307,6 +307,9 @@ $small-radius: 6px;
     display: flex;
     justify-content: center;
     margin: 1rem auto !important;
+    & img {
+      width: 100%;
+    }
   }
 
   hr {
