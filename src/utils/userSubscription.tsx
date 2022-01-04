@@ -16,7 +16,10 @@ const useSubscription = (wordCategory: string|null = null): string|boolean|null 
   useEffect(() => {
     if (user) {
       firebase.firestore().collection('users').doc(user.uid)
-        .onSnapshot(observer => setSubscription(observer?.data()?.main || ''))
+        .onSnapshot(
+          observer => setSubscription(observer?.data()?.main || ''),
+          () => setSubscription(null)
+        )
     }
   }, [user])
 
