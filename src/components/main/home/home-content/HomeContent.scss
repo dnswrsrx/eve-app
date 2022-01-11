@@ -4,28 +4,12 @@
 
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
 
-  &__wrapper {
-    @include admin-wrapper;
-  }
-
   &__banner {
     background-image: linear-gradient(to top, #fff6fe, #f7f8ff, #f2fafe, #f3fafa, #f6f9f7);
     color: $primary-color;
     border-bottom: 3px solid $accent-color;
     position: relative;
     overflow: hidden;
-  }
-
-  &__background-image {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 5px;
-    @include background-image;
-
-    &:after {
-      @include image-overlay(rgba(255, 255, 255, 0.35));
-    }
   }
 
   &__banner-wrapper {
@@ -48,13 +32,6 @@
     text-align: center;
   }
 
-  &__banner-content {
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
   &__language-buttons {
     @include grid-list(repeat(6, 1fr));
   }
@@ -67,12 +44,7 @@
     }
   }
 
-  &__banner-text {
-    @include grid-list(1fr);
-    @include wysiwyg-content;
-  }
-
-  &__main-content {
+  &__banner-text, &__main-content {
     @include grid-list(1fr);
     @include wysiwyg-content;
   }
