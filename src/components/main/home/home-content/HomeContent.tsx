@@ -24,7 +24,6 @@ const HomeContent = ({ homeLanguages }: HomeContentProps): JSX.Element => {
   return (
     <div className="home-content-container">
       <div className="home-content-container__banner">
-        <div className="home-content-container__background-image" style={{ backgroundImage: 'url(/images/banner.svg)' }} />
         <div className="home-content-container__banner-wrapper page-wrapper">
           <h1 className="home-content-container__banner-heading">{ activeLanguage.bannerHeading }</h1>
           <div className="home-content-container__banner-text" dangerouslySetInnerHTML={{ __html: activeLanguage.bannerText }}></div>
@@ -33,7 +32,7 @@ const HomeContent = ({ homeLanguages }: HomeContentProps): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className="home-content-container__wrapper page-wrapper">
+      <div className="home-content-container__banner-wrapper page-wrapper">
         <div className="home-content-container__main-content" dangerouslySetInnerHTML={{ __html: activeLanguage.mainContent }}></div>
       </div>
     </div>
