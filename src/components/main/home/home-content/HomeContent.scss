@@ -1,9 +1,11 @@
 @import '../../../../style/theme.scss';
 
 .home-content-container {
+
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
   &__wrapper {
     @include admin-wrapper;
-    padding-top: 3.5rem;
   }
 
   &__banner {
@@ -12,9 +14,6 @@
     border-bottom: 3px solid $accent-color;
     position: relative;
     overflow: hidden;
-    min-height: calc(100vh - #{$header-height});
-    padding-bottom: 150px;
-    display: flex;
   }
 
   &__background-image {
