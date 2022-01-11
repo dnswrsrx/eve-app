@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { HomeLanguage } from '../../../models/models';
+import Ads from '../../ads/Ads';
 import './HomeContent.scss';
 
 interface HomeContentProps {
@@ -32,9 +33,11 @@ const HomeContent = ({ homeLanguages }: HomeContentProps): JSX.Element => {
           </div>
         </div>
       </div>
+      <Ads slot="8767665789" />
       <div className="home-content-container__banner-wrapper page-wrapper">
         <div className="home-content-container__main-content" dangerouslySetInnerHTML={{ __html: activeLanguage.mainContent }}></div>
       </div>
+      <Ads slot="1252137845" />
     </div>
   )
 }
