@@ -18,6 +18,16 @@ interface SubcategoriesProps {
   match: MatchProps,
 }
 
+// For sorting the Academic Vocabulary sublists
+const sortBySublist = (group: Category, nextGroup: Category): Number => {
+
+  // Make "More Academic Vocabulary" the last one
+  if (group.name.includes('More')) return 1;
+  if (nextGroup.name.includes('More')) return 0;
+
+  return Number(group.name.match(/\d+/)) > Number(nextGroup.name.match(/\d+/)) ? 1 : -1;
+}
+
 const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   const categoryId = match.params.categoryId;
 
@@ -35,7 +45,8 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   if(!isLoaded(topLevelCategory) || !isLoaded(subcategories) || !auth.isLoaded) return <Loading />;
 
   const renderSubcategories = () => {
-    return subcategories
+    const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? subcategories.sort(sortBySublist) : subcategories;
+    return sortedSubcategories
       // render subcategory with [test] in name if admin
       .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
       .map((subcategory: Category): JSX.Element => (
