@@ -1,12 +1,17 @@
 @import '../../../../style/theme.scss';
 
 .group-list {
-  @include center-container(700px);
   padding: 1rem;
   display: grid;
   row-gap: 1rem;
 
   &__list {
-    @include grid-list(100%);
+    @include grid-list(1fr 1fr);
+  }
+
+  @include breakpoint($md) {
+    &__list { 
+    @include grid-list(1fr);
+    }
   }
 }

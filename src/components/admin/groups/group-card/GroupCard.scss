@@ -26,21 +26,23 @@
   &__button-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(auto, 155px));
-    justify-content: flex-end;
-    column-gap: 1rem;
+    justify-content: center;
+    column-gap: 0.35rem;
     row-gap: 0.5rem;
   }
 
   &__free-button {
     @include primary-inverse-button;
+    display: table-cell;
 
-    > span {
-      margin-left: 0.25rem;
+    > svg {
+      margin-right: 0.25rem;
     }
   }
 
   &__edit-button {
     @include primary-button;
+    font-weight: normal;
   }
 
   .delete-button {

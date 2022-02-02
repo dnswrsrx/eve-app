@@ -66,7 +66,10 @@ const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCar
                 : <p>No words have been added to this group yet.</p>
             }
             <div className="group-card__button-container">
-              <button className="group-card__free-button" onClick={toggleFree}><FontAwesomeIcon icon={free ? faCheck : faTimes} /><span>Free</span></button>
+              <button className="group-card__free-button" onClick={toggleFree}>
+                <FontAwesomeIcon icon={free ? faCheck : faTimes} />
+                Free
+              </button>
               <Link to={`/admin-dashboard/group/${subcategoryId}/${group.id}`} className="group-card__edit-button">
                 View/Edit Group
               </Link>
