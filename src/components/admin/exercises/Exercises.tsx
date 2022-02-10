@@ -2,16 +2,16 @@ import React from 'react';
 import { Exercise } from '../../models/models';
 import ExerciseAdd from './exercise-add/ExerciseAdd';
 import ExerciseCard from './exercise-card/ExerciseCard';
-import './ExerciseList.scss';
+import './Exercises.scss';
 
-interface ExerciseListProps {
+interface ExercisesProps {
   exercises: Exercise[],
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
   subcategoryId: string,
   groupId: string,
 }
 
-const ExerciseList = ({ exercises, setSuccessMessage, subcategoryId, groupId}: ExerciseListProps): JSX.Element => {
+const Exercises = ({ exercises, setSuccessMessage, subcategoryId, groupId}: ExercisesProps): JSX.Element => {
   const renderExercises = (): JSX.Element[] => {
     return exercises.map((exercise: Exercise, index: number) => (
       <li key={exercise.id}>
@@ -27,10 +27,10 @@ const ExerciseList = ({ exercises, setSuccessMessage, subcategoryId, groupId}: E
   }
   
   return (
-    <div className="exercise-list">
-      <h2 className="exercise-list__heading">Exercises</h2>
+    <div className="exercises">
+      <h2>Exercises</h2>
       <ExerciseAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={groupId} />
-      <ul className="exercise-list__list">
+      <ul className="exercises__list">
         {
           exercises.length
             ? renderExercises()
@@ -41,4 +41,4 @@ const ExerciseList = ({ exercises, setSuccessMessage, subcategoryId, groupId}: E
   )
 }
 
-export default ExerciseList;
+export default Exercises;

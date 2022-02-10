@@ -6,7 +6,7 @@ import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { MatchProps, CollectionNames } from '../../models/models';
 import Loading from '../../general/loading/Loading';
 import WordList from './list-container/WordList';
-import ExerciseList from '../exercise-list/ExerciseList';
+import Exercises from '../exercises/Exercises';
 import './Group.scss';
 
 interface GroupProps {
@@ -70,7 +70,7 @@ const Group = ({ match }: GroupProps): JSX.Element => {
           subcategoryId={subcategoryId}
           groupId={groupId}
         />
-        <ExerciseList
+        <Exercises
           exercises={exercises}
           setSuccessMessage={setSuccessMessage}
           subcategoryId={subcategoryId}
