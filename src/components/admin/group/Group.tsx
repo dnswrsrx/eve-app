@@ -6,7 +6,7 @@ import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { MatchProps, CollectionNames } from '../../models/models';
 import Loading from '../../general/loading/Loading';
 import WordList from './list-container/WordList';
-import ExerciseList from './exercise-list/ExerciseList';
+import ExerciseList from '../exercise-list/ExerciseList';
 import './Group.scss';
 
 interface GroupProps {

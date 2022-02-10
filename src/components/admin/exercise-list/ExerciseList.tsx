@@ -1,7 +1,7 @@
 import React from 'react';
-import { Exercise } from '../../../models/models';
-import ExerciseAdd from '../exercise-add/ExerciseAdd';
-import ExerciseCard from '../exercise-card/ExerciseCard';
+import { Exercise } from '../../models/models';
+import ExerciseAdd from './exercise-add/ExerciseAdd';
+import ExerciseCard from './exercise-card/ExerciseCard';
 import './ExerciseList.scss';
 
 interface ExerciseListProps {
