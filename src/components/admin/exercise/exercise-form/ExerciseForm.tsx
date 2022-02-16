@@ -161,11 +161,8 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
         </div>
         {
           Object.keys(questionList).length
-          ? <ExerciseEdit
-          questionList={questionList}
-          setQuestionList={setQuestionList}
-          />
-          : <p>This exercise is currently empty.</p>
+          ? <ExerciseEdit questionList={questionList} setQuestionList={setQuestionList}/>
+          : <p>This {groupId ? 'exercise' : 'test'} is currently empty.</p>
         }
 
       </div>
