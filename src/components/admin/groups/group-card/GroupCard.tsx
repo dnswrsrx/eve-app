@@ -71,7 +71,7 @@ const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCar
                 Free
               </button>
               <Link to={`/admin-dashboard/group/${subcategoryId}/${group.id}`} className="group-card__edit-button">
-                View/Edit Group
+                Edit
               </Link>
               <DeleteButton disabled={deleting} deleteFunction={deleteGroup} text="Delete" />
             </div>

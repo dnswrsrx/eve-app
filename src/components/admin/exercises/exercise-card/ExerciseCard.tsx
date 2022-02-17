@@ -43,7 +43,7 @@ const ExerciseCard = ({ number, exercise, subcategoryId, groupId, setSuccessMess
         }
         className="exercise-card__edit-button"
       >
-        View/Edit
+        Edit
       </Link>
       <DeleteButton disabled={deleting} deleteFunction={deleteGroup} text="Delete" />
     </div>
