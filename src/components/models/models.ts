@@ -16,6 +16,7 @@ export enum CollectionNames {
   Categories = 'top-level-categories',
   Subcategories = 'subcategories',
   Groups = 'groups',
+  Tests = 'tests',
   Exercises = 'exercises',
   HomeLanguages = 'home-languages',
   StudyGuides = 'weekly-study-guides',

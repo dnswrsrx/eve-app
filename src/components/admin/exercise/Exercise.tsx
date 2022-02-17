@@ -17,29 +17,33 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
   const groupId = match.params.groupId;
   const exerciseId = match.params.exerciseId;
 
-  useFirestoreConnect([
-    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: groupId,
-      subcollections: [{ collection: CollectionNames.Groups, doc: groupId }]
-    },
-    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
-      subcollections: [{ collection: CollectionNames.Groups, doc: groupId,
-        subcollections: [{ collection: CollectionNames.Exercises, doc: exerciseId }]
-      }]
-    }
-  ]);
+  useFirestoreConnect(
+    groupId
+    ? [
+      { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
+        subcollections: [{ collection: CollectionNames.Groups, doc: groupId,
+          subcollections: [{ collection: CollectionNames.Exercises, doc: exerciseId }]
+        }]
+      }
+    ]
+    : [
+      { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
+        subcollections: [{ collection: CollectionNames.Tests, doc: exerciseId }]
+      }
+    ]
+  );
 
-  const group = useSelector(({ firestore: { data } }: any) => data[groupId], isEqual);
   const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId], isEqual);
   
-  if(!isLoaded(group) || !isLoaded(exercise)) return <Loading />;
+  if(!isLoaded(exercise)) return <Loading />;
 
-  if(!group || !exercise) {
+  if(!exercise) {
     return (
       <section className="exercise-admin">
         <div className="exercise-admin__wrapper page-wrapper">
           <div className="exercise-admin__header">
             <h1 className="exercise-admin__heading">
-              Group Not Found
+              {groupId ? 'Exercise' : 'Test'} Not Found
             </h1>
             <Link to="/admin-dashboard/word-categories">Back to Top Level Categories</Link>
           </div>
@@ -53,14 +57,20 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
       <div className="exercise-admin__wrapper page-wrapper">
         <div className="exercise-admin__header">
           <h1 className="exercise-admin__heading">
-            Editing Exercise
+            Editing {groupId ? 'Exercise' : 'Test'}
           </h1>
-          <Link to={`/admin-dashboard/group/${subcategoryId}/${groupId}`}>
-            Back to Group
+          <Link
+            to={
+              groupId
+              ? `/admin-dashboard/group/${subcategoryId}/${groupId}`
+              : `/admin-dashboard/subcategories/${subcategoryId}`
+            }
+          >
+            Back to {groupId ? 'Group' : 'Subcategory'}
           </Link>
         </div>
         <p className="exercise-admin__description">
-          This is the interface for editing an exercise inside of a group.
+          This is the interface for editing {groupId ? 'an exercise' : 'a test'}.
           Please upload an HTM export from Gerry's Vocabulary Teacher to proceed.
         </p>
         <ExerciseForm

@@ -9,14 +9,17 @@ interface GroupCardProps {
   number: number,
   exercise: Exercise,
   subcategoryId: string,
-  groupId: string,
+  groupId: string|null,
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
 }
 
 const ExerciseCard = ({ number, exercise, subcategoryId, groupId, setSuccessMessage }: GroupCardProps): JSX.Element => {
   const [deleting, setDeleting] = useState<boolean>(false);
-  const exercisesCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId)
-    .collection(CollectionNames.Groups).doc(groupId).collection(CollectionNames.Exercises);
+
+  const subcategory = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId);
+  const exercisesCollection = groupId
+    ? subcategory.collection(CollectionNames.Groups).doc(groupId).collection(CollectionNames.Exercises)
+    : subcategory.collection(CollectionNames.Tests);
 
   const deleteGroup = (): void => {
     setDeleting(true);
@@ -29,8 +32,17 @@ const ExerciseCard = ({ number, exercise, subcategoryId, groupId, setSuccessMess
 
   return (
     <div className="exercise-card">
-      <h3 className="exercise-card__heading">Exercise { number }</h3>
-      <Link to={`/admin-dashboard/exercise/${subcategoryId}/${groupId}/${exercise.id}`} className="exercise-card__edit-button">
+      <h3 className="exercise-card__heading">
+        {`${groupId ? 'Exercise' : 'Test'} ${number}`}
+      </h3>
+      <Link
+        to={
+          groupId
+          ? `/admin-dashboard/exercise/${subcategoryId}/${groupId}/${exercise.id}`
+          : `/admin-dashboard/test/${subcategoryId}/${exercise.id}`
+        }
+        className="exercise-card__edit-button"
+      >
         View/Edit
       </Link>
       <DeleteButton disabled={deleting} deleteFunction={deleteGroup} text="Delete" />

@@ -8,7 +8,7 @@ interface ExercisesProps {
   exercises: Exercise[],
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
   subcategoryId: string,
-  groupId: string,
+  groupId: string|null,
 }
 
 const Exercises = ({ exercises, setSuccessMessage, subcategoryId, groupId}: ExercisesProps): JSX.Element => {
@@ -28,13 +28,13 @@ const Exercises = ({ exercises, setSuccessMessage, subcategoryId, groupId}: Exer
   
   return (
     <div className="exercises">
-      <h2>Exercises</h2>
+      <h2>{groupId ? 'Exercises' : 'Tests'}</h2>
       <ExerciseAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={groupId} />
       <ul className="exercises__list">
         {
           exercises.length
             ? renderExercises()
-            : <p>No exercises have been added to this group yet.</p>
+            : <p>No {groupId ? 'exercises' : 'tests'} have been added to this {groupId ? 'group' : 'subcategory'} yet.</p>
         }
       </ul>
     </div>

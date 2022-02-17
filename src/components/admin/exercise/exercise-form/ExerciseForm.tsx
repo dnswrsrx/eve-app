@@ -8,7 +8,7 @@ import ExerciseEdit from './ExerciseEdit'
 interface ExerciseFormProps {
   exercise: Exercise,
   subcategoryId: string,
-  groupId: string,
+  groupId: string|null,
   exerciseId: string
 }
 
@@ -46,8 +46,11 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
-  const exerciseCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId)
-    .collection(CollectionNames.Groups).doc(groupId).collection(CollectionNames.Exercises).doc(exerciseId);
+
+  const subcategory = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId);
+  const exerciseCollection = groupId
+    ? subcategory.collection(CollectionNames.Groups).doc(groupId).collection(CollectionNames.Exercises).doc(exerciseId)
+    : subcategory.collection(CollectionNames.Tests).doc(exerciseId);
 
   const saveExercise = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -57,13 +60,13 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
     setSubmitting(true);
 
     if(!Object.keys(questionList).length) {
-      setSubmitError('Save Failed. The exercise is empty.');
+      setSubmitError(`Save Failed. The ${groupId ? 'exercise' : 'test'} is empty.`);
       setSubmitting(false);
       return;
     }
 
     exerciseCollection.update({ questions: questionList }).then((): void => {
-      setSuccessMessage('Exercise has been saved.');
+      setSuccessMessage(`${groupId ? 'Exercise' : 'Test'} has been saved.`);
       setCurrentUpload('No file uploaded yet');
     }).catch((error: { message: string }): void => {
       setSuccessMessage('');
@@ -147,7 +150,7 @@ const ExerciseForm = ({ exercise, subcategoryId, groupId, exerciseId }: Exercise
               disabled={submitting}
               onClick={saveExercise}
             >
-              Save Exercise
+              Save {groupId ? 'Exercise' : 'Test'}
             </button>
           </div>
         </div>

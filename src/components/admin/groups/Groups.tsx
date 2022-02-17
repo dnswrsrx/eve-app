@@ -7,6 +7,7 @@ import { CollectionNames, MatchProps } from '../../models/models';
 import Loading from '../../general/loading/Loading';
 import GroupAdd from './group-add/GroupAdd';
 import GroupList from './group-list/GroupList';
+import Exercises from '../exercises/Exercises';
 import './Groups.scss';
 
 interface GroupProps {
@@ -24,13 +25,20 @@ const Groups = ({ match }: GroupProps): JSX.Element => {
         collection: CollectionNames.Groups,
         orderBy: ['createdAt', 'asc']
       }]
+    },
+    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `tests-${subcategoryId}`,
+      subcollections: [{
+        collection: CollectionNames.Tests,
+        orderBy: ['createdAt', 'asc']
+      }]
     }
   ]);
 
   const parentCategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
   const groups = useSelector(({ firestore: { ordered } }: any) => ordered[`groups-${subcategoryId}`], isEqual);
+  const tests = useSelector(({ firestore: { ordered } }: any) => ordered[`tests-${subcategoryId}`], isEqual);
 
-  if(!isLoaded(parentCategory) || !isLoaded(groups)) return <Loading />;
+  if(!isLoaded(parentCategory) || !isLoaded(groups) || !isLoaded(tests)) return <Loading />;
 
   if(!parentCategory) {
     return (
@@ -62,6 +70,7 @@ const Groups = ({ match }: GroupProps): JSX.Element => {
         <GroupAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} />
         { successMessage && <p className="groups-admin__success-message success">{ successMessage }</p> }
         <GroupList groups={groups} subcategoryId={subcategoryId} setSuccessMessage={setSuccessMessage} />
+        { parentCategory.name.includes('Academic') && <Exercises exercises={tests} setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={''} /> } 
       </div>
     </section>
   )

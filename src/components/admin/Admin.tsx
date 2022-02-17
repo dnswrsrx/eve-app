@@ -53,6 +53,7 @@ const Admin = (): JSX.Element => {
         <Route exact path="/admin-dashboard/subcategories/:subcategoryId" component={Groups} />
         <Route exact path="/admin-dashboard/group/:subcategoryId/:groupId" component={Group} />
         <Route exact path="/admin-dashboard/exercise/:subcategoryId/:groupId/:exerciseId" component={Exercise} />
+        <Route exact path="/admin-dashboard/test/:subcategoryId/:exerciseId" component={Exercise} />
         {/* <Route exact path="/admin-dashboard/weekly-study-guides" component={WeeklyStudyGuides} />
         <Route exact path="/admin-dashboard/add-study-guide" component={AddGuide} />
         <Route exact path="/admin-dashboard/edit-study-guide/:guideId" component={EditGuide} /> */}
