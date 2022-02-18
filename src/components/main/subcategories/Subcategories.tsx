@@ -19,7 +19,7 @@ interface SubcategoriesProps {
 }
 
 // For sorting the Academic Vocabulary sublists
-const sortBySublist = (group: Category, nextGroup: Category): Number => {
+const sortBySublist = (group: Category, nextGroup: Category): number => {
 
   // Make "More Academic Vocabulary" the last one
   if (group.name.includes('More')) return 1;
