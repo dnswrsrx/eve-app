@@ -45,7 +45,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   if(!isLoaded(topLevelCategory) || !isLoaded(subcategories) || !auth.isLoaded) return <Loading />;
 
   const renderSubcategories = () => {
-    const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? subcategories.sort(sortBySublist) : subcategories;
+    const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? [...subcategories].sort(sortBySublist) : subcategories;
     return sortedSubcategories
       // render subcategory with [test] in name if admin
       .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
