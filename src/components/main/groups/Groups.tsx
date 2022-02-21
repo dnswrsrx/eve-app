@@ -86,10 +86,10 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
               </p>
             </>
         }
-          { groups.length
-            ? <ul className="groups__list">{ renderGroups() }</ul>
-            : <p>There are no groups to display.</p>
-          }
+        { groups.length
+          ? <ul className="groups__list">{ renderGroups() }</ul>
+          : <p>There are no groups to display.</p>
+        }
       </div>
     </section>
   )
