@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 import useSubscription from '../../../utils/userSubscription';
 import Loading from '../../general/loading/Loading';
 import WordList from './word-list/WordList';
-import Exercises from './exercises/Exercises';
+import Exercises from '../exercises/Exercises';
 import './Group.scss';
 
 interface GroupProps {
