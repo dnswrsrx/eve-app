@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
 import useSubscription from '../../../utils/userSubscription';
 import Loading from '../../general/loading/Loading';
 import WordList from './word-list/WordList';
-import ExerciseList from './exercise-list/ExerciseList';
+import Exercises from './exercises/Exercises';
 import './Group.scss';
 
 interface GroupProps {
@@ -100,7 +100,7 @@ const Group = ({ match }: GroupProps): JSX.Element => {
         }
         {
           exercises.length
-            ? <ExerciseList exercises={exercises} subcategoryId={subcategoryId} groupId={groupId} />
+            ? <Exercises exercises={exercises} subcategoryId={subcategoryId} groupId={groupId} />
             : <>
                 <h2>Exercises</h2>
                 <p>There are no exercises to display in this group.</p>

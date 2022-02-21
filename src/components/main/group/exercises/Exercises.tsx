@@ -2,15 +2,15 @@ import React from 'react';
 import { Exercise } from '../../../models/models';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import './ExerciseList.scss';
+import './Exercises.scss';
 
-interface ExerciseListProps {
+interface ExercisesProps {
   exercises: Exercise[],
   subcategoryId: string,
   groupId: string,
 }
 
-const ExerciseList = ({ exercises, subcategoryId, groupId }: ExerciseListProps ): JSX.Element => {
+const Exercises = ({ exercises, subcategoryId, groupId }: ExercisesProps ): JSX.Element => {
   return (
     <div className="exercise-list-main">
       <h2 className="exercise-list-main__heading">Exercise List</h2>
@@ -29,4 +29,4 @@ const ExerciseList = ({ exercises, subcategoryId, groupId }: ExerciseListProps )
   )
 }
 
-export default ExerciseList;
+export default Exercises;
