@@ -35,6 +35,7 @@ const Main = (): JSX.Element => {
         <Route exact path="/groups/:subcategoryId/" component={Groups} />
         <Route exact path="/group/:subcategoryId/:groupId" component={Group} />
         <Route exact path="/exercise/:subcategoryId/:groupId/:exerciseId" component={Exercise} />
+        <Route exact path="/test/:subcategoryId/:exerciseId" component={Exercise} />
         {/* <Route exact path="/weekly-study-guides" component={WeeklyStudyGuides} /> */}
         {/* <Route exact path="/weekly-study-guide/:guideId" component={WeeklyStudyGuide} /> */}
         <Route exact path="/page/:slug" component={Page} />

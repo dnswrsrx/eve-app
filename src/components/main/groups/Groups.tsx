@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import Loading from '../../general/loading/Loading';
 import GroupCard from './group-card/GroupCard';
+import Exercises from '../exercises/Exercises';
 import './Groups.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +27,12 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
         collection: CollectionNames.Groups,
         orderBy: ['createdAt', 'asc']
       }]
+    },
+    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `tests-${subcategoryId}`,
+      subcollections: [{
+        collection: CollectionNames.Tests,
+        orderBy: ['createdAt', 'asc']
+      }]
     }
   ]);
 
@@ -34,8 +41,10 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   const topLevels = useSelector(( {firestore: { data }}: any ) => data['topLevels']);
   const topLevelName = subcategory && topLevels && topLevels[subcategory.parent]?.name;
   const isSubscribed = useSubscription(topLevelName);
+  
+  const tests = useSelector(({ firestore: { ordered } }: any) => ordered[`tests-${subcategoryId}`], isEqual);
 
-  if ([subcategory, groups, topLevels].some(v => !isLoaded(v))) return <Loading />;
+  if ([subcategory, groups, topLevels, tests].some(v => !isLoaded(v))) return <Loading />;
 
   if(!subcategory) {
     return (
@@ -88,6 +97,15 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
         { groups.length
             ? <ul className="groups__list">{ renderGroups() }</ul>
             : <p>There are no groups to display.</p>
+        }
+        { subcategory.name.includes('Academic') && tests && (
+          isSubscribed
+            ? <Exercises exercises={tests} subcategoryId={subcategoryId} groupId={null}/>
+            : <>
+                <h1>Tests</h1>
+                <p>Subscribe to {topLevelName} to access the tests for this sublist.</p>
+              </>
+          )
         }
       </div>
     </section>

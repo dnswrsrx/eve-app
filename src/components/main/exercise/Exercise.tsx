@@ -18,17 +18,26 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
   const groupId = match.params.groupId;
   const exerciseId = match.params.exerciseId;
 
-  useFirestoreConnect([
-    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: subcategoryId },
-    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: groupId,
-      subcollections: [{ collection: CollectionNames.Groups, doc: groupId }]
-    },
-    { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
-      subcollections: [{ collection: CollectionNames.Groups, doc: groupId,
-        subcollections: [{ collection: CollectionNames.Exercises, doc: exerciseId }]
-      }]
-    }
-  ]);
+  useFirestoreConnect(
+    groupId
+      ? [
+          { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: subcategoryId },
+          { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: groupId,
+            subcollections: [{ collection: CollectionNames.Groups, doc: groupId }]
+          },
+          { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
+            subcollections: [{ collection: CollectionNames.Groups, doc: groupId,
+              subcollections: [{ collection: CollectionNames.Exercises, doc: exerciseId }]
+            }]
+          }
+      ]
+      : [
+          { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: subcategoryId },
+          { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: exerciseId,
+              subcollections: [{ collection: CollectionNames.Tests, doc: exerciseId }]
+          }
+      ]
+  );
 
   const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
   const group = useSelector(({ firestore: { data } }: any) => data[groupId], isEqual);
@@ -48,18 +57,20 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
 
   if (!isLoaded(exercise)) return <Loading />;
 
-  // Redirect back to groups if viewing an exercise of a non-free group
-  if (isSubscribed === false && !group.free) window.location.assign(`/groups/${subcategoryId}`);
+  // Redirect back to groups if viewing exercise/test of a non-free group/subcategory
+  if (isSubscribed === false && (!groupId || (group && !group.free))) {
+    window.location.assign(`/groups/${subcategoryId}`);
+  }
 
   return (
     <section className="group">
       <div className="group__wrapper page-wrapper">
         <div className="group__header">
           <h1 className="group__heading">
-            Exercise
+            {groupId ? 'Exercise' : 'Test'}
           </h1>
-          <Link to={`/group/${subcategoryId}/${groupId}`}>
-            Back to Group
+          <Link to={groupId ? `/group/${subcategoryId}/${groupId}` : `/groups/${subcategoryId}`}>
+            Back to {groupId ? 'Group' : 'Sublist'}
           </Link>
         </div>
         <p className="exercise__description">
@@ -68,7 +79,7 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
         {
           exercise.questions.length
             ? <ExerciseForm exerciseId={exerciseId} questions={exercise.questions} />
-            : <p>No questions have been added to this exercise yet.</p>
+            : <p>No questions have been added to this {groupId ? 'exercise' : 'test'} yet.</p>
         }
       </div>
     </section>

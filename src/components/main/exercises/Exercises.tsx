@@ -7,19 +7,22 @@ import './Exercises.scss';
 interface ExercisesProps {
   exercises: Exercise[],
   subcategoryId: string,
-  groupId: string,
+  groupId: string|null,
 }
 
 const Exercises = ({ exercises, subcategoryId, groupId }: ExercisesProps ): JSX.Element => {
   return (
     <div className="exercise-list-main">
-      <h2 className="exercise-list-main__heading">Exercise List</h2>
+      <h2 className="exercise-list-main__heading">{groupId ? 'Exercises' : 'Tests'}</h2>
       <ul className="exercise-list-main__list">
         {
           exercises.map((exercise: Exercise, index: number): JSX.Element => (
             <li key={exercise.id}>
-              <a href={`/exercise/${subcategoryId}/${groupId}/${exercise.id}`} className="exercise-list-main__link">
-                <span>Exercise { index + 1 }</span> <FontAwesomeIcon icon={faArrowRight} />
+              <a
+                href={groupId ? `/exercise/${subcategoryId}/${groupId}/${exercise.id}` : `/test/${subcategoryId}/${exercise.id}`}
+                className="exercise-list-main__link"
+              >
+                <span>{groupId ? 'Exercise' : 'Test'} { index + 1 }</span> <FontAwesomeIcon icon={faArrowRight} />
               </a>
             </li>
           ))
