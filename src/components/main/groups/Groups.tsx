@@ -78,13 +78,11 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
         </div>
         {
           isSubscribed
-          ? <p>Select a group!</p>
-          : <>
-              <p>
+            ? <p>Select a group!</p>
+            : <p>
                 As you are not subscribed to {topLevelName}, only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available.
                 Each group contains words, their definitions, and exercises.
               </p>
-            </>
         }
         { groups.length
           ? <ul className="groups__list">{ renderGroups() }</ul>
