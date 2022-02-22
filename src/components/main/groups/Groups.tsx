@@ -65,6 +65,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
       />
     ))
   }
+
   return (
     <section className="groups">
       <div className="groups__wrapper page-wrapper">
