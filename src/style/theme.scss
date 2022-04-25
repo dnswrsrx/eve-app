@@ -86,7 +86,7 @@ $small-radius: 6px;
   align-items: center;
   cursor: pointer;
   -webkit-appearance: none;
-  font-size: 16px;
+  font-size: $small-font;
   text-align: center;
 
   &:disabled {
