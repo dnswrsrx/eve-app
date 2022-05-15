@@ -13,7 +13,7 @@
     color: $primary-highlight-color;
   }
 
-  .how.register {
+  &__register {
     @include grid-list(1.75fr 1fr);
     @include breakpoint($md) {
       @include grid-list(1fr);
