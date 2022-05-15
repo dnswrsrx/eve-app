@@ -1,0 +1,40 @@
+@import '../../../../style/theme.scss';
+
+.instructions {
+  ol {
+    margin-left: 2rem;
+  }
+
+  strong {
+    color: $primary-color;
+  }
+
+  details {
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      margin-bottom: initial;
+    }
+  }
+
+  summary {
+    cursor: pointer;
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+} 
+
+
+.emphasised {
+  border-radius: $medium-radius;
+  border: 5px solid $primary-highlight-color;
+  padding: 1rem 2rem;
+  font-size: 125%;
+
+  > h2 > span {
+    color: $primary-highlight-color;
+    margin-left: 0.5rem;
+  }
+}
