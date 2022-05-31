@@ -1,13 +1,13 @@
 import React, { createRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/reducers/rootReducer';
-import { isEqual } from 'lodash';
 import { Link, useHistory  } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { isEqual } from 'lodash';
+import { RootState } from '../../../store/reducers/rootReducer';
 import firebase from '../../../config/firebaseConfig';
-import './Header.scss';
 import Loading from '../../general/loading/Loading';
+import './Header.scss';
 
 const Header = (): JSX.Element => {
   const history = useHistory()
