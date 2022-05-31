@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useCallback } from 'react';
+import React, { createRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/reducers/rootReducer';
 import { isEqual } from 'lodash';
@@ -27,15 +27,10 @@ const Header = (): JSX.Element => {
     window.location.reload();
   }
 
-  const toggleMobileMenu = (): void => {
-    menuRef.current?.classList.toggle('show');
-    mobileOverlay.current?.classList.toggle('show');
+  const toggleMobileMenu = (e: React.MouseEvent|null, force: boolean|undefined = undefined): void => {
+    menuRef.current?.classList.toggle('show', force);
+    mobileOverlay.current?.classList.toggle('show', force);
   }
-
-  const hideMobileMenu = useCallback((): void => {
-    menuRef.current?.classList.remove('show')
-    mobileOverlay.current?.classList.remove('show');
-  }, [menuRef, mobileOverlay]);
 
   const checkCurrentPath = (pathList: (string | null)[]): string | undefined => {
     return pathList.includes(currentPath) ? 'current' : undefined;
@@ -44,7 +39,7 @@ const Header = (): JSX.Element => {
   useEffect((): (() => void) => {
     const escapeHandler = (e: KeyboardEvent) => {
       if(e.key === 'Escape') {
-        if(menuRef.current?.classList.contains('show')) hideMobileMenu();
+        if(menuRef.current?.classList.contains('show')) toggleMobileMenu(null, false);
       }
     }
 
@@ -53,7 +48,7 @@ const Header = (): JSX.Element => {
     return (): void => {
       window.removeEventListener('keydown', escapeHandler);
     }
-  }, [hideMobileMenu, menuRef]);
+  }, [toggleMobileMenu, menuRef]);
 
   if(!auth.isLoaded) {
     return (
@@ -71,7 +66,7 @@ const Header = (): JSX.Element => {
             English Vocabulary Exercises
           </Link>
         </div>
-        <div className="header__mobile-overlay" ref={mobileOverlay} onClick={hideMobileMenu} />
+        <div className="header__mobile-overlay" ref={mobileOverlay} onClick={(e: React.MouseEvent) => toggleMobileMenu(e, false)} />
         <nav className="header__nav" ref={menuRef}>
           <button className="header__close-button" onClick={toggleMobileMenu}>
             <FontAwesomeIcon icon={faTimes} />
