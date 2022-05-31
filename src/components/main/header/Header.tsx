@@ -1,18 +1,28 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useCallback } from 'react';
 import { Link, useHistory  } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import { RootState } from '../../../store/reducers/rootReducer';
+import { HomeLanguage } from '../../models/models';
 import firebase from '../../../config/firebaseConfig';
 import Loading from '../../general/loading/Loading';
 import './Header.scss';
 
-const Header = (): JSX.Element => {
-  const history = useHistory()
+
+interface HeaderProps {
+  homeLanguages: HomeLanguage[],
+  setActiveLanguage: React.Dispatch<React.SetStateAction<HomeLanguage|null>>
+}
+
+const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element => {
+
+  const history = useHistory();
   const menuRef = createRef<HTMLElement>();
   const mobileOverlay = createRef<HTMLDivElement>();
+  const languageMenu = createRef<HTMLUListElement>();
+
   const currentPath = window.location.pathname.split('/')[1] || null;
   const wordCategoryPaths: (string | null)[] = ['word-categories', 'subcategories', 'groups', 'group', 'exercise'];
   // const studyGuidePaths: (string | null)[] = ['weekly-study-guides', 'weekly-study-guide'];
@@ -27,10 +37,14 @@ const Header = (): JSX.Element => {
     window.location.reload();
   }
 
-  const toggleMobileMenu = (e: React.MouseEvent|null, force: boolean|undefined = undefined): void => {
+  const toggleMobileMenu = useCallback((e: React.MouseEvent|null, force: boolean|undefined = undefined) => {
     menuRef.current?.classList.toggle('show', force);
     mobileOverlay.current?.classList.toggle('show', force);
-  }
+  }, [menuRef, mobileOverlay])
+
+  const toggleLanguageMenu = useCallback((e: React.MouseEvent|null, force: boolean = true) => {
+    languageMenu.current?.classList.toggle('show', force);
+  }, [languageMenu])
 
   const checkCurrentPath = (pathList: (string | null)[]): string | undefined => {
     return pathList.includes(currentPath) ? 'current' : undefined;
@@ -40,15 +54,34 @@ const Header = (): JSX.Element => {
     const escapeHandler = (e: KeyboardEvent) => {
       if(e.key === 'Escape') {
         if(menuRef.current?.classList.contains('show')) toggleMobileMenu(null, false);
+        if(languageMenu.current?.classList.contains('show')) toggleLanguageMenu(null, false);
       }
     }
 
     window.addEventListener('keydown', escapeHandler);
+    document.addEventListener('click', (e: any) => toggleLanguageMenu(e, false));
+
 
     return (): void => {
       window.removeEventListener('keydown', escapeHandler);
+      document.removeEventListener('click', (e: any) => toggleLanguageMenu(e, false));
     }
-  }, [toggleMobileMenu, menuRef]);
+  }, [toggleMobileMenu, menuRef, languageMenu, toggleLanguageMenu]);
+
+
+  const renderLanguages = (): JSX.Element[] => {
+    return homeLanguages.map((homeLanguage: HomeLanguage, index: number): JSX.Element => (
+      <li key={index}>
+        <Link
+          to="#"
+          key={homeLanguage.id}
+          onClick={():void => setActiveLanguage(homeLanguages[index])}
+        >
+          { homeLanguage.name }
+        </Link>
+      </li>
+    ));
+  }
 
   if(!auth.isLoaded) {
     return (
@@ -87,6 +120,14 @@ const Header = (): JSX.Element => {
               <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
             </li>
             { auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
+            { window.location.pathname.length === 1 &&
+              <li className="header__language">
+                <Link to="#" onClick={toggleLanguageMenu} className="header__language-icon"><FontAwesomeIcon icon={faGlobe} /> &#9662;</Link>
+                <ul ref={languageMenu}>
+                  { renderLanguages() }
+                </ul>
+              </li>
+            }
           </ul>
         </nav>
         <button className="header__burger-button" onClick={toggleMobileMenu}>

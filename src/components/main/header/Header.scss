@@ -40,6 +40,29 @@
     }
   }
 
+  &__language {
+    position: relative;
+
+    > ul {
+      display: none;
+      list-style: none;
+      padding: 0.5rem;
+      background-color: $text-color;
+      border-radius: 5px;
+      right: 0;
+
+      > li {
+        padding: 0.25rem 0;
+      }
+    }
+
+    > ul.show {
+      display: block;
+      position: absolute;
+      z-index: 1;
+    }
+  }
+
   a {
     @include secondary-link;
     padding-bottom: 0.3rem;

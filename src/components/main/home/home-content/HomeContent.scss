@@ -32,18 +32,6 @@
     text-align: center;
   }
 
-  &__language-buttons {
-    @include grid-list(repeat(6, 1fr));
-  }
-
-  &__language-button {
-    @include primary-button;
-
-    &.active {
-      background-color: $secondary-color;
-    }
-  }
-
   &__banner-text, &__main-content {
     @include grid-list(1fr);
     @include wysiwyg-content;
@@ -54,10 +42,6 @@
       display: flex;
       flex-direction: column;
       padding: 2rem 6rem 0 6rem;
-    }
-
-    &__language-buttons {
-      @include grid-list(repeat(3, 1fr));
     }
   }
 

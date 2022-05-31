@@ -1,26 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { HomeLanguage } from '../../../models/models';
 import Ads from '../../ads/Ads';
 import './HomeContent.scss';
 
 interface HomeContentProps {
-  homeLanguages: HomeLanguage[],
+  activeLanguage: HomeLanguage|null,
 }
 
-const HomeContent = ({ homeLanguages }: HomeContentProps): JSX.Element => {
-  const [activeLanguage, setActiveLanguage] = useState<HomeLanguage>(homeLanguages[0]);
+const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
-  const renderLanguages = (): JSX.Element[] => {
-    return homeLanguages.map((homeLanguage: HomeLanguage, index: number): JSX.Element => (
-      <button
-        key={homeLanguage.id}
-        className={`home-content-container__language-button ${homeLanguage === activeLanguage ? 'active' : ''}`}
-        onClick={():void => setActiveLanguage(homeLanguages[index])}
-      >
-        { homeLanguage.name }
-      </button>
-    ));
-  }
 
   return (
     <div className="home-content-container">
@@ -28,9 +16,6 @@ const HomeContent = ({ homeLanguages }: HomeContentProps): JSX.Element => {
         <div className="home-content-container__banner-wrapper page-wrapper">
           <h1 className="home-content-container__banner-heading">{ activeLanguage.bannerHeading }</h1>
           <div className="home-content-container__banner-text" dangerouslySetInnerHTML={{ __html: activeLanguage.bannerText }}></div>
-          <div className="home-content-container__language-buttons">
-            { renderLanguages() }
-          </div>
         </div>
       </div>
       <Ads slot="8767665789" />

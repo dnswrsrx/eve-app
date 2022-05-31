@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+import { isEqual } from 'lodash';
+
 import Header from './header/Header';
 import Footer from './footer/Footer';
 import SimpleSinglePage from './simple-single-page/SimpleSinglePage';
@@ -17,13 +21,34 @@ import Exercise from './exercise/Exercise';
 // import WeeklyStudyGuides from './weekly-study-guides/WeeklyStudyGuides';
 // import WeeklyStudyGuide from './weekly-study-guide/WeeklyStudyGuide';
 import Page from './page/Page';
+import Loading from '../general/loading/Loading';
+
+import { CollectionNames, HomeLanguage } from '../models/models';
+
 
 const Main = (): JSX.Element => {
+
+  useFirestoreConnect([
+    { collection: CollectionNames.HomeLanguages, orderBy: ['createdAt', 'asc']  }
+  ])
+
+  const homeLanguages = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.HomeLanguages], isEqual);
+
+  const [activeLanguage, setActiveLanguage] = useState<HomeLanguage|null>(null);
+
+  useEffect(() => {
+    if (homeLanguages && homeLanguages.length) setActiveLanguage(homeLanguages[0])
+  }, [homeLanguages])
+
+  if (window.location.pathname.length === 1 && !isLoaded(homeLanguages)) return <Loading />
+
   return (
     <main>
-      <Header />
+      <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/">
+          <Home activeLanguage={activeLanguage} />
+        </Route>
         <Route exact path="/privacy-policy" component={SimpleSinglePage} />
         <Route exact path="/teacher-notes" component={SimpleSinglePage} />
         <Route exact path="/login" component={UserLogin} />
