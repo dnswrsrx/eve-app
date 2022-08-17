@@ -4,7 +4,7 @@ import Ads from '../../ads/Ads';
 import './HomeContent.scss';
 
 interface HomeContentProps {
-  activeLanguage: HomeLanguage|null,
+  activeLanguage: HomeLanguage,
 }
 
 const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
