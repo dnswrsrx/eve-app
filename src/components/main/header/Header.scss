@@ -22,7 +22,9 @@
   }
 
   &__nav-list {
-    @include grid-list(auto auto auto auto);
+    display: flex;
+    list-style: none;
+    gap: 1rem;
     margin: auto 0;
   }
 
