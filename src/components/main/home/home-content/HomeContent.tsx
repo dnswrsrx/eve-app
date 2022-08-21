@@ -30,17 +30,17 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
           <div className="home-content-container__banner-questions">
             <div className="home-content-container__banner-question">
               <h3>Trying to speak better and understand more?</h3>
-              <img className="home-content-container__banner-image" src='/images/speaking.svg' />
+              <img className="home-content-container__banner-image" src='/images/speaking.svg' alt="speaking"/>
             </div>
 
             <div className="home-content-container__banner-question {activeLanguage.name}">
               <h3>Looking to improve your reading and writing?</h3>
-              <img className="home-content-container__banner-image" src="/images/study.svg"  />
+              <img className="home-content-container__banner-image" src="/images/study.svg" alt="writing"/>
             </div>
 
             <div className="home-content-container__banner-question">
               <h3>Need to score well on English tests?</h3>
-              <img className="home-content-container__banner-image" src='/images/education.svg' />
+              <img className="home-content-container__banner-image" src='/images/education.svg' alt="someone standing on a book and tossing a graduation cap"/>
             </div>
           </div>
         </div>
