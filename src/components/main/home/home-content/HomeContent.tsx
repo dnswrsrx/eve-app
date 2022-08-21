@@ -26,7 +26,6 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
     return (
       <div className="home-content-container page-wrapper">
         <h1 className="home-content-container__banner-heading">Welcome to English Vocabulary Exercises</h1>
-        {/* <div className="home-content-container__banner-text" dangerouslySetInnerHTML={{ __html: activeLanguage.bannerText }}></div> */}
         <div className="home-content-container__banner-text">
           <div className="home-content-container__banner-questions">
             <div className="home-content-container__banner-question">
