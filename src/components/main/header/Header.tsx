@@ -75,7 +75,10 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
         <Link
           to="#"
           key={homeLanguage.id}
-          onClick={():void => setActiveLanguage(homeLanguages[index])}
+          onClick={():void => {
+            setActiveLanguage(homeLanguages[index]);
+            toggleLanguageMenu(null, false);
+          }}
         >
           { homeLanguage.name }
         </Link>
