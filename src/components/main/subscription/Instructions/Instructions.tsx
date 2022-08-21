@@ -46,8 +46,7 @@ const Instructions = ({ auth, subscription }: InstructionsProps): JSX.Element =>
             Go to your email and click the message with the subject: <strong>Verify your email for English Vocabulary Exercises</strong>.
           </li>
           <li>
-            You will see the message: <strong>Hello. Follow this link to verify your email address. </strong>
-            Click on the link.
+            You will see the message: <strong>Hello. Follow this link to verify your email address.</strong> Click on the link.
           </li>
           <li>
             A new tab or window will open saying that your email has been verified. You may close that tab or window.
