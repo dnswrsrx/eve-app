@@ -2,34 +2,30 @@
 
 .home-content-container {
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: $primary-color;
+
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
+  height: 100%;
 
-  &__banner {
-    background-image: linear-gradient(to top, #fff6fe, #f7f8ff, #f2fafe, #f3fafa, #f6f9f7);
-    color: $primary-color;
-    border-bottom: 3px solid $accent-color;
-    position: relative;
-    overflow: hidden;
+  padding: 3rem 2rem;
+
+  > * {
+    z-index: 0;
+    margin-bottom: 1rem;
   }
-
-  &__banner-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 12rem 0 12rem;
-    justify-content: center;
-    height: 100%;
-    text-align: left;
-    margin: auto;
-
-    > * {
-      z-index: 0;
-      margin-bottom: 2.5rem;
-    }
-  }
-
+  
   &__banner-heading {
     font-size: $xl-font;
-    text-align: center;
+  }
+
+  &__start-today {
+    @include primary-button;
+    padding: 1rem 1rem;
+    margin-bottom: 2.5rem;
   }
 
   &__banner-text, &__main-content {
@@ -37,22 +33,27 @@
     @include wysiwyg-content;
   }
 
+  &__banner-questions {
+    @include grid-list(1fr 1fr 1fr);
+  }
+
+  &__banner-image {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+  }
+
   @include breakpoint($lg) {
     &__banner-wrapper {
       display: flex;
       flex-direction: column;
-      padding: 2rem 6rem 0 6rem;
+      padding: 2rem 3rem 0 3rem;
     }
   }
 
   @include breakpoint($md) {
     &__banner-wrapper {
       padding: 2rem 3rem 0 3rem;
-    }
-
-    &__background-image {
-      background-size: cover;
-      background-position: bottom;
     }
   }
 

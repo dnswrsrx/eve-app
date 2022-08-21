@@ -10,9 +10,9 @@ import './Subscribe.scss';
 
 interface SubscribeToProductProps {
   product: Product,
-  cartOrPortal: Function,
-  loadingCartPortal: string|null,
-  auth: FirebaseReducer.AuthState,
+  cartOrPortal?: Function|null,
+  loadingCartPortal?: string|null,
+  auth?: FirebaseReducer.AuthState|null,
 }
 
 const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: SubscribeToProductProps) => {
@@ -39,31 +39,58 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
 
   const manageSubscription = (priceID: string) => {
     setLoading(true);
-    cartOrPortal(priceID);
+    if (cartOrPortal) {
+      cartOrPortal(priceID);
+    }
   }
+
+  const images = window.location.pathname === '/' && (
+    product.name.includes('Academic Vocabulary')
+      ? ['exams', 'teaching', 'book_lover']
+      : ['multitasking', 'travel_mode', 'having_fun']
+  );
 
   return (
     <div className="subscribe__col">
-      <h3>{product.name}</h3>
-      { window.location.pathname.includes('/subscription') && product.description && <p>{product.description}</p> }
-      { priceID && price &&
-          ( auth.uid && auth.email
-            ? <button
-                className="subscribe__subscribe"
-                onClick={() => manageSubscription(priceID)}
-                disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed || !['admin@eve.com', 'gerry@cpr4esl.com', 'dennissaw12@gmail.com'].includes(auth.email)}
-              >
-                { subscription
-                  ? ( isSubscribed
-                        ? `Currently subscribed (${amount} USD/year)`
-                        : loading ? 'Loading portal...' : `Update subscription ($${amount} USD/year)`
-                    )
-                  : loading ? 'Loading cart...' : `Subscribe for $${amount} USD/year`
-                }
-                { loading && <span className="subscribe__spinner"></span> }
-              </button>
-            : <p className="subscribe__text bold">${amount} USD/year</p>
-          )
+      <h3>
+        { // Home page describes the categories and not the subscription/
+          window.location.pathname === '/'
+            ? product.name.replace('General Vocabulary + ', '')
+            : product.name
+        }
+      </h3>
+
+      { images &&
+        <div className="subscribe__images">
+          { images.map((name, index) => <img key={index} className="subscribe__image" src={`/images/${name}.svg`} alt={name} />) }
+        </div>
+      }
+
+      { (window.location.pathname.includes('/subscription') || window.location.pathname === '/') && product.description && <p>{product.description}</p> }
+      {
+
+        window.location.pathname === '/'
+          ? <p className="subscribe__text bold">
+              {product.name.includes('Academic Vocabulary') ? '+3 USD/year'  : `${amount} USD/year`}
+            </p>
+          : priceID && price &&
+              ( auth && auth.uid && auth.email
+                ? <button
+                    className="subscribe__subscribe"
+                    onClick={() => manageSubscription(priceID)}
+                    disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed || !['admin@eve.com', 'gerry@cpr4esl.com', 'dennissaw12@gmail.com'].includes(auth.email)}
+                  >
+                    { subscription
+                      ? ( isSubscribed
+                            ? `Currently subscribed (${amount} USD/year)`
+                            : loading ? 'Loading portal...' : `Update subscription ($${amount} USD/year)`
+                        )
+                      : loading ? 'Loading cart...' : `Subscribe for $${amount} USD/year`
+                    }
+                    { loading && <span className="subscribe__spinner"></span> }
+                  </button>
+                : <p className="subscribe__text bold">${amount} USD/year</p>
+              )
       }
     </div>
   )
