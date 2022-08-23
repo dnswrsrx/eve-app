@@ -9,7 +9,7 @@ import './SimpleSinglePage.scss';
 
 const SimpleSinglePage = (): JSX.Element => {
 
-  const page = window.location.pathname.includes('/privacy-policy') ? 'Privacy Policy' : window.location.pathname.includes('/teacher-notes') ? 'Note to Teachers' : '';
+  const page = window.location.pathname.includes('/terms-of-use') ? 'Terms of Use' : window.location.pathname.includes('/teacher-notes') ? 'Note to Teachers' : '';
 
   useFirestoreConnect([
     { collection: CollectionNames.Pages, where: ['name', '==', page], storeAs: 'page' }

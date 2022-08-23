@@ -25,9 +25,9 @@ const Home = (): JSX.Element => {
             <div className="admin-home__card-image" style={{ backgroundImage: 'url(/images/private.svg)' }} />
             <h2 className="admin-home__card-heading">Private Pages</h2>
           </Link>
-          <Link className="admin-home__link-card" to="/admin-dashboard/privacy-policy">
+          <Link className="admin-home__link-card" to="/admin-dashboard/terms-of-use">
             <div className="admin-home__card-image" style={{ backgroundImage: 'url(/images/privacy_policy.svg)' }}></div>
-            <h2 className="admin-home__card-heading">Privacy Policy</h2>
+            <h2 className="admin-home__card-heading">Terms of Use</h2>
           </Link>
           <Link className="admin-home__link-card" to="/admin-dashboard/teacher-notes">
             <div className="admin-home__card-image" style={{ backgroundImage: 'url(/images/education.svg)' }}></div>

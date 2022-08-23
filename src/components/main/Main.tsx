@@ -49,7 +49,7 @@ const Main = (): JSX.Element => {
         <Route exact path="/">
           <Home activeLanguage={activeLanguage} />
         </Route>
-        <Route exact path="/privacy-policy" component={SimpleSinglePage} />
+        <Route exact path="/terms-of-use" component={SimpleSinglePage} />
         <Route exact path="/teacher-notes" component={SimpleSinglePage} />
         <Route exact path="/login" component={UserLogin} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
