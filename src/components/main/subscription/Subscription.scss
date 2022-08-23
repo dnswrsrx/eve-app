@@ -13,7 +13,7 @@
     color: $primary-highlight-color;
   }
 
-  &__instructions {
+  &__instructions, &__register {
     margin-top: 1.5rem;
 
     @include breakpoint($md) {
