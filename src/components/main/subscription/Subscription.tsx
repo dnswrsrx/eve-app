@@ -28,11 +28,10 @@ const Subscription = (): JSX.Element => {
         { auth.uid && subscription && <h3 className="success">You are currently subscribed to {subscription}.</h3> }
 
         <p>We currently offer the following subscription tiers.</p>
+
         <Subscribe />
 
-        <hr />
-
-        <div className={!auth.uid ? "subscription-page__register" : ""}>
+        <div className="subscription-page__register">
           <Instructions auth={auth} subscription={subscription} />
           {!auth.uid && <RegisterForm /> }
         </div>
