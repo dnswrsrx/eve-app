@@ -13,13 +13,10 @@ interface InstructionsProps {
 
 const Instructions = ({ auth, subscription }: InstructionsProps): JSX.Element => {
 
-  const emphasised = window.location.hash.includes('instructions');
-
   return (
-    <article className={`instructions ${emphasised ? 'emphasised' : ''}`}>
+    <article className='instructions'>
       <h2>
-        Instructions
-        {emphasised && <span><FontAwesomeIcon icon={faStar} /></span>}
+        Instructions <span><FontAwesomeIcon icon={faStar} /></span>
       </h2>
 
       <details open={!auth.uid}>

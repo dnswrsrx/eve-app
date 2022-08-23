@@ -1,6 +1,12 @@
 @import '../../../../style/theme.scss';
 
 .instructions {
+
+  border-radius: $medium-radius;
+  border: 5px solid $primary-highlight-color;
+  padding: 1rem 2rem;
+  font-size: 125%;
+
   ol {
     margin-left: 2rem;
   }
@@ -24,14 +30,6 @@
       color: $hover-color;
     }
   }
-}
-
-
-.emphasised {
-  border-radius: $medium-radius;
-  border: 5px solid $primary-highlight-color;
-  padding: 1rem 2rem;
-  font-size: 125%;
 
   > h2 > span {
     color: $primary-highlight-color;

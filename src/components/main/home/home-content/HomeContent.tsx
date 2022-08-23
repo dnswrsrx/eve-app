@@ -49,7 +49,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
           With 2000+ carefully chosen words and 800+ exercises, start growing your English vocabulary.
         </h3>
 
-        <Link className="home-content-container__start-today" to="/subscription#instructions">Get Started and Subscribe!</Link>
+        <Link className="home-content-container__start-today" to="/subscription">Get Started and Subscribe!</Link>
 
         <Ads slot="8767665789" />
 
