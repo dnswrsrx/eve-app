@@ -31,7 +31,7 @@ const Subscription = (): JSX.Element => {
 
         <Subscribe />
 
-        <div className="subscription-page__register">
+        <div className={`subscription-page__${auth.uid ? 'instructions' : 'register'}`}>
           <Instructions auth={auth} subscription={subscription} />
           {!auth.uid && <RegisterForm /> }
         </div>

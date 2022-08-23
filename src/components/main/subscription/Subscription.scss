@@ -13,12 +13,16 @@
     color: $primary-highlight-color;
   }
 
-  &__register {
-    @include grid-list(1.75fr 1fr);
+  &__instructions {
     margin-top: 1.5rem;
+
     @include breakpoint($md) {
       @include grid-list(1fr);
     }
+  }
+
+  &__register {
+    @include grid-list(1.75fr 1fr);
   }
 
   ul {
