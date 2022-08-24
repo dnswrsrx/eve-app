@@ -29,7 +29,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         <div className="home-content-container__banner-text">
           <div className="home-content-container__banner-questions">
             <div className="home-content-container__banner-question">
-              <h3>Trying to speak better and understand more?</h3>
+              <h3>Want to speak better and understand more?</h3>
               <img className="home-content-container__banner-image" src='/images/speaking.svg' alt="speaking"/>
             </div>
 
@@ -39,21 +39,21 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
             </div>
 
             <div className="home-content-container__banner-question">
-              <h3>Need to score well on English tests?</h3>
+              <h3>Need to score well on English tests, including the IELTS, TOEFL, and TOEIC?</h3>
               <img className="home-content-container__banner-image" src='/images/education.svg' alt="someone standing on a book and tossing a graduation cap"/>
             </div>
           </div>
         </div>
         <h2>This website has been created especially for you!</h2>
         <h3>
-          With 2000+ carefully chosen words and 800+ exercises, start growing your English vocabulary.
+           Start growing your English vocabulary today, with over 2000 carefully chosen words and over 800 exercises.
         </h3>
 
         <Link className="home-content-container__start-today" to="/subscription">Get Started and Subscribe!</Link>
 
         <Ads slot="8767665789" />
 
-        <h2>There are two main categories for you to learn and practise.</h2>
+        <h2>There are two main categories to learn and practise your new vocabulary.</h2>
         <div className="subscribe__products">
           { products.map((p: Product, index: number) => {
             return <SubscribeToProduct
@@ -65,7 +65,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
         <h3>Each category is further divided into subcategories of 14 to 17 words.</h3>
 
-        <h3>Each subcategory contains 5 gap-fill exercises with the words of that subcategory.</h3>
+        <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
 
         <Ads slot="1252137845" />
 
