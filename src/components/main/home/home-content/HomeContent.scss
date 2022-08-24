@@ -34,7 +34,10 @@
   }
 
   &__banner-questions {
-    @include grid-list(1fr 1fr 1fr);
+    @include grid-list(repeat(3, 1fr));
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column dense;
+    margin-bottom: 1rem;
   }
 
   &__banner-image {

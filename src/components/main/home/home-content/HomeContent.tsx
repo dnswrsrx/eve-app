@@ -28,20 +28,14 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         <h1 className="home-content-container__banner-heading">Welcome to English Vocabulary Exercises</h1>
         <div className="home-content-container__banner-text">
           <div className="home-content-container__banner-questions">
-            <div className="home-content-container__banner-question">
-              <h3>Want to speak better and understand more?</h3>
-              <img className="home-content-container__banner-image" src='/images/speaking.svg' alt="speaking"/>
-            </div>
+            <h3>Want to speak better and understand more?</h3>
+            <img className="home-content-container__banner-image" src='/images/speaking.svg' alt="speaking"/>
 
-            <div className="home-content-container__banner-question {activeLanguage.name}">
-              <h3>Looking to improve your reading and writing?</h3>
-              <img className="home-content-container__banner-image" src="/images/study.svg" alt="writing"/>
-            </div>
+            <h3>Looking to improve your reading and writing?</h3>
+            <img className="home-content-container__banner-image" src="/images/study.svg" alt="writing"/>
 
-            <div className="home-content-container__banner-question">
-              <h3>Need to score well on English tests, including the IELTS, TOEFL, and TOEIC?</h3>
-              <img className="home-content-container__banner-image" src='/images/education.svg' alt="someone standing on a book and tossing a graduation cap"/>
-            </div>
+            <h3>Need to score well on English tests, including the IELTS, TOEFL, and TOEIC?</h3>
+            <img className="home-content-container__banner-image" src='/images/education.svg' alt="someone standing on a book and tossing a graduation cap"/>
           </div>
         </div>
         <h2>This website has been created especially for you!</h2>
