@@ -71,7 +71,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
 
         window.location.pathname === '/'
           ? <p className="subscribe__text bold">
-              {product.name.includes('Academic Vocabulary') ? '+3 USD/year'  : `${amount} USD/year`}
+              {product.name.includes('Academic Vocabulary') ? '+$3 USD/year'  : `$${amount} USD/year`}
             </p>
           : priceID && price &&
               ( auth && auth.uid && auth.email
@@ -82,7 +82,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
                   >
                     { subscription
                       ? ( isSubscribed
-                            ? `Currently subscribed (${amount} USD/year)`
+                            ? `Currently subscribed ($${amount} USD/year)`
                             : loading ? 'Loading portal...' : `Update subscription ($${amount} USD/year)`
                         )
                       : loading ? 'Loading cart...' : `Subscribe for $${amount} USD/year`
