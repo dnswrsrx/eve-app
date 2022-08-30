@@ -71,7 +71,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
 
         window.location.pathname === '/'
           ? <p className="subscribe__text bold">
-              {product.name.includes('Academic Vocabulary') ? '+$3 USD/year'  : `$${amount} USD/year`}
+              { product.name.includes('Academic Vocabulary') ? '$8 USD/year for both' : `$${amount} USD/year`}
             </p>
           : priceID && price &&
               ( auth && auth.uid && auth.email
