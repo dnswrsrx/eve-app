@@ -11,6 +11,9 @@ import useSubscription from '../../../utils/userSubscription';
 import Subscribe from '../utils/subscribe/Subscribe';
 import './Subscription.scss'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+
 const Subscription = (): JSX.Element => {
 
   const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
@@ -22,14 +25,22 @@ const Subscription = (): JSX.Element => {
     <section className="subscription-page">
       <div className="subscription-page__wrapper page-wrapper">
         <h1 className="subscription-page__heading">Subscription</h1>
-        { auth.uid && !auth.emailVerified &&
-          <h3 className="subscription-page__unverified">You are now signed up! Please go to your email and click on the verification link.</h3>
-        }
         { auth.uid && subscription && <h3 className="success">You are currently subscribed to {subscription}.</h3> }
 
         <p>We currently offer the following subscription tiers.</p>
 
         <Subscribe />
+
+        { auth.uid && !auth.emailVerified &&
+          <div className="subscription-page__unverified">
+            <h3>
+              <span><FontAwesomeIcon icon={faExclamationTriangle} /></span>
+              You are now signed up!
+              Please go to your email and click on the verification link.
+            </h3>
+            <p>If you don't see the verification email, please check your junk mail or spam folder.</p>
+          </div>
+        }
 
         <div className={`subscription-page__${auth.uid ? 'instructions' : 'register'}`}>
           <Instructions auth={auth} subscription={subscription} />

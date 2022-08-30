@@ -10,7 +10,15 @@
   }
 
   &__unverified {
-    color: $primary-highlight-color;
+    border-radius: $medium-radius;
+    border: 5px solid $primary-highlight-color;
+    padding: 1rem 2rem;
+    justify-self: center;
+
+    span {
+      color: $primary-highlight-color;
+      margin-right: 0.5rem;
+    }
   }
 
   &__instructions, &__register {
