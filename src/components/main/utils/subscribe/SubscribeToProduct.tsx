@@ -58,6 +58,9 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
             ? product.name.replace('General Vocabulary + ', '')
             : product.name
         }
+        { window.location.pathname === '/' && product.name.includes('Academic Vocabulary') &&
+          <small> (+ General Vocabulary)</small>
+        }
       </h3>
 
       { images &&
@@ -71,7 +74,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: 
 
         window.location.pathname === '/'
           ? <p className="subscribe__text bold">
-              { product.name.includes('Academic Vocabulary') ? '$8 USD/year for both' : `$${amount} USD/year`}
+              { product.name.includes('Academic Vocabulary') ? '$8 USD/year' : `$${amount} USD/year`}
             </p>
           : priceID && price &&
               ( auth && auth.uid && auth.email
