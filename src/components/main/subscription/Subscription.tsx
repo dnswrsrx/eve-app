@@ -42,10 +42,12 @@ const Subscription = (): JSX.Element => {
           </div>
         }
 
-        <div className={`subscription-page__${auth.uid ? 'instructions' : 'register'}`}>
-          <Instructions auth={auth} subscription={subscription} />
-          {!auth.uid && <RegisterForm /> }
-        </div>
+        { (!auth.uid || !subscription) &&
+          <div className={`subscription-page__${auth.uid ? 'instructions' : 'register'}`}>
+            <Instructions auth={auth} subscription={subscription} />
+            {!auth.uid && <RegisterForm /> }
+          </div>
+        }
       </div>
     </section>
   )
