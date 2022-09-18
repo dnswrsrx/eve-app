@@ -9,7 +9,7 @@
     font-size: $large-font;
   }
 
-  &__unverified {
+  &__unverified, &__subscribed {
     border-radius: $medium-radius;
     border: 5px solid $primary-highlight-color;
     padding: 1rem 2rem;
@@ -18,6 +18,13 @@
     span {
       color: $primary-highlight-color;
       margin-right: 0.5rem;
+    }
+  }
+
+  &__subscribed {
+    border: 5px solid $accent-color;
+    span {
+      color: $accent-color;
     }
   }
 

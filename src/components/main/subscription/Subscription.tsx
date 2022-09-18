@@ -12,7 +12,7 @@ import Subscribe from '../utils/subscribe/Subscribe';
 import './Subscription.scss'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Subscription = (): JSX.Element => {
 
@@ -25,7 +25,6 @@ const Subscription = (): JSX.Element => {
     <section className="subscription-page">
       <div className="subscription-page__wrapper page-wrapper">
         <h1 className="subscription-page__heading">Subscription</h1>
-        { auth.uid && subscription && <h3 className="success">You are currently subscribed to {subscription}.</h3> }
 
         <p>We currently offer the following subscription tiers.</p>
 
@@ -40,6 +39,16 @@ const Subscription = (): JSX.Element => {
             </h3>
             <p>If you don't see the verification email, please check your junk mail or spam folder.</p>
           </div>
+        }
+
+        { auth.uid && subscription &&
+            <div className="subscription-page__subscribed">
+              <h3>
+                <span><FontAwesomeIcon icon={faCheckCircle} /></span>
+                You are now subscribed to { subscription }.
+                Start growing your English vocabulary today!
+              </h3>
+            </div>
         }
 
         { (!auth.uid || !subscription) &&
