@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, CategoryTypes, MatchProps } from '../../models/models';
+import { sortAWLSubcategories } from '../../../utils/utils';
 import Loading from '../../general/loading/Loading';
 import CategoryAdd from '../general/category-add/CategoryAdd';
 import CategoryList from '../general/category-list/CategoryList';
@@ -42,6 +43,8 @@ const Subcategories = ({ match } : SubcategoryProps): JSX.Element => {
     )
   }
 
+  const sortedSubcategories = parentCategory.name.includes('Academic Vocabulary') ? [...subcategories].sort(sortAWLSubcategories) : subcategories;
+
   return (
     <section className="subcategories-admin">
       <div className="subcategories-admin__wrapper page-wrapper">
@@ -60,7 +63,7 @@ const Subcategories = ({ match } : SubcategoryProps): JSX.Element => {
         />
         <CategoryList
           type={CategoryTypes.Sub}
-          categories={subcategories || []}
+          categories={sortedSubcategories || []}
           setSuccessMessage={setSuccessMessage}
         />
       </div>

@@ -1,4 +1,4 @@
-import { ApiWord, Meaning, Definitions, CategoryTypes, CollectionNames, PageTypes } from "../components/models/models";
+import { ApiWord, Meaning, Definitions, CategoryTypes, CollectionNames, PageTypes, Category } from "../components/models/models";
 
 export const formatDictionaryResults = (data: ApiWord[]): Definitions[] => {
   const definitions: Definitions[] = [];
@@ -48,4 +48,12 @@ export const getCollectionName = (type: string): string => {
     default:
       return '';
   }
+}
+
+export const sortAWLSubcategories = (category: Category, nextCategory: Category): number => {
+  // Sort "More Academic Vocabulary" after regular ones
+  if (category.name.includes('More') && !category.name.includes('More')) return 1;
+  if (!category.name.includes('More') && nextCategory.name.includes('More')) return 0;
+
+  return Number(category.name.match(/\d+/)) > Number(nextCategory.name.match(/\d+/)) ? 1 : -1;
 }

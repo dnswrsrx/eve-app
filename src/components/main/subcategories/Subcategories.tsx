@@ -11,21 +11,12 @@ import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 import Loading from '../../general/loading/Loading';
 import useSubscription from '../../../utils/userSubscription';
+import { sortAWLSubcategories } from '../../../utils/utils';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
 import './Subcategories.scss';
 
 interface SubcategoriesProps {
   match: MatchProps,
-}
-
-// For sorting the Academic Vocabulary sublists
-const sortBySublist = (group: Category, nextGroup: Category): number => {
-
-  // Make "More Academic Vocabulary" the last one
-  if (group.name.includes('More')) return 1;
-  if (nextGroup.name.includes('More')) return 0;
-
-  return Number(group.name.match(/\d+/)) > Number(nextGroup.name.match(/\d+/)) ? 1 : -1;
 }
 
 const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
@@ -45,7 +36,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   if(!isLoaded(topLevelCategory) || !isLoaded(subcategories) || !auth.isLoaded) return <Loading />;
 
   const renderSubcategories = () => {
-    const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? [...subcategories].sort(sortBySublist) : subcategories;
+    const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? [...subcategories].sort(sortAWLSubcategories) : subcategories;
     return sortedSubcategories
       // render subcategory with [test] in name if admin
       .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
