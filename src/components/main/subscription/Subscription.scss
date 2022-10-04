@@ -30,14 +30,14 @@
 
   &__instructions, &__register {
     margin: 1.5rem 0;
-
-    @include breakpoint($md) {
-      @include grid-list(1fr);
-    }
   }
 
   &__register {
     @include grid-list(1.75fr 1fr);
+
+    @include breakpoint($md) {
+      @include grid-list(1fr);
+    }
   }
 
   ul {
