@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { HomeLanguage, Product } from '../../../models/models';
 
-import { HomeLanguage, CollectionNames, Product } from '../../../models/models';
-
-import Loading from '../../../general/loading/Loading';
+import { ProductsContext } from '../../Main';
 import Ads from '../../ads/Ads';
 import SubscribeToProduct from '../../utils/subscribe/SubscribeToProduct';
 import './HomeContent.scss';
@@ -16,11 +13,8 @@ interface HomeContentProps {
 }
 
 const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
-
-  useFirestoreConnect([{ collection: CollectionNames.Products, where: ['active', '==', true]}]);
-  const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
-
-  if (!isLoaded(products)) return <Loading />
+  const products = useContext(ProductsContext);
+  const individualProducts = products.filter((p: Product) => p.name !== 'Institutional Pricing');
 
   if (!activeLanguage || activeLanguage.name === 'English') {
     return (
@@ -49,7 +43,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
         <h2>There are two main categories to learn and practise your new vocabulary.</h2>
         <div className="subscribe__products">
-          { products.map((p: Product, index: number) => {
+          { individualProducts.map((p: Product, index: number) => {
             return <SubscribeToProduct
               key={index}
               product={p}

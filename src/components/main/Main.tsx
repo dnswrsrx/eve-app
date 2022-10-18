@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
@@ -26,10 +26,13 @@ import Loading from '../general/loading/Loading';
 import { CollectionNames, HomeLanguage } from '../models/models';
 
 
+export const ProductsContext = createContext([]);
+
 const Main = (): JSX.Element => {
 
   useFirestoreConnect([
-    { collection: CollectionNames.HomeLanguages, orderBy: ['createdAt', 'asc']  }
+    { collection: CollectionNames.HomeLanguages, orderBy: ['createdAt', 'asc']  },
+    { collection: CollectionNames.Products, where: ['active', '==', true] }
   ])
 
   const homeLanguages = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.HomeLanguages], isEqual);
@@ -40,34 +43,44 @@ const Main = (): JSX.Element => {
     if (homeLanguages && homeLanguages.length) setActiveLanguage(homeLanguages[0])
   }, [homeLanguages])
 
-  if (window.location.pathname.length === 1 && !isLoaded(homeLanguages)) return <Loading />
+  const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
 
-  return (
+  if (!isLoaded(products)) return (
     <main>
       <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
-      <Switch>
-        <Route exact path="/">
-          <Home activeLanguage={activeLanguage} />
-        </Route>
-        <Route exact path="/terms-of-use" component={SimpleSinglePage} />
-        <Route exact path="/teacher-notes" component={SimpleSinglePage} />
-        <Route exact path="/login" component={UserLogin} />
-        <Route exact path="/forgot-password" component={ForgotPassword} />
-        <Route exact path="/my-account" component={MyAccount} />
-        <Route exact path="/subscription" component={Subscription} />
-        <Route exact path="/word-categories" component={WordCategories} />
-        <Route exact path="/subcategories/:categoryId" component={Subcategories} />
-        <Route exact path="/groups/:subcategoryId/" component={Groups} />
-        <Route exact path="/group/:subcategoryId/:groupId" component={Group} />
-        <Route exact path="/exercise/:subcategoryId/:groupId/:exerciseId" component={Exercise} />
-        <Route exact path="/test/:subcategoryId/:exerciseId" component={Exercise} />
-        {/* <Route exact path="/weekly-study-guides" component={WeeklyStudyGuides} /> */}
-        {/* <Route exact path="/weekly-study-guide/:guideId" component={WeeklyStudyGuide} /> */}
-        <Route exact path="/page/:slug" component={Page} />
-        <Route path="/" component={PageNotFound} />
-      </Switch>
+      <Loading />
       <Footer />
     </main>
+  )
+
+  return (
+    <ProductsContext.Provider value={products}>
+      <main>
+        <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
+        <Switch>
+          <Route exact path="/">
+            <Home activeLanguage={activeLanguage} />
+          </Route>
+          <Route exact path="/terms-of-use" component={SimpleSinglePage} />
+          <Route exact path="/teacher-notes" component={SimpleSinglePage} />
+          <Route exact path="/login" component={UserLogin} />
+          <Route exact path="/forgot-password" component={ForgotPassword} />
+          <Route exact path="/my-account" component={MyAccount} />
+          <Route exact path="/subscription" component={Subscription} />
+          <Route exact path="/word-categories" component={WordCategories} />
+          <Route exact path="/subcategories/:categoryId" component={Subcategories} />
+          <Route exact path="/groups/:subcategoryId/" component={Groups} />
+          <Route exact path="/group/:subcategoryId/:groupId" component={Group} />
+          <Route exact path="/exercise/:subcategoryId/:groupId/:exerciseId" component={Exercise} />
+          <Route exact path="/test/:subcategoryId/:exerciseId" component={Exercise} />
+          {/* <Route exact path="/weekly-study-guides" component={WeeklyStudyGuides} /> */}
+          {/* <Route exact path="/weekly-study-guide/:guideId" component={WeeklyStudyGuide} /> */}
+          <Route exact path="/page/:slug" component={Page} />
+          <Route path="/" component={PageNotFound} />
+        </Switch>
+        <Footer />
+      </main>
+    </ProductsContext>
   )
 }
 
