@@ -1,12 +1,10 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../../store/reducers/rootReducer';
+import React, { useContext } from 'react';
 
-import Loading from '../../general/loading/Loading';
 import Instructions from './Instructions/Instructions';
 import RegisterForm from './RegisterForm/RegisterForm';
 
 import useSubscription from '../../../utils/userSubscription';
+import { AuthContext } from '../Main';
 
 import Subscribe from '../utils/subscribe/Subscribe';
 import './Subscription.scss'
@@ -14,12 +12,11 @@ import './Subscription.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
+
 const Subscription = (): JSX.Element => {
 
-  const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
+  const auth = useContext(AuthContext);
   const subscription  = useSubscription();
-
-  if (!auth.isLoaded) return <Loading />;
 
   return (
     <section className="subscription-page">
@@ -41,7 +38,7 @@ const Subscription = (): JSX.Element => {
           </div>
         }
 
-        { auth.uid && subscription &&
+        { subscription &&
             <div className="subscription-page__subscribed">
               <h3>
                 <span><FontAwesomeIcon icon={faCheckCircle} /></span>
