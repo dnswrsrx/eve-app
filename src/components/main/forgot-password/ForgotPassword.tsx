@@ -8,7 +8,7 @@ import { RootState } from '../../../store/reducers/rootReducer';
 import { Redirect } from 'react-router-dom';
 import './ForgotPassword.scss';
 
-const Register = (): JSX.Element => {
+const ForgotPassword = (): JSX.Element => {
   const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
 
   const [resetResponse, setResetResponse] = useState<string>('');
@@ -69,4 +69,4 @@ const Register = (): JSX.Element => {
   )
 }
 
-export default Register;
+export default ForgotPassword;
