@@ -1,12 +1,7 @@
-import { useState } from 'react';
-import { isEqual } from 'lodash';
-import { useSelector } from 'react-redux';
-
+import { useState, useContext } from 'react';
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
-
-import { RootState } from '../../../../store/reducers/rootReducer';
-
+import { AuthContext } from '../../Main';
 import useSubscription from '../../../../utils/userSubscription';
 
 
@@ -19,7 +14,7 @@ interface hookSignature {
 
 const useCartOrPortalHook = (): hookSignature => {
 
-  const auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
+  const auth = useContext(AuthContext);
   const user = auth.isLoaded && !auth.isEmpty && firebase.firestore().collection('users').doc(auth.uid);
 
   const [error, setError] = useState<'cart'|'portal'|null>(null);

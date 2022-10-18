@@ -1,17 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../../store/reducers/rootReducer';
 import { Redirect } from 'react-router-dom';
+import { AuthContext } from '../Main';
 import LoginForm from './LoginForm/LoginForm';
 import './Login.scss';
 
 const Login = (): JSX.Element => {
-  const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
+  const auth = useContext(AuthContext);
 
-  if(!auth.isLoaded) {
-    return <></>;
-  }
   if (auth.uid) return <Redirect to='/' />
 
   return (

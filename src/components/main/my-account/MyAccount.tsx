@@ -1,17 +1,13 @@
-import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { RootState } from '../../../store/reducers/rootReducer';
+import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import { AuthContext } from '../Main';
 import AccountForm from './AccountForm/AccountForm';
 import SubscriptionForm from './SubscriptionForm/SubscriptionForm';
 import './MyAccount.scss';
 
 const MyAccount = (): JSX.Element => {
-  const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
+  const auth = useContext(AuthContext);
 
-  if(!auth.isLoaded) {
-    return <></>;
-  }
   if (!auth.uid) return <Redirect to='/' />
 
   return (

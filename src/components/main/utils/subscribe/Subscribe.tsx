@@ -1,8 +1,4 @@
 import React, { useContext } from 'react';
-import { isEqual } from 'lodash';
-import { useSelector } from 'react-redux';
-
-import { RootState } from '../../../../store/reducers/rootReducer';
 import { Product } from '../../../models/models';
 import { ProductsContext } from '../../Main';
 import './Subscribe.scss';
@@ -13,8 +9,6 @@ const Subscribe = (): JSX.Element => {
 
   const products = useContext(ProductsContext);
   const individualProducts = products.filter((p: Product) => p.name !== 'Institutional Pricing');
-
-  const auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
 
   const { cartOrPortal, loadingCartOrPortal, error } = useCartOrPortal();
 
@@ -30,7 +24,6 @@ const Subscribe = (): JSX.Element => {
             product={p}
             cartOrPortal={cartOrPortal(p.name)}
             loadingCartPortal={loadingCartOrPortal}
-            auth={auth}
           />
         })}
       </div>

@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
 import { useForm } from 'react-hook-form';
-
 import firebase from '../../../config/firebaseConfig';
-import { RootState } from '../../../store/reducers/rootReducer';
 import { Redirect } from 'react-router-dom';
+import { AuthContext } from '../Main';
 import './ForgotPassword.scss';
 
 const ForgotPassword = (): JSX.Element => {
-  const auth = useSelector((state: RootState) => state.firebase.auth, shallowEqual);
+  const auth = useContext(AuthContext);
 
   const [resetResponse, setResetResponse] = useState<string>('');
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, errors } = useForm();
 
-  if(!auth.isLoaded) {
-    return <></>;
-  }
   if (auth.uid) return <Redirect to='/' />
 
   const onSubmit = (data: any) : void => {

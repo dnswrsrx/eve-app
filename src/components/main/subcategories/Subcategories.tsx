@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps, Category } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
-import { RootState } from '../../../store/reducers/rootReducer';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 import Loading from '../../general/loading/Loading';
+import { AuthContext } from '../Main';
 import useSubscription from '../../../utils/userSubscription';
 import { sortAWLSubcategories } from '../../../utils/utils';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
@@ -31,9 +31,9 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   const subcategories = useSelector(({ firestore: { ordered } }: any) => ordered[`subcategories-${categoryId}`], isEqual);
   const isSubscribed = useSubscription(topLevelCategory && topLevelCategory.name);
 
-  const auth = useSelector(( state: RootState  ) => state.firebase.auth);
+  const auth = useContext(AuthContext);
 
-  if(!isLoaded(topLevelCategory) || !isLoaded(subcategories) || !auth.isLoaded) return <Loading />;
+  if (!isLoaded(topLevelCategory) || !isLoaded(subcategories) ) return <Loading />;
 
   const renderSubcategories = () => {
     const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? [...subcategories].sort(sortAWLSubcategories) : subcategories;

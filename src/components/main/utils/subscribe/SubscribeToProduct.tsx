@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { FirebaseReducer, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { AuthContext } from '../../Main';
 import { CollectionNames, Product } from '../../../models/models';
-
 import useSubscription from '../../../../utils/userSubscription';
-
 import './Subscribe.scss';
+
 
 interface SubscribeToProductProps {
   product: Product,
   cartOrPortal?: Function|null,
   loadingCartPortal?: string|null,
-  auth?: FirebaseReducer.AuthState|null,
 }
 
-const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal, auth }: SubscribeToProductProps) => {
+
+const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: SubscribeToProductProps) => {
+
+  const auth = useContext(AuthContext);
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,

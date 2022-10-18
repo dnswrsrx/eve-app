@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
-import firebase from '../config/firebaseConfig';
+import { useContext } from 'react';
+import { isEqual } from 'lodash';
+import { useSelector } from 'react-redux';
+import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { AuthContext } from '../components/main/Main';
 
 const useSubscription = (wordCategory: string|null = null): string|boolean|null => {
   // Return a string if
@@ -10,20 +13,16 @@ const useSubscription = (wordCategory: string|null = null): string|boolean|null 
   //  - false if no user
   // Return null if waiting for user to load
 
-  const [subscription, setSubscription] = useState<string|null>(null);
-  const user = firebase.auth().currentUser;
+  const auth = useContext(AuthContext);
 
-  useEffect(() => {
-    if (user) {
-      firebase.firestore().collection('users').doc(user.uid)
-        .onSnapshot(
-          observer => setSubscription(observer?.data()?.main || ''),
-          () => setSubscription(null)
-        )
-    }
-  }, [user])
+  useFirestoreConnect([
+    {collection: 'users', doc: auth.uid, storeAs: 'currentUser'}
+  ])
+  const userInfo = useSelector(({ firestore: { data } }: any) => data['currentUser'], isEqual);
 
-  if (!user || !user.uid) return false;
+  if (!auth.uid) return false;
+
+  const subscription:string|null = isLoaded(userInfo) ? userInfo.main : null;
 
   if (subscription !== null && wordCategory) return subscription.includes(wordCategory);
 

@@ -1,12 +1,10 @@
-import React, { createRef, useEffect, useCallback } from 'react';
+import React, { createRef, useEffect, useCallback, useContext } from 'react';
 import { Link, useHistory  } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { isEqual } from 'lodash';
-import { RootState } from '../../../store/reducers/rootReducer';
 import { HomeLanguage } from '../../models/models';
 import firebase from '../../../config/firebaseConfig';
+import { AuthContext } from '../Main';
 import './Header.scss';
 
 
@@ -28,7 +26,7 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
   const accountPaths: (string | null)[] = ['login', 'my-account'];
   const subscriptionPath: (string | null)[] = ['subscription'];
 
-  const auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
+  const auth = useContext(AuthContext);
 
   const logOut = (): void => {
     firebase.auth().signOut();
@@ -101,7 +99,7 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
           <ul className="header__nav-list">
             <li>
               <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>
-                { auth.isLoaded && auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
+                { auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
               </Link>
             </li>
             <li>
@@ -110,12 +108,10 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
             {/* <li>
               <Link to="/weekly-study-guides" className={checkCurrentPath(studyGuidePaths)}>Weekly Study Guides</Link>
             </li> */}
-            { auth.isLoaded &&
-              <li>
-                <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
-              </li>
-            }
-            { auth.isLoaded && auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
+            <li>
+              <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
+            </li>
+            { auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
             { window.location.pathname.length === 1 &&
               <li className="header__language">
                 <Link to="#" onClick={toggleLanguageMenu} className="header__language-icon"><FontAwesomeIcon icon={faGlobe} /> &#9662;</Link>
