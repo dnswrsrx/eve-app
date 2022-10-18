@@ -7,7 +7,6 @@ import { isEqual } from 'lodash';
 import { RootState } from '../../../store/reducers/rootReducer';
 import { HomeLanguage } from '../../models/models';
 import firebase from '../../../config/firebaseConfig';
-import Loading from '../../general/loading/Loading';
 import './Header.scss';
 
 
@@ -86,14 +85,6 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
     ));
   }
 
-  if(!auth.isLoaded) {
-    return (
-      <section className="admin-dashboard">
-        <Loading />
-      </section>
-    );
-  }
-
   return (
     <header className="header">
       <div className="header__wrapper page-wrapper">
@@ -110,7 +101,7 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
           <ul className="header__nav-list">
             <li>
               <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>
-                { auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
+                { auth.isLoaded && auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
               </Link>
             </li>
             <li>
@@ -119,16 +110,20 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
             {/* <li>
               <Link to="/weekly-study-guides" className={checkCurrentPath(studyGuidePaths)}>Weekly Study Guides</Link>
             </li> */}
-            <li>
-              <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
-            </li>
-            { auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
+            { auth.isLoaded &&
+              <li>
+                <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
+              </li>
+            }
+            { auth.isLoaded && auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
             { window.location.pathname.length === 1 &&
               <li className="header__language">
                 <Link to="#" onClick={toggleLanguageMenu} className="header__language-icon"><FontAwesomeIcon icon={faGlobe} /> &#9662;</Link>
-                <ul ref={languageMenu}>
-                  { renderLanguages() }
-                </ul>
+                { homeLanguages &&
+                  <ul ref={languageMenu}>
+                    { renderLanguages() }
+                  </ul>
+                }
               </li>
             }
           </ul>
