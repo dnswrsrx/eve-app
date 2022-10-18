@@ -12,9 +12,7 @@ const MyAccount = (): JSX.Element => {
   if(!auth.isLoaded) {
     return <></>;
   }
-  if(!auth.uid) {
-    return <Redirect to='/' />
-  }
+  if (!auth.uid) return <Redirect to='/' />
 
   return (
     <section className="account-page">

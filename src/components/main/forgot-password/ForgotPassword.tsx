@@ -18,9 +18,7 @@ const ForgotPassword = (): JSX.Element => {
   if(!auth.isLoaded) {
     return <></>;
   }
-  if(auth.uid) {
-    return <Redirect to='/' />
-  }
+  if (auth.uid) return <Redirect to='/' />
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
