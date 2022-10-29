@@ -58,7 +58,7 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
   if (!isLoaded(exercise)) return <Loading />;
 
   // Redirect back to groups if viewing exercise/test of a non-free group/subcategory
-  if (isSubscribed === false && (!groupId || (group && !group.free))) {
+  if (!isSubscribed && (!groupId || (group && !group.free))) {
     window.location.assign(`/groups/${subcategoryId}`);
   }
 

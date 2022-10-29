@@ -8,7 +8,7 @@ import './Instructions.scss';
 
 interface InstructionsProps {
   auth: FirebaseReducer.AuthState,
-  subscription?: string|boolean
+  subscription: string|null
 }
 
 const Instructions = ({ auth, subscription }: InstructionsProps): JSX.Element => {

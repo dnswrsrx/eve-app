@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { UserInfoContext, CurrentSubscriptionContext } from '../components/main/Main';
 
-const useSubscription = (wordCategory?: string|null): string|boolean|undefined => {
+const useSubscription = (wordCategory?: string|null): string|null => {
   // Returns undefined if
   //  - not logged in
   //  - no subscription
@@ -16,13 +16,12 @@ const useSubscription = (wordCategory?: string|null): string|boolean|undefined =
   if (userInfo) {
 
     if (currentSubscription) {
-      let subscription = currentSubscription.items[0].price.product.name;
-
-      if (wordCategory) return subscription.includes(wordCategory);
-
-      return subscription;
+      const subscription = currentSubscription.items[0].price.product.name;
+      if (!wordCategory || subscription.includes(wordCategory)) return subscription;
     }
   }
+
+  return null;
 }
 
 export default useSubscription;

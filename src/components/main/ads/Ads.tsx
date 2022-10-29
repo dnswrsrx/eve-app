@@ -15,7 +15,7 @@ const Ads = ({ slot }: AdsProp): JSX.Element => {
   const isSubscribed = useSubscription();
 
   if (!pathsToHideAds.includes(window.location.pathname)) {
-    if (!auth.uid || isSubscribed === '') {
+    if (!auth.uid || !isSubscribed) {
       return <Adsense client="ca-pub-6759848654104488" slot={slot} format="fluid" />
     }
   }
