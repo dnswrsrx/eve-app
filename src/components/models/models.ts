@@ -23,6 +23,7 @@ export enum CollectionNames {
   Pages = 'pages',
   Contact = 'contact-page',
   Products = 'products',
+  Users = 'users',
 }
 
 export enum DefaultStudyGuide {
@@ -214,4 +215,28 @@ export interface Product {
   name: string,
   stripe_metadata_price: number,
   stripe_metadata_price_id: string,
+}
+
+export interface UserInfo {
+  canTest: boolean,
+  email: string,
+  main?: string,
+  accessCode?: string,
+  accessCodeExpiry?: Date;
+  stripeId: string,
+  stripeLink: string,
+}
+
+export interface SubscriptionItem {
+  price: {
+    product: {
+      name: string
+    }
+  }
+}
+
+export interface CurrentSubscription {
+  status: string,
+  quantity: number,
+  items: SubscriptionItem[],
 }

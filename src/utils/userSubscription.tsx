@@ -1,32 +1,28 @@
 import { useContext } from 'react';
-import { isEqual } from 'lodash';
-import { useSelector } from 'react-redux';
-import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { AuthContext } from '../components/main/Main';
+import { UserInfoContext, CurrentSubscriptionContext } from '../components/main/Main';
 
-const useSubscription = (wordCategory: string|null = null): string|boolean|null => {
+const useSubscription = (wordCategory?: string|null): string|boolean|undefined => {
+  // Returns undefined if
+  //  - not logged in
+  //  - no subscription
+  //  Returns a boolean if
+  //  - wordCategory is passed in and whether the user's subscription includes that category
   // Return a string if
   //  - user is subscribed to something (returns product's name)
-  //  - empty string if there is a user but not subscribed to anything
-  // Return a boolean if
-  //  - wordCategory is passed in and whether the user's subscription includes that category
-  //  - false if no user
-  // Return null if waiting for user to load
 
-  const auth = useContext(AuthContext);
+  const userInfo = useContext(UserInfoContext);
+  const currentSubscription = useContext(CurrentSubscriptionContext);
 
-  useFirestoreConnect([
-    {collection: 'users', doc: auth.uid, storeAs: 'currentUser'}
-  ])
-  const userInfo = useSelector(({ firestore: { data } }: any) => data['currentUser'], isEqual);
+  if (userInfo) {
 
-  if (!auth.uid) return false;
+    if (currentSubscription) {
+      let subscription = currentSubscription.items[0].price.product.name;
 
-  const subscription:string|null = isLoaded(userInfo) ? userInfo.main : null;
+      if (wordCategory) return subscription.includes(wordCategory);
 
-  if (subscription !== null && wordCategory) return subscription.includes(wordCategory);
-
-  return subscription;
+      return subscription;
+    }
+  }
 }
 
 export default useSubscription;
