@@ -71,30 +71,25 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
       }
 
       { (window.location.pathname.includes('/subscription') || window.location.pathname === '/') && product.description && <p>{product.description}</p> }
-      {
 
+      {
         window.location.pathname === '/'
-          ? <p className="subscribe__text bold">
-              { product.name.includes('Academic Vocabulary') ? '$8 USD/year' : `$${amount} USD/year`}
-            </p>
-          : priceID && price &&
-              ( auth && auth.uid && auth.email
-                ? <button
-                    className="subscribe__subscribe"
-                    onClick={() => manageSubscription(priceID)}
-                    disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed || !['admin@eve.com', 'gerry@cpr4esl.com', 'dennissaw12@gmail.com'].includes(auth.email)}
-                  >
-                    { subscription
-                      ? ( isSubscribed
-                            ? `Currently subscribed ($${amount} USD/year)`
-                            : loading ? 'Loading portal...' : `Update subscription ($${amount} USD/year)`
-                        )
-                      : loading ? 'Loading cart...' : `Subscribe for $${amount} USD/year`
-                    }
-                    { loading && <span className="subscribe__spinner"></span> }
-                  </button>
-                : <p className="subscribe__text bold">${amount} USD/year</p>
-              )
+          ? <p className="subscribe__text bold">${amount} USD/year</p>
+          : price
+              ? <button
+                  className="subscribe__subscribe"
+                  onClick={() => manageSubscription(priceID || '')}
+                  disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed || !['admin@eve.com', 'gerry@cpr4esl.com', 'dennissaw12@gmail.com'].includes(auth.email)}
+                >
+                  { loading
+                      ? `Loading ${isSubscribed ? 'portal' : 'cart'}...`
+                      : !subscription
+                        ? `Subscribe for $${amount} USD/year`
+                        : `${isSubscribed ? 'Currently subscribed' : 'Update subscription'} ($${amount} USD/year)`
+                  }
+                  { loading && <span className="subscribe__spinner"></span> }
+                </button>
+              : <p className="subscribe__text bold">${amount} USD/year</p>
       }
     </div>
   )
