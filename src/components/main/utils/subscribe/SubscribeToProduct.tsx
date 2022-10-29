@@ -26,7 +26,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
     subcollections: [{ collection: 'prices' }]
   }]);
 
-  const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`])
+  const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`]);
   const priceID = isLoaded(prices) && Object.keys(prices).length ? Object.keys(prices)[0] : null;
   const price = priceID ? prices[priceID] : null;
   const amount = price && price.unit_amount / 100;
