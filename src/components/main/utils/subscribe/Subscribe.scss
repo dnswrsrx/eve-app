@@ -12,14 +12,10 @@
   }
 
   &__col {
-    @include secondary-card;
+    @include secondary-card(false);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    &:hover {
-      background-color: inherit;
-    }
 
     > h3 {
       font-size: $medium-font;

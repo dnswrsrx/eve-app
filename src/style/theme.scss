@@ -168,13 +168,15 @@ $small-radius: 6px;
   }
 }
 
-@mixin secondary-card {
+@mixin secondary-card($hover: true) {
   @include card-styling;
   border-top: 5px solid $primary-color;
 
-  &:hover {
-    background-color: $background-color;
-    color: $text-color;
+  @if $hover {
+    &:hover {
+      background-color: $background-color;
+      color: $text-color;
+    }
   }
 }
 
