@@ -3,6 +3,14 @@
 .subscribe {
   @include center-container(1100px);
 
+  > p:first-child {
+    font-size: $medium-font;
+  }
+
+  > p {
+    margin-bottom: 0.5rem;
+  }
+
   &__products {
     @include grid-list(1fr 1fr, $gap: 2rem);
 

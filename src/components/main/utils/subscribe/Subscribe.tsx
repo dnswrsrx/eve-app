@@ -14,6 +14,7 @@ const Subscribe = (): JSX.Element => {
 
   return (
     <div className="subscribe">
+      <p>These are the current subscription tiers.</p>
 
       {error && <p className="error">Error creating the {error}. Please refresh the page and try again.</p>}
 

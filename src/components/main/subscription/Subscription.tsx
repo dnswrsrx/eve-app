@@ -23,8 +23,6 @@ const Subscription = (): JSX.Element => {
       <div className="subscription-page__wrapper page-wrapper">
         <h1 className="subscription-page__heading">Subscription</h1>
 
-        <p>We currently offer the following subscription tiers.</p>
-
         <Subscribe />
 
         { auth.uid && !auth.emailVerified &&
