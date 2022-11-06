@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { AuthContext } from '../../Main';
 import { CollectionNames, Product } from '../../../models/models';
-import useSubscription from '../../../../utils/userSubscription';
+import useSubscription from '../UserSubscriptionHook';
 import './Subscribe.scss';
 
 

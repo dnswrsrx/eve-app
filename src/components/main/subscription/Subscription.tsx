@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import Instructions from './Instructions/Instructions';
 import RegisterForm from './RegisterForm/RegisterForm';
 
-import useSubscription from '../../../utils/userSubscription';
+import useSubscription from '../utils/UserSubscriptionHook';
 import { AuthContext } from '../Main';
 
 import Subscribe from '../utils/subscribe/Subscribe';

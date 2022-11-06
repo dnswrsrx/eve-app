@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserInfoContext, CurrentSubscriptionContext } from '../components/main/Main';
+import { UserInfoContext, CurrentSubscriptionContext } from '../Main';
 
 const useSubscription = (wordCategory?: string|null): string|null => {
   // Returns undefined if

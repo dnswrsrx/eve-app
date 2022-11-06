@@ -5,7 +5,7 @@ import { CollectionNames, MatchProps } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import firebase from '../../../config/firebaseConfig';
-import useSubscription from '../../../utils/userSubscription';
+import useSubscription from '../utils/UserSubscriptionHook';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 

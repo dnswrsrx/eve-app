@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
 import { AuthContext } from '../../Main';
-import useSubscription from '../../../../utils/userSubscription';
+import useSubscription from '../UserSubscriptionHook';
 
 
 interface hookSignature {

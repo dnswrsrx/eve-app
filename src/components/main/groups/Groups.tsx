@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps, Group } from '../../models/models';
-import useSubscription from '../../../utils/userSubscription';
+import useSubscription from '../utils/UserSubscriptionHook';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import Loading from '../../general/loading/Loading';

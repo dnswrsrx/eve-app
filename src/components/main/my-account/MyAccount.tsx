@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
 import firebase from '../../../config/firebaseConfig';
-import useSubscription from '../../../utils/userSubscription';
+import useSubscription from '../utils/UserSubscriptionHook';
 import useCartOrPortalHook from '../utils/subscribe/CartOrPortalHook';
 import { AuthContext } from '../Main';
 import './MyAccount.scss';

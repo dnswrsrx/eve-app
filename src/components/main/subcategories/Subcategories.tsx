@@ -10,7 +10,7 @@ import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 import Loading from '../../general/loading/Loading';
 import { AuthContext } from '../Main';
-import useSubscription from '../../../utils/userSubscription';
+import useSubscription from '../utils/UserSubscriptionHook';
 import { sortAWLSubcategories } from '../../../utils/utils';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
 import './Subcategories.scss';

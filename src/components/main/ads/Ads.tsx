@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Adsense } from '@ctrl/react-adsense';
 import { AuthContext } from '../Main';
-import useSubscription from '../../../utils/userSubscription';
+import useSubscription from '../utils/UserSubscriptionHook';
 
 const pathsToHideAds = ['/my-account', '/subscription', '/login', '/forgot-password'];
 
