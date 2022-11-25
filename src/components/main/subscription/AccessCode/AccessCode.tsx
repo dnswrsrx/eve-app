@@ -38,7 +38,6 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
     const useCode = (): void => {
       const input: HTMLInputElement | null = accessCodeInput.current;
       const value = input!.value.trim();
-      setLoading(true);
 
       if (input && value) {
         setError('');
