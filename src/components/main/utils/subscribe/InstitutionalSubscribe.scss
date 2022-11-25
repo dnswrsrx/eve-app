@@ -1,0 +1,80 @@
+@import '../../../../style/theme.scss';
+
+.institutional {
+  @include secondary-card(false);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  justify-content: space-between;
+
+  table {
+    border: 1px solid $primary-color;
+    border-radius: 5px;
+    padding: 0.5rem;
+    text-align: left;
+
+    th {
+      white-space: nowrap;
+
+      &:first-of-type {
+        padding-right: 1rem;
+      }
+    }
+  
+    tr:first-of-type {
+      border-bottom: 1px solid $primary-color;
+    }
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    @include breakpoint($md) {
+      flex-direction: column;
+    }
+
+    & > article > p:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__units {
+    width: 50%;
+
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    justify-content: space-between;
+
+    input {
+      @include form-input;
+      margin-right: 0.5rem;
+    }
+
+    p {
+      font-size: $small-font;
+      white-space: nowrap;
+    }
+  }
+
+  &__reduction-warning {
+    color: $primary-highlight-color;
+    filter: brightness(0.7);
+  }
+
+  button {
+    @include primary-button;
+    width: 50%;
+  }
+
+  &__spinner {
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: auto 0.5rem auto 1rem;
+      @include spinner(5px, $primary-color, 1s);
+    }
+}

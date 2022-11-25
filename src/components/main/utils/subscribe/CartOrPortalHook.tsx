@@ -36,7 +36,7 @@ const useCartOrPortalHook = (): hookSignature => {
     })
   }
 
-  const checkout = (priceID: string) => {
+  const checkout = (priceID: string, quantity?: number) => {
 
     if (user) {
       setLoadingCartOrPortal('cart');
@@ -45,6 +45,7 @@ const useCartOrPortalHook = (): hookSignature => {
       // Once session is in Firestore, it'll ping Stripe to verify.
       user.collection('checkout_sessions').add({
         price: priceID,
+        quantity: quantity || 1,
         customerEmail: auth.email,
         mode: 'subscription',
         success_url: window.location.href,

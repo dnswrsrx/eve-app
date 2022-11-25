@@ -24,6 +24,7 @@ export enum CollectionNames {
   Contact = 'contact-page',
   Products = 'products',
   Users = 'users',
+  AccessCodes = 'access-codes',
 }
 
 export enum DefaultStudyGuide {
@@ -246,4 +247,25 @@ export interface CurrentSubscription {
   status: string,
   quantity: number,
   items: SubscriptionItem[],
+  created: { seconds: number },
+  cancel_at: { seconds: number } | null,
+  cancel_at_period_end: boolean,
+  current_period_end: { seconds: number },
+}
+
+export interface AccessCodeInfo {
+  quantity: number;
+  remaining?: number;
+  current_period_end: {seconds: number},
+  ended_at: {seconds: number} | null,
+  status: string,
+}
+
+export interface Subscriber {
+  email: string,
+  created: {seconds: number},
+}
+
+export interface Subscribers {
+  [uid: string]: Subscriber
 }

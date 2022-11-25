@@ -4,6 +4,7 @@ import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { AuthContext } from '../../Main';
 import { CollectionNames, Product, Price } from '../../../models/models';
 import useSubscription from '../UserSubscriptionHook';
+import { UserInfoContext } from '../../Main';
 import './Subscribe.scss';
 
 
@@ -17,6 +18,7 @@ interface SubscribeToProductProps {
 const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: SubscribeToProductProps) => {
 
   const auth = useContext(AuthContext);
+  const userInfo = useContext(UserInfoContext);
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,
@@ -75,7 +77,7 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
       { (window.location.pathname.includes('/subscription') || window.location.pathname === '/') && product.description && <p>{product.description}</p> }
 
       {
-        window.location.pathname === '/'
+        window.location.pathname === '/' || (subscription || '').includes('Institutional')
           ? <p className="subscribe__text bold">${amount} USD/year</p>
           : price
               ? <button

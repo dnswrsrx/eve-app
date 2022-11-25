@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 
 import Instructions from './Instructions/Instructions';
 import RegisterForm from './RegisterForm/RegisterForm';
+import AccessCode from './AccessCode/AccessCode';
 
 import useSubscription from '../utils/UserSubscriptionHook';
 import { AuthContext } from '../Main';
 
 import Subscribe from '../utils/subscribe/Subscribe';
+import InstitutionalSubscribe from '../utils/subscribe/InstitutionalSubscribe';
 import './Subscription.scss'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,12 +38,15 @@ const Subscription = (): JSX.Element => {
           </div>
         }
 
-        { subscription &&
+        { subscription && !subscription.includes('Institutional ') &&
             <div className="subscription-page__subscribed">
               <h3>
                 <span><FontAwesomeIcon icon={faCheckCircle} /></span>
-                You are now subscribed to { subscription }.
-                Start growing your English vocabulary today!
+                {
+                    subscription.includes('Institutional-')
+                      ? 'You now have access to both Academic and General categories. Start growing your English vocabulary today!'
+                      : `You are now subscribed to ${subscription}. Start growing your English vocabulary today!`
+                }
               </h3>
             </div>
         }
@@ -52,6 +57,11 @@ const Subscription = (): JSX.Element => {
             {!auth.uid && <RegisterForm /> }
           </div>
         }
+
+        <div className="subscription-page__actions">
+          <InstitutionalSubscribe auth={auth} subscription={subscription} />
+          {(!subscription || subscription.includes('Institutional')) && <AccessCode auth={auth} subscription={subscription} />}
+        </div>
       </div>
     </section>
   )

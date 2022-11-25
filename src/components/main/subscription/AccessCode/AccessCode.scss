@@ -1,0 +1,37 @@
+@import '../../../../style/theme.scss';
+
+.access-code {
+  @include secondary-card(false);
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  align-self: start;
+
+  @include breakpoint($md) {
+    align-self: stretch;
+  }
+
+  input {
+    @include form-input;
+  }
+
+  button {
+    @include primary-button;
+    padding: 0.25rem 3rem;
+  }
+
+  &__spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    @include spinner(5px, $primary-color, 1s);
+  }
+
+  &__error {
+    color: $error-color;
+  }
+
+  code {
+    font-size: $small-font;
+  }
+}

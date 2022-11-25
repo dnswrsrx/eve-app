@@ -59,7 +59,7 @@ const Instructions = ({ auth, subscription }: InstructionsProps): JSX.Element =>
           Subscribe
         </summary>
         <ol>
-          <li>You can now choose the tier you would like to subscribe above.</li>
+          <li>You can now either subscribe to one of the tiers above or purchase multiple subscriptions. If you were provided an access code, you may enter and submit that instead.</li>
           <li>When you've clicked on a <strong>Subscribe</strong> button, you will be brought to a new page to enter your credit card information.</li>
           <li>Once you're subscribed, you can access all the groups and exercises in the tier you chose.</li>
         </ol>

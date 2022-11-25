@@ -67,23 +67,48 @@ exports.onGroupDelete = functions.firestore.document('subcategories/{subcategory
 
 exports.onSubscriptionWrite = functions.firestore.document('users/{userID}/subscriptions/{subscriptionID}').onWrite(
   async (snap, context) => {
-
     const userID = context.params.userID;
     const subscription = snap.after.data();
 
     if (subscription) {
+      const promises: Promise<FirebaseFirestore.WriteResult>[] = [];
 
       const userDoc = await admin.firestore().collection('users').doc(userID).get();
 
       if (userDoc) {
-        if (subscription.status !== 'active') return Promise.resolve(userDoc.ref.update({ main: admin.firestore.FieldValue.delete() }));
+        const subscriptionItem = subscription.items[0];
 
-        const productName = subscription.items[0].price.product.name;
+        if (subscriptionItem.price.product.name === 'Institutional Pricing') {
+          const accessCode = admin.firestore().collection('access-codes').doc(userID);
 
-        if (['General Vocabulary', 'General Vocabulary + Academic Vocabulary'].includes(productName)) {
-          return Promise.resolve(userDoc.ref.update({ main: productName }));
+          const subscribersCollection = accessCode.collection('subscribers');
+          const subscribersSnapshot = await subscribersCollection.get();
+          const subscribers = subscribersSnapshot.docs
+            .map(d => {
+              const { email, created, disabled } = d.data();
+              return {email, created, disabled, id: d.id};
+            })
+            .sort((prev, curr) => Number(prev.created.seconds > curr.created.seconds));
+
+          const remainingSpots = subscriptionItem.quantity - subscribers.length;
+
+          // Update access code info
+          promises.push(accessCode.set({
+            quantity: subscriptionItem.quantity,
+            remaining: Math.max(0, remainingSpots),
+            status: subscription.status,
+            ended_at: subscription.ended_at,
+            current_period_end: subscription.current_period_end,
+          }, { merge: true }))
+
+          // Delete subscribers until number of subscribers matches the number of units user purchased
+          if (remainingSpots < 0) {
+            const toDelete = subscribers.slice(0, -remainingSpots);
+            toDelete.forEach(s => promises.push(subscribersCollection.doc(s.id).delete()));
+          }
         }
       }
+      return Promise.all(promises)
     }
-    return null;
+    return;
   })
