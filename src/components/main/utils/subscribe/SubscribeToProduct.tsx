@@ -38,6 +38,8 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
 
   useEffect(() => {if (loadingCartPortal === null) setLoading(false)}, [loadingCartPortal]);
 
+  if (!isLoaded(prices)) return <></>
+
   const manageSubscription = (priceID: string) => {
     setLoading(true);
     if (cartOrPortal) {
