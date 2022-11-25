@@ -217,6 +217,13 @@ export interface Product {
   stripe_metadata_price_id: string,
 }
 
+export interface Price {
+  active: boolean,
+  billing_scheme: string,
+  currency: string,
+  unit_amount?: number,
+}
+
 export interface UserInfo {
   canTest: boolean,
   email: string,

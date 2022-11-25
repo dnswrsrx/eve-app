@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { AuthContext } from '../../Main';
-import { CollectionNames, Product } from '../../../models/models';
+import { CollectionNames, Product, Price } from '../../../models/models';
 import useSubscription from '../UserSubscriptionHook';
 import './Subscribe.scss';
 
@@ -26,11 +26,8 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
     subcollections: [{ collection: 'prices' }]
   }]);
 
-  const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`]);
-  const priceID = isLoaded(prices) && Object.keys(prices).length ? Object.keys(prices)[0] : null;
-  const price = priceID ? prices[priceID] : null;
-  const amount = price && price.unit_amount / 100;
-
+  const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`]) || {};
+  
   const subscription = useSubscription();
   const isSubscribed = Boolean(subscription && subscription === product.name);
 
@@ -39,6 +36,9 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
   useEffect(() => {if (loadingCartPortal === null) setLoading(false)}, [loadingCartPortal]);
 
   if (!isLoaded(prices)) return <></>
+
+  const [priceID, price]: [string|null, Price|null] = Object.entries(prices).length ? Object.entries(prices)[0] as [string|null, Price|null] : [null, null];
+  const amount = (price?.unit_amount || 0) / 100;
 
   const manageSubscription = (priceID: string) => {
     setLoading(true);
