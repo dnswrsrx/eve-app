@@ -88,7 +88,7 @@ exports.onSubscriptionWrite = functions.firestore.document('users/{userID}/subsc
               const { email, created, disabled } = d.data();
               return {email, created, disabled, id: d.id};
             })
-            .sort((prev, curr) => Number(prev.created.seconds > curr.created.seconds));
+            .sort((prev, curr) => prev.created.seconds > curr.created.seconds ? 1 : -1);
 
           const remainingSpots = subscriptionItem.quantity - subscribers.length;
 
