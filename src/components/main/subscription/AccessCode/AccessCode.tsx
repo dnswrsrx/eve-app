@@ -136,6 +136,25 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
   const cancelAt = currentSubscription?.cancel_at && new Date(currentSubscription.cancel_at.seconds * 1000).toLocaleDateString();
   const periodEnd = currentSubscription?.cancel_at_period_end && new Date(currentSubscription.current_period_end.seconds * 1000).toLocaleDateString();
 
+  const copyCode = (): void => {
+    if (document?.getElementById('access-code__code')) {
+      navigator.clipboard.writeText(document?.getElementById('access-code__code')?.innerText || '')
+      .then((): void => {
+        const copyButton = document?.getElementById('access-code__copy-code');
+        if (copyButton) {
+          copyButton.setAttribute('disabled', '');
+          const currentText = copyButton.innerText;
+          copyButton.innerText = 'Copied';
+
+          setTimeout(() => {
+            copyButton.innerText = currentText;
+            copyButton.removeAttribute('disabled');
+          }, 2000);
+        }
+      })
+    }
+  }
+
   return (
     <div className="access-code">
       <h2>Access Code</h2>
@@ -147,8 +166,10 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
           : <>
             <p>
               Share the following access code:<br />
-              <code>{ auth.uid }</code>
+              <code id="access-code__code">{ auth.uid }</code>
             </p>
+
+            <button id="access-code__copy-code" onClick={copyCode}>Copy Code</button>
 
             <article className="access-code__units">
               <p>Units purchased: <strong>{ accessCode.quantity }</strong></p>
