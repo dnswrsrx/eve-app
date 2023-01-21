@@ -11,6 +11,10 @@
 
   &__list {
     @include grid-list(1fr 1fr 1fr 1fr 1fr);
+
+    &:not(:first-of-type) {
+      margin-top: 2rem;
+    }
   }
 
   @include breakpoint($lg) {

@@ -11,7 +11,6 @@ import {faStar} from '@fortawesome/free-solid-svg-icons';
 import Loading from '../../general/loading/Loading';
 import { AuthContext } from '../Main';
 import useSubscription from '../utils/UserSubscriptionHook';
-import { sortAWLSubcategories } from '../../../utils/utils';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
 import './Subcategories.scss';
 
@@ -36,15 +35,32 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   if (!isLoaded(topLevelCategory) || !isLoaded(subcategories) ) return <Loading />;
 
   const renderSubcategories = () => {
-    const sortedSubcategories = topLevelCategory.name.includes('Academic Vocabulary') ? [...subcategories].sort(sortAWLSubcategories) : subcategories;
-    return sortedSubcategories
-      // render subcategory with [test] in name if admin
-      .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
-      .map((subcategory: Category): JSX.Element => (
-        <li key={subcategory.id}>
-          <SubcategoryCard subcategory={subcategory} notSubscribed={!isSubscribed} />
-        </li>
-      ));
+    let sortedSubcategories = [subcategories];
+
+    if (topLevelCategory.name.includes('Academic Vocabulary')) {
+      const regularAWL = subcategories.filter((subcategory: Category) => !subcategory.name.includes('More'));
+      const moreAWL = subcategories.filter((subcategory: Category) => subcategory.name.includes('More'));
+      sortedSubcategories = [regularAWL, moreAWL];
+    }
+
+    return <>
+      {
+        sortedSubcategories.map((subcategories, i) => {
+          return <ul className="subcategories__list" key={i}>
+            {
+              subcategories
+                // render subcategory with [test] in name if admin
+                .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
+                .map((subcategory: Category): JSX.Element => (
+                  <li key={subcategory.id}>
+                    <SubcategoryCard subcategory={subcategory} notSubscribed={!isSubscribed} />
+                  </li>
+                ))
+            }
+          </ul>
+        })
+      }
+    </>
   }
 
   if(!topLevelCategory) {
@@ -85,9 +101,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
         }
         {
           subcategories.length
-            ? <ul className="subcategories__list">
-                { renderSubcategories() }
-              </ul>
+            ? renderSubcategories()
             : <p>There are no subcategories to display.</p>
         }
       </div>
