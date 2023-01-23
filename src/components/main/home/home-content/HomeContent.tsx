@@ -42,6 +42,9 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         <Ads slot="8767665789" />
 
         <h2>There are two main categories to learn and practise your new vocabulary.</h2>
+
+        <h4>The prices below are for individual subscriptions. We offer multiple and institutional subscriptions too!</h4>
+
         <div className="subscribe__products">
           { individualProducts.map((p: Product, index: number) => {
             return <SubscribeToProduct
