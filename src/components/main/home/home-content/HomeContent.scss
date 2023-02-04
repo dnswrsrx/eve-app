@@ -18,10 +18,6 @@
     margin-bottom: 1rem;
   }
 
-  h2 ~ h4 {
-    margin-top: -0.5rem;
-  }
-
   &__banner-heading {
     font-size: $xl-font;
   }
@@ -50,6 +46,21 @@
     margin: 0 auto;
   }
 
+  .subscribe__institutional {
+    @include secondary-card(false);
+    display: flex;
+    flex-direction: column;
+    h3 {
+      font-size: $medium-font;
+    }
+    img {
+      height: 130px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
   @include breakpoint($lg) {
     &__banner-wrapper {
       display: flex;
@@ -61,6 +72,10 @@
   @include breakpoint($md) {
     &__banner-wrapper {
       padding: 2rem 3rem 0 3rem;
+    }
+
+    .subscribe__institutional {
+      width: 100%;
     }
   }
 

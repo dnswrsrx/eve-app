@@ -43,8 +43,6 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
         <h2>There are two main categories to learn and practise your new vocabulary.</h2>
 
-        <h4>The prices below are for individual subscriptions. We offer multiple and institutional subscriptions too!</h4>
-
         <div className="subscribe__products">
           { individualProducts.map((p: Product, index: number) => {
             return <SubscribeToProduct
@@ -52,6 +50,11 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
               product={p}
             />
           })}
+        </div>
+
+        <div className="subscribe__institutional">
+          <h3>Visit our <a href="/subscription">subscription page</a> for institutional rates!</h3>
+          <img src="/images/meeting.svg" alt="Meeting" />
         </div>
 
         <h3>Each category is further divided into subcategories of 14 to 17 words.</h3>
