@@ -43,6 +43,10 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
         <h2>There are two main categories to learn and practise your new vocabulary.</h2>
 
+        <h3>Each category is further divided into subcategories of 14 to 17 words.</h3>
+
+        <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
+
         <div className="subscribe__products">
           { individualProducts.map((p: Product, index: number) => {
             return <SubscribeToProduct
@@ -56,10 +60,6 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
           <h3>Visit our <a href="/subscription">subscription page</a> for institutional rates!</h3>
           <img src="/images/meeting.svg" alt="Meeting" />
         </div>
-
-        <h3>Each category is further divided into subcategories of 14 to 17 words.</h3>
-
-        <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
 
         <Ads slot="1252137845" />
 
