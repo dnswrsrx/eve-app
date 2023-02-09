@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 import Loading from '../../general/loading/Loading';
-import { AuthContext } from '../Main';
+import { UserInfoContext } from '../Main';
 import useSubscription from '../utils/UserSubscriptionHook';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
 import './Subcategories.scss';
@@ -30,7 +30,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   const subcategories = useSelector(({ firestore: { ordered } }: any) => ordered[`subcategories-${categoryId}`], isEqual);
   const isSubscribed = useSubscription(topLevelCategory && topLevelCategory.name);
 
-  const auth = useContext(AuthContext);
+  const userInfo = useContext(UserInfoContext);
 
   if (!isLoaded(topLevelCategory) || !isLoaded(subcategories) ) return <Loading />;
 
@@ -50,7 +50,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
             {
               subcategories
                 // render subcategory with [test] in name if admin
-                .filter((subcategory: Category) => auth.uid === process.env.REACT_APP_ADMIN_UID || !subcategory?.name?.includes('[test]'))
+                .filter((subcategory: Category) => userInfo.isAdmin || !subcategory?.name?.includes('[test]'))
                 .map((subcategory: Category): JSX.Element => (
                   <li key={subcategory.id}>
                     <SubcategoryCard subcategory={subcategory} notSubscribed={!isSubscribed} />

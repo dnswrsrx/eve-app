@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import { RootState } from '../../store/reducers/rootReducer';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { Redirect } from 'react-router-dom';
 import Header from './header/Header';
 import Home from './home/Home';
@@ -21,11 +22,15 @@ import EditPages from './edit-pages/EditPages';
 import Footer from './footer/Footer';
 import PageNotFound from '../general/404/PageNotFound';
 import Loading from '../general/loading/Loading';
+import { CollectionNames, UserInfo } from '../models/models';
 
 const Admin = (): JSX.Element => {
   const auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
 
-  if(!auth.isLoaded) {
+  useFirestoreConnect([{ collection: CollectionNames.Users, doc: `${auth?.uid}`, storeAs: 'userInfo' }]);
+  const userInfo: UserInfo = useSelector(({ firestore: { data } }: any) => data['userInfo']);
+
+  if(!auth.isLoaded || !isLoaded(userInfo)) {
     return (
       <section className="admin-dashboard">
         <Header />
@@ -36,7 +41,7 @@ const Admin = (): JSX.Element => {
   else if(!auth.uid) {
     return <Redirect to='/admin-login' />
   }
-  else if(auth.uid !== process.env.REACT_APP_ADMIN_UID) {
+  else if(userInfo && !userInfo.isAdmin) {
     return <Redirect to='/' />
   }
 
