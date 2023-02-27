@@ -8,6 +8,7 @@ import { isEqual } from 'lodash';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
+import { sortAWLSubcategories } from '../../../utils/utils';
 import Loading from '../../general/loading/Loading';
 import { UserInfoContext } from '../Main';
 import useSubscription from '../utils/UserSubscriptionHook';
@@ -40,7 +41,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
     if (topLevelCategory.name.includes('Academic Vocabulary')) {
       const regularAWL = subcategories.filter((subcategory: Category) => !subcategory.name.includes('More'));
       const moreAWL = subcategories.filter((subcategory: Category) => subcategory.name.includes('More'));
-      sortedSubcategories = [regularAWL, moreAWL];
+      sortedSubcategories = [regularAWL.sort(sortAWLSubcategories), moreAWL];
     }
 
     return <>
