@@ -91,7 +91,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
             Back to Word Categories
           </Link>
         </div>
-        { isSubscribed ? <p>Select a subcategory!.</p>
+        { isSubscribed ? <p>Select a subcategory!</p>
           : <>
               <p>
                 As you are not subscribed to {topLevelCategory.name}, only the subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups.

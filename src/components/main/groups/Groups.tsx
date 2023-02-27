@@ -88,7 +88,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
         </div>
         {
           isSubscribed
-            ? <p>Select a group!</p>
+            ? <p>Select a group to begin work on the exercises!</p>
             : <p>
                 As you are not subscribed to {topLevelName}, only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available.
                 Each group contains words, their definitions, and exercises.
@@ -102,8 +102,14 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
           isSubscribed
             ? <Exercises exercises={tests} subcategoryId={subcategoryId} groupId={null}/>
             : <>
-                <h1>Tests</h1>
-                <p>Subscribe to {topLevelName} to access the tests for this sublist.</p>
+                <h1>Achievement Tests</h1>
+                <p>
+                  {
+                    isSubscribed
+                      ? 'Once you have completed the exercises in each group, check your knowledge of all the vocabulary with the following Achievement Tests'
+                      : 'Subscribe to {topLevelName} to access the tests for this sublist.'
+                  }
+                </p>
               </>
           )
         }

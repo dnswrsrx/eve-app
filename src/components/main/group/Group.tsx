@@ -84,10 +84,8 @@ const Group = ({ match }: GroupProps): JSX.Element => {
           </Link>
         </div>
         <p>
-          Select a word to learn more about it, or select an exercise to test your vocabulary!
-          { isSubscribed ||
-            ` Consider subscribing for full access to ${category}.`
-          }
+          Select a word to see a definition or select an exercise to practise the vocabulary in context.
+          { isSubscribed ? '' : ` Consider subscribing for full access to ${category}.`}
         </p>
         
         {

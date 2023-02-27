@@ -68,7 +68,7 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
 
       return (
         <>
-          <FontAwesomeIcon icon={faGrinBeam} /> Congratulations, you got the this question correct!
+          <FontAwesomeIcon icon={faGrinBeam} /> Congratulations, your answer is correct!
         </>
       )
     }

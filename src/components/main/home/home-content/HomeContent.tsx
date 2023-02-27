@@ -37,13 +37,18 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
            Start growing your English vocabulary today, with over 2000 carefully chosen words and over 800 exercises.
         </h3>
 
+        <h3>
+          New content will be added annually.
+        </h3>
+
         <Link className="home-content-container__start-today" to="/subscription">Get Started and Subscribe!</Link>
 
         <Ads slot="8767665789" />
 
-        <h2>There are two main categories to learn and practise your new vocabulary.</h2>
+        <h2>There are two main categories to learn and practise your new vocabulary:</h2>
+        <h2>General Vocabulary & Academic Vocabulary.</h2>
 
-        <h3>Each category is further divided into subcategories of 14 to 17 words.</h3>
+        <h3>Each category is further divided into subcategories of 10 to 17 words.</h3>
 
         <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
 
