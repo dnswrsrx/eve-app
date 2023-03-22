@@ -25,8 +25,6 @@ const Subscription = (): JSX.Element => {
       <div className="subscription-page__wrapper page-wrapper">
         <h1 className="subscription-page__heading">Subscription</h1>
 
-        <Subscribe />
-
         { auth.uid && !auth.emailVerified &&
           <div className="subscription-page__unverified">
             <h3>
@@ -50,6 +48,8 @@ const Subscription = (): JSX.Element => {
               </h3>
             </div>
         }
+
+        <Subscribe />
 
         { (!auth.uid || !subscription) &&
           <div className="subscription-page__actions">
