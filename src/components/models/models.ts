@@ -226,7 +226,6 @@ export interface Price {
 }
 
 export interface UserInfo {
-  canTest: boolean,
   isAdmin?: boolean,
   email: string,
   main?: string,
