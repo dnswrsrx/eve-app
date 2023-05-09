@@ -90,7 +90,7 @@ const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps)
 
   return (
     <div className="institutional">
-      <h2>Institutional Pricing</h2>
+      <h2>Yearly Institutional Rates</h2>
       <div className="institutional__info">
         <table>
           <thead>
