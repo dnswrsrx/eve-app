@@ -125,7 +125,7 @@ const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps)
 
         <article>
           <p>
-            Purchase multiple subscriptions and provide access to others <em>e.g.</em> for a class or institution. Subscriptions include both General and Academic categories of vocabulary.
+            Purchase multiple subscriptions and provide access to others. Useful if you have a class or are part of an institution. Subscriptions include both General and Academic categories of vocabulary.
           </p>
         </article>
       </div>
