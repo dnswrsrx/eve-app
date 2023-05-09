@@ -27,7 +27,7 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
   if (!auth?.uid || !userInfo) return (
     <div className="access-code">
       <h2>Access Code</h2>
-      <p>Please register and log in before you entering or managing your access code.</p>
+      <p>Please register and log in before you may enter or manage your access code.</p>
     </div>
   )
 
