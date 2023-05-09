@@ -95,7 +95,7 @@ const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps)
         <table>
           <thead>
             <tr>
-              <th>Number of Subscriptions</th>
+              <th>Number of subscriptions</th>
               <th>Cost per unit (USD)</th>
             </tr>
           </thead>
