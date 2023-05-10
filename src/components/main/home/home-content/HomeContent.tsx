@@ -48,7 +48,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         <h2 className="anchor">There are two main categories to learn and practise your new vocabulary:</h2>
         <h2 className="anchor">General Vocabulary & Academic Vocabulary.</h2>
 
-        <h3>Each category is further divided into subcategories of 10 to 17 words.</h3>
+        <h3>Each category is divided into subcategories of 10 to 17 words.</h3>
 
         <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
 
