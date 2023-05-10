@@ -22,37 +22,27 @@ interface SubscribeToProductProps {
 
 const TIERS = [
   { perUnit: 8, max: 4 },
-  { perUnit: 7, max: 16 },
-  { perUnit: 6.5, max: 15 },
-  { perUnit: 6, max: 15 },
+  { perUnit: 7, max: 20 },
+  { perUnit: 6.5, max: 35 },
+  { perUnit: 6, max: 50 },
   { perUnit: 5.5 },
 ];
 
 
 const calculateCost = (unitsAsString: string): string => {
 
-  let units = parseInt(unitsAsString);
+  const units = parseInt(unitsAsString);
 
-  if (units < 1) return '0';
-
-  let cost = 0;
-  let level = 0;
-
-  while (units) {
-    const currentTier = TIERS[level];
-
-    if (!currentTier.max || units < currentTier.max) {
-      cost += currentTier.perUnit * units
-      units -= units
-    } else {
-      cost += currentTier.perUnit * currentTier.max;
-      units -= currentTier.max;
-      level += 1;
+  if (units) {
+    for (const tier of TIERS) {
+      if (!tier.max || units <= tier.max) {
+        const cost = tier.perUnit * units;
+        return cost.toFixed(cost.toString().includes('.') ? 2 : 0);
+      }
     }
   }
-
-  return cost.toFixed(cost.toString().includes('.') ? 2 : 0);
- }
+  return '0'
+}
 
 
 const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps): JSX.Element => {
