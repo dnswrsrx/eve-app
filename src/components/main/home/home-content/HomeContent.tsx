@@ -19,7 +19,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
   if (!activeLanguage || activeLanguage.name === 'English') {
     return (
       <div className="home-content-container page-wrapper">
-        <h1 className="home-content-container__banner-heading">Welcome to English Vocabulary Exercises</h1>
+        <h1 className="home-content-container__banner-heading anchor">Welcome to English Vocabulary Exercises</h1>
         <div className="home-content-container__banner-text">
           <div className="home-content-container__banner-questions">
             <h3>Want to speak better and understand more?</h3>
@@ -45,8 +45,8 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
         <Ads slot="8767665789" />
 
-        <h2>There are two main categories to learn and practise your new vocabulary:</h2>
-        <h2>General Vocabulary & Academic Vocabulary.</h2>
+        <h2 className="anchor">There are two main categories to learn and practise your new vocabulary:</h2>
+        <h2 className="anchor">General Vocabulary & Academic Vocabulary.</h2>
 
         <h3>Each category is further divided into subcategories of 10 to 17 words.</h3>
 

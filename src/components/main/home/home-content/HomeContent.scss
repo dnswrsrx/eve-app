@@ -8,6 +8,10 @@
 
   color: $primary-color;
 
+  .anchor {
+    color: $text-color;
+  }
+
   min-height: calc(100vh - #{$header-height} - #{$footer-height});
   height: 100%;
 
