@@ -107,7 +107,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
                   {
                     isSubscribed
                       ? 'Once you have completed the exercises in each group, check your knowledge of all the vocabulary with the following Achievement Tests'
-                      : 'Subscribe to {topLevelName} to access the tests for this sublist.'
+                      : `Subscribe to ${topLevelName} to access the tests for this sublist.`
                   }
                 </p>
               </>
