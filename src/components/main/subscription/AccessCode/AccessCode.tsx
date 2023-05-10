@@ -24,7 +24,7 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
 
   const [, isSubscriber] = (subscription || '').split('-');
 
-  if (!auth?.uid || !userInfo) return (
+  if (!auth?.uid) return (
     <div className="access-code">
       <h2>Access Code</h2>
       <p>Please register and log in before you may enter or manage your access code.</p>
@@ -65,19 +65,24 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
             return;
           }
 
-          // Remove user from previous access code if there's one
-          // Free up spot if this access code becomes active in the future
-          if (userInfo.accessCode) {
-            const oldAccessCode = firestore.collection(CollectionNames.AccessCodes).doc(userInfo.accessCode)
-            oldAccessCode.get().then(d => {
-              const subscribers = oldAccessCode.collection('subscribers')
-              subscribers.doc(auth.uid).delete().then(() => {
-                subscribers.get().then(snapShot => {
-                  const numberOfSubscribers = snapShot.docs.map(d => d.data()).length;
-                  oldAccessCode.update({remaining: d.data()!.quantity - numberOfSubscribers}).then();
-                })
-              });
-            })
+          // Since we've configured Stripe extension not to create user on sign up,
+          // there wouldn't be a user document.
+          // So we can only check against existing access code if there's a user doc.
+          if (userInfo) {
+            // Remove user from previous access code if there's one
+            // Free up spot if this access code becomes active in the future
+            if (userInfo.accessCode) {
+              const oldAccessCode = firestore.collection(CollectionNames.AccessCodes).doc(userInfo.accessCode)
+              oldAccessCode.get().then(d => {
+                const subscribers = oldAccessCode.collection('subscribers')
+                subscribers.doc(auth.uid).delete().then(() => {
+                  subscribers.get().then(snapShot => {
+                    const numberOfSubscribers = snapShot.docs.map(d => d.data()).length;
+                    oldAccessCode.update({remaining: d.data()!.quantity - numberOfSubscribers}).then();
+                  })
+                });
+              })
+            }
           }
 
           const subscribers = accessCodeDoc.collection('subscribers');
@@ -89,7 +94,14 @@ const AccessCode = ({ auth, subscription }: AccessCodeProp): JSX.Element => {
               subscribers.get().then(snapShot => {
                 const numberOfSubscribers = snapShot.docs.map(d => d.data()).length;
                 accessCodeDoc.update({ remaining: info.quantity - numberOfSubscribers }).then(() => {
-                  firestore.collection(CollectionNames.Users).doc(auth.uid).update({ accessCode: value }).then(() => setLoading(false));
+                  const userDoc = firestore.collection(CollectionNames.Users).doc(auth.uid);
+                  // Create a new user document if one doesn't already exist.
+                  // Configured the Stripe extension not to create new customer on sign up!
+                  if (!userInfo) {
+                    userDoc.set({ email: auth.email, accessCode: value }).then(() => setLoading(false));
+                  } else {
+                    userDoc.update({ accessCode: value }).then(() => setLoading(false));
+                  }
                 })
               })
             })

@@ -51,7 +51,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
             {
               subcategories
                 // render subcategory with [test] in name if admin
-                .filter((subcategory: Category) => userInfo.isAdmin || !subcategory?.name?.includes('[test]'))
+                .filter((subcategory: Category) => userInfo?.isAdmin || !subcategory?.name?.includes('[test]'))
                 .map((subcategory: Category): JSX.Element => (
                   <li key={subcategory.id}>
                     <SubcategoryCard subcategory={subcategory} notSubscribed={!isSubscribed} />
