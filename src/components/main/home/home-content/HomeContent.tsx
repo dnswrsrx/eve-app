@@ -51,6 +51,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         <h3>Each category is divided into subcategories of 10 to 17 words.</h3>
 
         <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
+        <h3>We have free groups and exercises for you to try out in each category!</h3>
 
         <div className="subscribe__products">
           { individualProducts.map((p: Product, index: number) => {
