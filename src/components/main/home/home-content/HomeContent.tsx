@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
+
 import { HomeLanguage, Product } from '../../../models/models';
 
 import { ProductsContext } from '../../Main';
@@ -43,6 +46,10 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
 
         <Link className="home-content-container__start-today" to="/subscription">Get Started and Subscribe!</Link>
 
+        <div className="home-content-container__try">
+          <h3><FontAwesomeIcon icon={faStar}/> Try free exercises in the <Link to="/subcategories/0zwuF8q0eHklNDFZJAH9">General</Link> and <Link to="/subcategories/VQvdu2OoscCzjxPk1C5s">Academic</Link> categories</h3>
+        </div>
+
         <Ads slot="8767665789" />
 
         <h2 className="anchor">There are two main categories to learn and practise your new vocabulary:</h2>
@@ -51,7 +58,6 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         <h3>Each category is divided into subcategories of 10 to 17 words.</h3>
 
         <h3>Each subcategory contains 5 gap-fill exercises to practise each word in 5 different contexts.</h3>
-        <h3>We have free groups and exercises for you to try out in each category!</h3>
 
         <div className="subscribe__products">
           { individualProducts.map((p: Product, index: number) => {

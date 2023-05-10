@@ -29,7 +29,19 @@
   &__start-today {
     @include primary-button;
     padding: 1rem 1rem;
+  }
+
+  &__try {
+    @include card-styling;
     margin-bottom: 2.5rem;
+
+    svg {
+      color: $primary-highlight-color;
+    }
+
+    a {
+      text-decoration: revert;
+    }
   }
 
   &__banner-text, &__main-content {
@@ -50,8 +62,13 @@
     margin: 0 auto;
   }
 
+  .subscribe__products {
+    margin-top: 1rem;
+  }
+
   .subscribe__institutional {
     @include secondary-card(false);
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     h3 {
