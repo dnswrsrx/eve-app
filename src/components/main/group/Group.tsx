@@ -77,7 +77,7 @@ const Group = ({ match }: GroupProps): JSX.Element => {
       <div className="group__wrapper page-wrapper">
         <div className="group__header">
           <h1 className="group__heading">
-            Group in {subcategory.name}
+            Group {group.number} in {subcategory.name}
           </h1>
           <Link to={`/groups/${subcategoryId}`}>
             Back to {subcategory.name}

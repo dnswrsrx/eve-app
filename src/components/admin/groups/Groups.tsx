@@ -23,7 +23,7 @@ const Groups = ({ match }: GroupProps): JSX.Element => {
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `groups-${subcategoryId}`,
       subcollections: [{
         collection: CollectionNames.Groups,
-        orderBy: ['createdAt', 'asc']
+        orderBy: ['number', 'asc']
       }]
     },
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `tests-${subcategoryId}`,
@@ -67,7 +67,7 @@ const Groups = ({ match }: GroupProps): JSX.Element => {
           </Link>
         </div>
         <p className="groups-admin__description">This is the interface for editing groups inside of a subcategory.</p>
-        <GroupAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} />
+        <GroupAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} number={groups.length + 1} />
         { successMessage && <p className="groups-admin__success-message success">{ successMessage }</p> }
         <GroupList groups={groups} subcategoryId={subcategoryId} setSuccessMessage={setSuccessMessage} />
         { parentCategory.name.includes('Academic') && <Exercises exercises={tests} setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={''} /> } 

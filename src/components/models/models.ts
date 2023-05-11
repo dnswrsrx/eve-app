@@ -117,6 +117,7 @@ export interface Group {
   words: WordList,
   free?: boolean,
   createdAt: firebase.firestore.Timestamp,
+  number: number,
 }
 
 export interface HomeLanguage {

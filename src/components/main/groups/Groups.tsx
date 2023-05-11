@@ -25,7 +25,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `groups-${subcategoryId}`,
       subcollections: [{
         collection: CollectionNames.Groups,
-        orderBy: ['createdAt', 'asc']
+        orderBy: ['number', 'asc']
       }]
     },
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `tests-${subcategoryId}`,
@@ -64,9 +64,8 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   }
 
   const renderGroups = (): JSX.Element => {
-    return groups.map((group: Group, index: number): JSX.Element => (
+    return groups.map((group: Group): JSX.Element => (
       <GroupCard
-        number={index + 1}
         subcategoryId={subcategoryId}
         group={group}
         notSubscribed={!isSubscribed}

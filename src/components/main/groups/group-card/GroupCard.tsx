@@ -8,13 +8,12 @@ import { Group } from '../../../models/models';
 import './GroupCard.scss';
 
 interface GroupCardProps {
-  number: number,
   subcategoryId: string,
   group: Group,
   notSubscribed: boolean
 }
 
-const GroupCard = ({ number, subcategoryId, group, notSubscribed }: GroupCardProps) => {
+const GroupCard = ({ subcategoryId, group, notSubscribed }: GroupCardProps) => {
   const wordList = Object.keys(group.words).sort();
 
   const renderWords = (): JSX.Element[] => {
@@ -28,7 +27,7 @@ const GroupCard = ({ number, subcategoryId, group, notSubscribed }: GroupCardPro
       <>
         <div className="group-card-main__card-header">
           <h2 className="group-card-main__heading">
-            Group {number}
+            Group {group.number}
           </h2>
           { notSubscribed && group.free &&
             <h2 className="group-card-main__free"><FontAwesomeIcon icon={faStar} /> Free</h2>

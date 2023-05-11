@@ -6,9 +6,10 @@ import './GroupAdd.scss';
 interface GroupAddProps {
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
   subcategoryId: string,
+  number: number,
 }
 
-const GroupAdd = ({ setSuccessMessage, subcategoryId }: GroupAddProps): JSX.Element => {
+const GroupAdd = ({ setSuccessMessage, subcategoryId, number }: GroupAddProps): JSX.Element => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [addError, setAddError] = useState<string>('');
   const groupsCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups);
@@ -19,6 +20,7 @@ const GroupAdd = ({ setSuccessMessage, subcategoryId }: GroupAddProps): JSX.Elem
     const newDocument = {
       words: {},
       createdAt: new Date(),
+      number: number,
     }
 
     groupsCollection.doc().set(newDocument).then((): void => {

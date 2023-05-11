@@ -9,13 +9,14 @@ import firebase from '../../../../config/firebaseConfig';
 import './GroupCard.scss';
 
 interface GroupCardProps {
-  number: number,
   group: Group,
   subcategoryId: string,
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
 }
 
-const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCardProps): JSX.Element => {
+const GroupCard = ({ group, subcategoryId, setSuccessMessage }: GroupCardProps): JSX.Element => {
+
+
   const subcategory = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId);
   const groupsCollection = subcategory.collection(CollectionNames.Groups);
 
@@ -35,7 +36,7 @@ const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCar
   const deleteGroup = (): void => {
     setDeleting(true);
     groupsCollection.doc(group.id).delete().then((): void => {
-      setSuccessMessage(`Group ${number} has been deleted, other groups have been renamed accordingly.`);
+      setSuccessMessage(`Group ${group.number} has been deleted, other groups have been renamed accordingly.`);
       updateNumberFree();
     }).catch((error: {message: string}) => {
       setSuccessMessage(error.message);
@@ -52,13 +53,13 @@ const GroupCard = ({ number, group, subcategoryId, setSuccessMessage }: GroupCar
 
   return (
     <Flipped
-      flipId={`group-${number}`}
+      flipId={`group-${group.number}`}
       stagger="card"
     >
       <div className="group-card">
-        <Flipped inverseFlipId={`group-${number}`}>
+        <Flipped inverseFlipId={`group-${group.number}`}>
           <div className="group-card__content">
-            <h3 className="group-card__heading">Group { number }</h3>
+            <h3 className="group-card__heading">Group { group.number }</h3>
             <h4 className="group-card__heading">Word List:</h4>
             {
               Object.keys(group.words).length
