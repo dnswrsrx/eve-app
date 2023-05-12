@@ -29,10 +29,11 @@ const GroupList = ({ groups, subcategoryId, setSuccessMessage }: GroupListProps)
         groups.length
         ? <ul className="group-list__list">
             {
-              groups.map((group: Group) => (
+              groups.map((group: Group, index: number) => (
                 <li key={group.id}>
                   <GroupCard
                     group={group}
+                    number={index+1}
                     subcategoryId={subcategoryId}
                     setSuccessMessage={setSuccessMessage}
                   />

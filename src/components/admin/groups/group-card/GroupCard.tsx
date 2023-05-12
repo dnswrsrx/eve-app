@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flipped } from "react-flip-toolkit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -10,15 +10,22 @@ import './GroupCard.scss';
 
 interface GroupCardProps {
   group: Group,
+  number: number,
   subcategoryId: string,
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
 }
 
-const GroupCard = ({ group, subcategoryId, setSuccessMessage }: GroupCardProps): JSX.Element => {
+const GroupCard = ({ group, number, subcategoryId, setSuccessMessage }: GroupCardProps): JSX.Element => {
 
 
   const subcategory = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId);
   const groupsCollection = subcategory.collection(CollectionNames.Groups);
+
+  useEffect(() => {
+    if (group.number !== number) {
+      groupsCollection.doc(group.id).update({ number: number }).then()
+    }
+  }, [number])
 
   const updateNumberFree = () => {
     groupsCollection.onSnapshot(observer => {
