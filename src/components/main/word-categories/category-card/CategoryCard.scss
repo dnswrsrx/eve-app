@@ -3,11 +3,18 @@
 .category-card {
   display: block;
   @include secondary-card;
-  padding: 3rem;
+  padding: 1rem;
   transition: all 0.1s ease;
 
-  &__heading {
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  height: 100%;
+
+  img {
+    width: 80%;
+    margin-top: 1rem;
   }
 
   @include breakpoint($md) {
