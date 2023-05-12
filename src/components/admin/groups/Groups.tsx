@@ -70,7 +70,7 @@ const Groups = ({ match }: GroupProps): JSX.Element => {
         <GroupAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} number={groups.length + 1} />
         { successMessage && <p className="groups-admin__success-message success">{ successMessage }</p> }
         <GroupList groups={groups} subcategoryId={subcategoryId} setSuccessMessage={setSuccessMessage} />
-        { parentCategory.name.includes('Academic') && <Exercises exercises={tests} setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={''} /> } 
+        { parentCategory.name.includes('Academic') && <Exercises exercises={tests} setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={''} /> }
       </div>
     </section>
   )
