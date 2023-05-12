@@ -7,9 +7,10 @@ interface ExerciseAddProps {
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
   subcategoryId: string,
   groupId: string|null,
+  number: number,
 }
 
-const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId }: ExerciseAddProps): JSX.Element => {
+const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId, number }: ExerciseAddProps): JSX.Element => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [addError, setAddError] = useState<string>('');
 
@@ -27,6 +28,7 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId }: ExerciseAddP
     const newDocument: Exercise = {
       questions: [],
       createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+      number: number,
     }
 
     exercisesCollection.add(newDocument).then((newExerciseRef): void => {

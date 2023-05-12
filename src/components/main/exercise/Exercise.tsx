@@ -67,7 +67,7 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
       <div className="group__wrapper page-wrapper">
         <div className="group__header">
           <h1 className="group__heading">
-            {groupId ? 'Exercise' : 'Test'}
+            {groupId ? 'Exercise' : 'Test'} { exercise.number }
           </h1>
           <Link to={groupId ? `/group/${subcategoryId}/${groupId}` : `/groups/${subcategoryId}`}>
             Back to {groupId ? 'Group' : 'Sublist'}

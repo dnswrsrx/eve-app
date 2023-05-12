@@ -31,7 +31,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: `tests-${subcategoryId}`,
       subcollections: [{
         collection: CollectionNames.Tests,
-        orderBy: ['createdAt', 'asc']
+        orderBy: ['number', 'asc']
       }]
     }
   ]);

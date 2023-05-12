@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CollectionNames, Exercise } from '../../../models/models';
 import { Link } from 'react-router-dom';
 import DeleteButton from '../../general/delete-button/DeleteButton';
@@ -6,14 +6,14 @@ import firebase from '../../../../config/firebaseConfig';
 import './ExerciseCard.scss';
 
 interface GroupCardProps {
-  number: number,
   exercise: Exercise,
+  number: number,
   subcategoryId: string,
   groupId: string|null,
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
 }
 
-const ExerciseCard = ({ number, exercise, subcategoryId, groupId, setSuccessMessage }: GroupCardProps): JSX.Element => {
+const ExerciseCard = ({ exercise, number, subcategoryId, groupId, setSuccessMessage }: GroupCardProps): JSX.Element => {
   const [deleting, setDeleting] = useState<boolean>(false);
 
   const subcategory = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId);
@@ -21,10 +21,16 @@ const ExerciseCard = ({ number, exercise, subcategoryId, groupId, setSuccessMess
     ? subcategory.collection(CollectionNames.Groups).doc(groupId).collection(CollectionNames.Exercises)
     : subcategory.collection(CollectionNames.Tests);
 
+    useEffect(() => {
+      if (exercise.number !== number) {
+        exercisesCollection.doc(exercise.id).update({ number: number }).then()
+      }
+    }, [number])
+
   const deleteGroup = (): void => {
     setDeleting(true);
     exercisesCollection.doc(exercise.id).delete().then((): void => {
-      setSuccessMessage(`Exercise ${number} has been deleted, other exercises have been renamed accordingly.`);
+      setSuccessMessage(`Exercise ${exercise.number} has been deleted, other exercises have been renamed accordingly.`);
     }).catch((error: {message: string}) => {
       setSuccessMessage(error.message);
     });
@@ -33,7 +39,7 @@ const ExerciseCard = ({ number, exercise, subcategoryId, groupId, setSuccessMess
   return (
     <div className="exercise-card">
       <h3 className="exercise-card__heading">
-        {`${groupId ? 'Exercise' : 'Test'} ${number}`}
+        {`${groupId ? 'Exercise' : 'Test'} ${exercise.number}`}
       </h3>
       <Link
         to={

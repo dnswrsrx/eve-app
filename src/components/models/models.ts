@@ -110,6 +110,7 @@ export interface Exercise {
   id?: string,
   questions: QuestionList,
   createdAt: firebase.firestore.Timestamp,
+  number: number,
 }
 
 export interface Group {

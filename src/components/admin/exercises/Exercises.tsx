@@ -16,8 +16,8 @@ const Exercises = ({ exercises, setSuccessMessage, subcategoryId, groupId}: Exer
     return exercises.map((exercise: Exercise, index: number) => (
       <li key={exercise.id}>
         <ExerciseCard
-          number={index + 1}
           exercise={exercise}
+          number={index+1}
           subcategoryId={subcategoryId}
           groupId={groupId}
           setSuccessMessage={setSuccessMessage}
@@ -29,7 +29,7 @@ const Exercises = ({ exercises, setSuccessMessage, subcategoryId, groupId}: Exer
   return (
     <div className="exercises">
       <h2>{groupId ? 'Exercises' : 'Tests'}</h2>
-      <ExerciseAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={groupId} />
+      <ExerciseAdd setSuccessMessage={setSuccessMessage} subcategoryId={subcategoryId} groupId={groupId} number={exercises.length + 1} />
       <ul className="exercises__list">
         {
           exercises.length

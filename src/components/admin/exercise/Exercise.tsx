@@ -57,7 +57,7 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
       <div className="exercise-admin__wrapper page-wrapper">
         <div className="exercise-admin__header">
           <h1 className="exercise-admin__heading">
-            Editing {groupId ? 'Exercise' : 'Test'}
+            Editing {groupId ? 'Exercise' : 'Test'} { exercise.number }
           </h1>
           <Link
             to={
