@@ -68,11 +68,13 @@ const GroupCard = ({ group, number, subcategoryId, setSuccessMessage }: GroupCar
           <div className="group-card__content">
             <h3 className="group-card__heading">Group { group.number }</h3>
             <h4 className="group-card__heading">Word List:</h4>
-            {
-              Object.keys(group.words).length
-                ? <ul className="group-card__word-list">{ renderWords() }</ul>
-                : <p>No words have been added to this group yet.</p>
-            }
+            <div className="group-card__word-list">
+              {
+               Object.keys(group.words).length
+                 ? <ul className="group-card__word-list">{ renderWords() }</ul>
+                 : <p>No words have been added to this group yet.</p>
+              }
+            </div>
             <div className="group-card__button-container">
               <button className="group-card__free-button" onClick={toggleFree}>
                 <FontAwesomeIcon icon={free ? faCheck : faTimes} />
