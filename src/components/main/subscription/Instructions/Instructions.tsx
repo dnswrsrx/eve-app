@@ -40,7 +40,7 @@ const Instructions = ({ auth, subscription }: InstructionsProps): JSX.Element =>
         </summary>
         <ol>
           <li>
-            Go to your email and click the message with the subject: <strong>Verify your email for English Vocabulary Exercises</strong>.
+            Go to your email and click the message with the subject: <strong>Verify your email for English Vocabulary Exercises</strong>. Check your spam folder if the email does not show up in your inbox.
           </li>
           <li>
             You will see the message: <strong>Hello. Follow this link to verify your email address.</strong> Click on the link.
