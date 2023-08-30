@@ -66,7 +66,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
     }
 
     setSubmitting(true);
-    fetch(`https://api.dictionaryapi.dev/api/v1/entries/en/${formWord}`).then(response => {
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${formWord}`).then(response => {
       response.json().then((data: any) => {
         setSubmitError('');
         setSuccessMessage('');
