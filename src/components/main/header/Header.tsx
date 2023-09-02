@@ -22,7 +22,6 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
 
   const currentPath = window.location.pathname.split('/')[1] || null;
   const wordCategoryPaths: (string | null)[] = ['word-categories', 'subcategories', 'groups', 'group', 'exercise'];
-  // const studyGuidePaths: (string | null)[] = ['weekly-study-guides', 'weekly-study-guide'];
   const accountPaths: (string | null)[] = ['login', 'my-account'];
   const subscriptionPath: (string | null)[] = ['subscription'];
 
@@ -105,9 +104,6 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
             <li>
               <Link to="/word-categories" className={checkCurrentPath(wordCategoryPaths)}>Word Categories</Link>
             </li>
-            {/* <li>
-              <Link to="/weekly-study-guides" className={checkCurrentPath(studyGuidePaths)}>Weekly Study Guides</Link>
-            </li> */}
             <li>
               <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
             </li>

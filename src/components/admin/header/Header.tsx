@@ -12,7 +12,6 @@ const Header = (): JSX.Element => {
   const currentPath = window.location.pathname.split('/')[2] || null;
   const homePaths: (string | null)[] = [null, 'home-languages', 'pages', 'edit-single'];
   const wordCategoryPaths: (string | null)[] = ['word-categories', 'top-level-categories', 'subcategories', 'group', 'exercise'];
-  // const studyGuidePaths: (string | null)[] = ['weekly-study-guides', 'add-study-guide', 'edit-study-guide'];
 
   const logOut = (): void => {
     firebase.auth().signOut();
@@ -67,9 +66,6 @@ const Header = (): JSX.Element => {
             <li>
               <Link to="/admin-dashboard/word-categories" className={checkCurrentPath(wordCategoryPaths)}>Edit Word Categories</Link>
             </li>
-            {/* <li>
-              <Link to="/admin-dashboard/weekly-study-guides" className={checkCurrentPath(studyGuidePaths)}>Edit Weekly Study Guides</Link>
-            </li> */}
             <li>
               <button className="admin-header__logout-button" onClick={logOut} title="Log Out">
                 <FontAwesomeIcon icon={faDoorOpen} />
