@@ -71,7 +71,7 @@ const FocusedWord = ({ word, wordInfo }: FocusedWordProps) => {
                       <p className="focused-word__example"><span className="bold">Example:</span> { definition.example }</p>
                     }
                     {
-                      definition.synonyms &&
+                      definition.synonyms && definition.synonyms.length > 0 &&
                       <>
                         <p><span className="bold">Synonyms:</span> </p>
                         <div className="focused-word__synonyms">

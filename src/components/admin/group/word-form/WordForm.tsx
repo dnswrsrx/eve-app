@@ -198,7 +198,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         <button disabled={!formWord || (word && word !== formWord) || submitting} className="word-form__def-button" type="button" onClick={searchDefinitions}>
           Get Definitions
         </button>
-        { definitions && definitions.length &&
+        { definitions && definitions.length > 0 &&
           <button className="word-form__clear-definitions" disabled={submitting} onClick={clearDefinitions}>
             Clear Definitions
           </button>
@@ -209,14 +209,14 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         { word && <DeleteButton disabled={!formWord || submitting} deleteFunction={deleteWord} text="Delete" /> }
       </div>
 
-      { definitions && definitions.length &&
+      { definitions && definitions.length > 0 &&
         <>
           <DefinitionBox definitions={definitions} setDefinitions={setDefinitions} />
           <div className="word-form__submit-row">
             <button disabled={!formWord || submitting} className="word-form__save-button" type="submit">
               { word ? (word !== formWord ? 'Change Word' : 'Save') : 'Add' }
             </button>
-            { definitions && definitions.length &&
+            { definitions && definitions.length > 0 &&
               <button className="word-form__clear-definitions" disabled={submitting} onClick={clearDefinitions}>
                 Clear Definitions
               </button>

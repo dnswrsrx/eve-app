@@ -58,7 +58,7 @@ const DefinitionBox = ({ definitions, setDefinitions }: DefinitionBoxProps): JSX
                     <p className="definitions-row__example"><span className="bold">Example</span>: { definition.example }</p>
                   }
                   {
-                    definition.synonyms &&
+                    definition.synonyms && definition.synonyms.length > 0 &&
                     <>
                       <p><span className="bold">Synonyms</span>: </p>
                       <div className="definitions-row__synonyms">
