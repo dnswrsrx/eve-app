@@ -1,4 +1,4 @@
-import { ApiWord, Meaning, Definitions, CategoryTypes, CollectionNames, PageTypes, Category } from "../components/models/models";
+import { ApiWord, Meaning, Definitions, CategoryTypes, CollectionNames, PageTypes, Category, ApiDefinition } from "../components/models/models";
 
 export const formatDictionaryResults = (data: ApiWord[]): Definitions[] => {
   const definitions: Definitions[] = [];
@@ -6,23 +6,22 @@ export const formatDictionaryResults = (data: ApiWord[]): Definitions[] => {
   data.forEach((wordInfo: ApiWord): void => {
     const newDefinition: Definitions = {
       word: wordInfo.word,
-      phonetics: wordInfo.phonetics,
+      phonetics: wordInfo.phonetics.filter(p => p.audio),
       definitions: [],
     };
-    const meanings = wordInfo.meaning;
+    const meanings = wordInfo.meanings;
 
-    Object.keys(meanings).forEach((type: string) => {
-      meanings[type].forEach((definition: Meaning) => {
+    meanings.forEach((meaning: Meaning) => {
+      meaning.definitions.forEach((definition: ApiDefinition) => {
         newDefinition.definitions.push({
-          type,
+          type: meaning.partOfSpeech,
           definition: definition.definition,
-          example: definition.example || '',
+          example: definition.example || null,
           synonyms: definition.synonyms || null,
           selected: false,
         });
       });
     });
-
     definitions.push(newDefinition);
   })
 

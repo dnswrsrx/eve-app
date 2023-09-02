@@ -182,26 +182,30 @@ export interface Phonetic {
   audio?: string,
 }
 
-export interface Meaning {
+export interface ApiDefinition {
   definition: string,
+  synonyms: string[],
+  antonyms: string[],
   example?: string,
-  synonyms?: string[],
 }
 
-export interface Meanings {
-  [type: string]: Meaning[],
+export interface Meaning {
+  partOfSpeech: string,
+  definitions: ApiDefinition[],
+  synonyms?: string[],
+  antonyms?: string[],
 }
 
 export interface ApiWord {
   word: string,
   phonetics: Phonetic[],
-  meaning: Meanings,
+  meanings: Meaning[],
 }
 
 export interface Definition {
   type: string,
   definition: string,
-  example?: string,
+  example?: string | null,
   synonyms?: string[] | null,
   selected: boolean,
 }
