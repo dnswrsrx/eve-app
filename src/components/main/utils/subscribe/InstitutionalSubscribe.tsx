@@ -2,9 +2,6 @@ import React, { useState, useRef, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { FirebaseReducer, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-
 import { CollectionNames, Product, Price } from '../../../models/models';
 
 import { ProductsContext } from '../../Main';
@@ -125,13 +122,6 @@ const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps)
           <p>Total: ${cost}</p>
         </div>
       }
-      {/* {
-        price && subscription && subscription.includes('Institutional ') &&
-          <p className="institutional__reduction-warning">
-            <FontAwesomeIcon icon={faExclamationTriangle} /> If you reduced the number of subscription units and there were more subscribers than units purchased,
-            we will remove the additional subscribers. Older subscribers will be removed first.
-          </p>
-      } */}
       {
         price && (!subscription || subscription.includes('Institutional ')) &&
           <button
