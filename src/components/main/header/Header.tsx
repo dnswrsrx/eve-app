@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useCallback, useContext } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, NavLink, useNavigate  } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { HomeLanguage } from '../../models/models';
@@ -20,11 +20,6 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
   const mobileOverlay = createRef<HTMLDivElement>();
   const languageMenu = createRef<HTMLUListElement>();
 
-  const currentPath = window.location.pathname.split('/')[1] || null;
-  const wordCategoryPaths: (string | null)[] = ['word-categories', 'subcategories', 'groups', 'group', 'exercise'];
-  const accountPaths: (string | null)[] = ['login', 'my-account'];
-  const subscriptionPath: (string | null)[] = ['subscription'];
-
   const auth = useContext(AuthContext);
 
   const logOut = (): void => {
@@ -42,8 +37,9 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
     languageMenu.current?.classList.toggle('show', force);
   }, [languageMenu])
 
-  const checkCurrentPath = (pathList: (string | null)[]): string | undefined => {
-    return pathList.includes(currentPath) ? 'current' : undefined;
+  const underWordCategories = (): string | undefined => {
+    const currentPath = window.location.pathname.split('/')[1] || '';
+    return ['word-categories', 'subcategories', 'groups', 'group', 'exercise'].includes(currentPath) ? 'active' : undefined
   }
 
   useEffect((): (() => void) => {
@@ -97,15 +93,19 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
           </button>
           <ul className="header__nav-list">
             <li>
-              <Link to="/subscription" className={checkCurrentPath(subscriptionPath)}>
+              <NavLink to="/subscription">
                 { auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/word-categories" className={checkCurrentPath(wordCategoryPaths)}>Word Categories</Link>
+              <NavLink to="/word-categories" className={underWordCategories}>Word Categories</NavLink>
             </li>
             <li>
-              <Link to={auth.uid ? '/my-account' : '/login'} className={checkCurrentPath(accountPaths)}>{auth.uid ? 'My Account' : 'Log In'}</Link>
+              {
+                auth.uid
+                  ? <NavLink to='/my-account'>My Account</NavLink>
+                  : <NavLink to='/login'>Log In</NavLink>
+              }
             </li>
             { auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
             { window.location.pathname.length === 1 &&
