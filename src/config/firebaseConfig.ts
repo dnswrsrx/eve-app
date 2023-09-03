@@ -20,4 +20,3 @@ firebase.analytics();
 firebase.firestore();
 
 export default firebase;
-export { firebaseConfig };
