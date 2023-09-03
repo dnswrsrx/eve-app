@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, MatchProps } from '../../models/models';
 import firebase from '../../../config/firebaseConfig';
@@ -68,7 +68,7 @@ const Group = ({ match }: GroupProps): JSX.Element => {
   }
 
   // Redirect back to groups if viewing a non-free group as an unsubscribed user
-  if (!isSubscribed && !group.free) window.location.assign(`/groups/${subcategoryId}`);
+  if (!isSubscribed && !group.free) return <Navigate to={`/groups/${subcategoryId}` }/>;
 
   const wordList = Object.keys(group.words).sort();
 

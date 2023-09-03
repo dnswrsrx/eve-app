@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import firebase from '../../../config/firebaseConfig';
 import useSubscription from '../utils/UserSubscriptionHook';
 import useCartOrPortalHook from '../utils/subscribe/CartOrPortalHook';
@@ -33,7 +33,7 @@ const MyAccount = (): JSX.Element => {
     }
   }, [isDirty])
 
-  if (!auth.uid) return <Redirect to='/' />
+  if (!auth.uid) return <Navigate to='/' />;
 
   const onSubmit = (data: any) : void => {
 

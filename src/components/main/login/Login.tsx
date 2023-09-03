@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../Main';
 import LoginForm from './LoginForm/LoginForm';
 import './Login.scss';
@@ -8,7 +8,7 @@ import './Login.scss';
 const Login = (): JSX.Element => {
   const auth = useContext(AuthContext);
 
-  if (auth.uid) return <Redirect to='/' />
+  if (auth.uid) return <Navigate to='/' />;
 
   return (
     <section className="login-page">

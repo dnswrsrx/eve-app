@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import { RootState } from '../../store/reducers/rootReducer';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Header from './header/Header';
 import Home from './home/Home';
 import EditHome from './edit-home/EditHome';
@@ -36,7 +36,7 @@ const Admin = (): JSX.Element => {
     );
   }
 
-  else if(!auth.uid || !userInfo?.isAdmin) return <Redirect to='/' />
+  else if(!auth.uid || !userInfo?.isAdmin) return <Navigate to='/' />
 
   return (
     <main className="admin-dashboard">

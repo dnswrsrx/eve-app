@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import firebase from '../../../config/firebaseConfig';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../Main';
 import './ForgotPassword.scss';
 
@@ -13,7 +13,7 @@ const ForgotPassword = (): JSX.Element => {
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, errors } = useForm();
 
-  if (auth.uid) return <Redirect to='/' />
+  if (auth.uid) return <Navigate to='/' />;
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
