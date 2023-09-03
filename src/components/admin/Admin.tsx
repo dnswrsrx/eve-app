@@ -35,12 +35,8 @@ const Admin = (): JSX.Element => {
       </section>
     );
   }
-  else if(!auth.uid) {
-    return <Redirect to='/admin-login' />
-  }
-  else if(userInfo && !userInfo.isAdmin) {
-    return <Redirect to='/' />
-  }
+
+  else if(!auth.uid || !userInfo?.isAdmin) return <Redirect to='/' />
 
   return (
     <main className="admin-dashboard">
