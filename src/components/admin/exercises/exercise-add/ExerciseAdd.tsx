@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CollectionNames, Exercise } from '../../../models/models';
 import firebase from '../../../../config/firebaseConfig';
 
@@ -20,7 +20,7 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId, number }: Exer
     : subcategory.collection(CollectionNames.Tests);
 
 
-  const history = useHistory();
+  const history = useNavigate();
 
   const addExercise = (): void => {
     setSubmitting(true);
@@ -35,7 +35,7 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId, number }: Exer
       setSubmitting(false);
       setAddError('');
       setSuccessMessage('New exercise added');
-      history.push(
+      history(
         groupId
         ? `/admin-dashboard/exercise/${subcategoryId}/${groupId}/${newExerciseRef.id}`
         : `/admin-dashboard/test/${subcategoryId}/${newExerciseRef.id}`

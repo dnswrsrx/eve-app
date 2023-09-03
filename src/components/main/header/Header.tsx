@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useCallback, useContext } from 'react';
-import { Link, useHistory  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { HomeLanguage } from '../../models/models';
@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element => {
 
-  const history = useHistory();
+  const history = useNavigate();
   const menuRef = createRef<HTMLElement>();
   const mobileOverlay = createRef<HTMLDivElement>();
   const languageMenu = createRef<HTMLUListElement>();
@@ -29,7 +29,7 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
 
   const logOut = (): void => {
     firebase.auth().signOut();
-    history.push('/');
+    history('/');
     window.location.reload();
   }
 
