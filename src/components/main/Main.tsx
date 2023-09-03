@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FirebaseReducer, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { isEqual } from 'lodash';
@@ -96,7 +96,7 @@ const Main = (): JSX.Element => {
               <AccessCodeSubscribersContext.Provider value={accessCodeSubscribers}>
                 <main>
                   <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
-                  <Switch>
+                  <Routes>
                     <Route exact path="/">
                       <Home activeLanguage={activeLanguage} />
                     </Route>
@@ -114,7 +114,7 @@ const Main = (): JSX.Element => {
                     <Route exact path="/test/:subcategoryId/:exerciseId" component={Exercise} />
                     <Route exact path="/page/:slug" component={Page} />
                     <Route path="/" component={PageNotFound} />
-                  </Switch>
+                  </Routes>
                   <Footer />
                 </main>
               </AccessCodeSubscribersContext.Provider>

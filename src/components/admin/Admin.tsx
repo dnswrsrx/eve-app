@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import { RootState } from '../../store/reducers/rootReducer';
@@ -45,7 +45,7 @@ const Admin = (): JSX.Element => {
   return (
     <main className="admin-dashboard">
       <Header />
-      <Switch>
+      <Routes>
         <Route exact path="/admin-dashboard" component={Home} />
         <Route exact path="/admin-dashboard/home-languages" component={EditHome} />
         <Route exact path="/admin-dashboard/word-categories" component={WordCategories} />
@@ -59,7 +59,7 @@ const Admin = (): JSX.Element => {
         <Route exact path="/admin-dashboard/pages" component={EditPages} />
         <Route exact path="/admin-dashboard/edit-single/:type/:pageId" component={SinglePage} />
         <Route path="/admin-dashboard" component={PageNotFound} />
-      </Switch>
+      </Routes>
       <Footer />
     </main>
   )
