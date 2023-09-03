@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 /* Enums */
 export enum CategoryTypes {
   Top = 'Category',
@@ -61,7 +63,7 @@ export interface MatchProps {
 export interface Category {
   id: string,
   name: string,
-  createdAt: firebase.firestore.Timestamp,
+  createdAt: Timestamp
   parent?: string,
   numberOfFreeGroups?: number,
 }
@@ -109,7 +111,7 @@ export type QuestionList = Question[]
 export interface Exercise {
   id?: string,
   questions: QuestionList,
-  createdAt: firebase.firestore.Timestamp,
+  createdAt: Timestamp,
   number: number,
 }
 
@@ -117,7 +119,7 @@ export interface Group {
   id?: string,
   words: WordList,
   free?: boolean,
-  createdAt: firebase.firestore.Timestamp,
+  createdAt: Timestamp,
   number: number,
 }
 
@@ -127,13 +129,13 @@ export interface HomeLanguage {
   bannerHeading: string,
   bannerText: string,
   mainContent: string,
-  createdAt: firebase.firestore.Timestamp,
+  createdAt: Timestamp,
 }
 
 export interface StudyGuide {
   id?: string,
-  startDate: firebase.firestore.Timestamp,
-  endDate: firebase.firestore.Timestamp,
+  startDate: Timestamp,
+  endDate: Timestamp,
   generalVocabContent: string,
   academicVocabContent: string,
   readingContent: string,
@@ -142,12 +144,12 @@ export interface StudyGuide {
   grammarContent: string,
   speakingContent: string,
   testPrepContent: string,
-  createdAt: firebase.firestore.Timestamp,
+  createdAt: Timestamp,
 }
 
 export interface StudyGuideDocument {
-  startDate: firebase.firestore.Timestamp,
-  endDate: firebase.firestore.Timestamp,
+  startDate: Timestamp,
+  endDate: Timestamp,
   generalVocabContent: string,
   academicVocabContent: string,
   readingContent: string,

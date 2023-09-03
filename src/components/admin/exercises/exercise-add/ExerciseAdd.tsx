@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CollectionNames, Exercise } from '../../../models/models';
 import firebase from '../../../../config/firebaseConfig';
+import { Timestamp } from 'firebase/firestore';
 
 interface ExerciseAddProps {
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>,
@@ -27,7 +28,7 @@ const ExerciseAdd = ({ setSuccessMessage, subcategoryId, groupId, number }: Exer
 
     const newDocument: Exercise = {
       questions: [],
-      createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+      createdAt: Timestamp.fromDate(new Date()),
       number: number,
     }
 
