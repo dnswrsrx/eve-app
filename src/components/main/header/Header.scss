@@ -68,10 +68,6 @@
   a {
     @include secondary-link;
     padding-bottom: 0.3rem;
-
-    &.current {
-      border-bottom: 3px solid #FFF;
-    }
   }
 
   @include breakpoint($lg) {

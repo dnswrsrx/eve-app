@@ -145,7 +145,7 @@ $small-radius: 6px;
   color: #FFF;
   padding-bottom: 0.3rem;
 
-  &:hover, &.current {
+  &:hover, &.current, &.active {
     color: #FFF;
     border-bottom: 3px solid #FFF;
   }
