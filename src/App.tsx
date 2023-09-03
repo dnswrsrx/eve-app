@@ -8,8 +8,8 @@ const App = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin-dashboard" component={Admin} />
-        <Route path="/" component={Main} />
+        <Route path="/admin-dashboard/*" element={<Admin />} />
+        <Route path="/*" element={<Main />} />
       </Routes>
     </BrowserRouter>
   );
