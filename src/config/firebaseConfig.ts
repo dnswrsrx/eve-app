@@ -1,8 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/functions';
-import 'firebase/auth';
-import 'firebase/analytics';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/functions';
+import 'firebase/compat/auth';
+import 'firebase/compat/analytics';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -17,5 +17,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+firebase.firestore();
 
 export default firebase;
+export { firebaseConfig };
