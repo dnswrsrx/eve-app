@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
-import { CollectionNames, MatchProps } from '../../models/models';
+import { CollectionNames } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import firebase from '../../../config/firebaseConfig';
@@ -9,14 +9,11 @@ import useSubscription from '../utils/UserSubscriptionHook';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 
-interface ExerciseProps {
-  match: MatchProps,
-}
-
-const Exercise = ({ match }: ExerciseProps): JSX.Element => {
-  const subcategoryId = match.params.subcategoryId;
-  const groupId = match.params.groupId;
-  const exerciseId = match.params.exerciseId;
+const Exercise = (): JSX.Element => {
+  let { subcategoryId, groupId, exerciseId } = useParams();
+  subcategoryId = subcategoryId || '';
+  groupId = groupId || '';
+  exerciseId = exerciseId || '';
 
   useFirestoreConnect(
     groupId
@@ -39,9 +36,9 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
       ]
   );
 
-  const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
-  const group = useSelector(({ firestore: { data } }: any) => data[groupId], isEqual);
-  const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId], isEqual);
+  const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId || ''], isEqual);
+  const group = useSelector(({ firestore: { data } }: any) => data[groupId || ''], isEqual);
+  const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId || ''], isEqual);
 
   const [category, setCategory] = useState(null);
   useEffect(() => {

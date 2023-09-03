@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
-import { CollectionNames, CategoryTypes, MatchProps } from '../../models/models';
+import { CollectionNames, CategoryTypes } from '../../models/models';
 import { sortAWLSubcategories } from '../../../utils/utils';
 import Loading from '../../general/loading/Loading';
 import CategoryAdd from '../general/category-add/CategoryAdd';
 import CategoryList from '../general/category-list/CategoryList';
 import './Subcategories.scss';
 
-interface SubcategoryProps {
-  match: MatchProps,
-}
-
-const Subcategories = ({ match } : SubcategoryProps): JSX.Element => {
+const Subcategories = (): JSX.Element => {
   const [successMessage, setSuccessMessage] = useState<string>('');
-  const categoryId = match.params.categoryId;
+  const { categoryId } = useParams();
 
   useFirestoreConnect([
     { collection: CollectionNames.Categories, doc: categoryId, storeAs: categoryId },
     { collection: CollectionNames.Subcategories, orderBy: ['name', 'asc'], where: ['parent', '==', categoryId], storeAs: `subcategories-${categoryId}` }
   ]);
 
-  const parentCategory = useSelector(({ firestore: { data } }: any) => data[categoryId], isEqual);
+  const parentCategory = useSelector(({ firestore: { data } }: any) => data[categoryId || ''], isEqual);
   const subcategories = useSelector(({ firestore: { ordered } }: any) => ordered[`subcategories-${categoryId}`], isEqual);
 
   if(!isLoaded(parentCategory) || !isLoaded(subcategories)) return <Loading />;

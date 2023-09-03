@@ -4,15 +4,12 @@ import PageNotFound from '../../general/404/PageNotFound';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
-import { CollectionNames, MatchProps } from '../../models/models';
+import { useParams } from 'react-router-dom';
+import { CollectionNames } from '../../models/models';
 import './Page.scss';
 
-interface PageProps {
-  match: MatchProps,
-}
-
-const Page = ({ match }: PageProps): JSX.Element => {
-  const pageSlug = match.params.slug;
+const Page = (): JSX.Element => {
+  const { pageSlug } = useParams();
 
   useFirestoreConnect([
     { collection: CollectionNames.Pages, where:['slug', '==', pageSlug], storeAs: 'page' },

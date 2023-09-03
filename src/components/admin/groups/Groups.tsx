@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
-import { CollectionNames, MatchProps } from '../../models/models';
+import { CollectionNames } from '../../models/models';
 import Loading from '../../general/loading/Loading';
 import GroupAdd from './group-add/GroupAdd';
 import GroupList from './group-list/GroupList';
 import Exercises from '../exercises/Exercises';
 import './Groups.scss';
 
-interface GroupProps {
-  match: MatchProps,
-}
-
-const Groups = ({ match }: GroupProps): JSX.Element => {
+const Groups = (): JSX.Element => {
   const [successMessage, setSuccessMessage] = useState<string>('');
-  const subcategoryId = match.params.subcategoryId;
+  let { subcategoryId } = useParams();
+  subcategoryId = subcategoryId || '';
+
 
   useFirestoreConnect([
     { collection: CollectionNames.Subcategories, doc: subcategoryId, storeAs: subcategoryId },
@@ -34,7 +32,7 @@ const Groups = ({ match }: GroupProps): JSX.Element => {
     }
   ]);
 
-  const parentCategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
+  const parentCategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId || ''], isEqual);
   const groups = useSelector(({ firestore: { ordered } }: any) => ordered[`groups-${subcategoryId}`], isEqual);
   const tests = useSelector(({ firestore: { ordered } }: any) => ordered[`tests-${subcategoryId}`], isEqual);
 

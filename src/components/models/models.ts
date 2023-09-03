@@ -53,13 +53,6 @@ export interface ParamsProps {
   slug: string,
 }
 
-export interface MatchProps {
-  isExact: boolean,
-  params: ParamsProps,
-  path: string,
-  url: string,
-}
-
 export interface Category {
   id: string,
   name: string,

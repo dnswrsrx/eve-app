@@ -97,23 +97,21 @@ const Main = (): JSX.Element => {
                 <main>
                   <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
                   <Routes>
-                    <Route exact path="/">
-                      <Home activeLanguage={activeLanguage} />
-                    </Route>
-                    <Route exact path="/terms-of-use" component={SimpleSinglePage} />
-                    <Route exact path="/teacher-notes" component={SimpleSinglePage} />
-                    <Route exact path="/login" component={UserLogin} />
-                    <Route exact path="/forgot-password" component={ForgotPassword} />
-                    <Route exact path="/my-account" component={MyAccount} />
-                    <Route exact path="/subscription" component={Subscription} />
-                    <Route exact path="/word-categories" component={WordCategories} />
-                    <Route exact path="/subcategories/:categoryId" component={Subcategories} />
-                    <Route exact path="/groups/:subcategoryId/" component={Groups} />
-                    <Route exact path="/group/:subcategoryId/:groupId" component={Group} />
-                    <Route exact path="/exercise/:subcategoryId/:groupId/:exerciseId" component={Exercise} />
-                    <Route exact path="/test/:subcategoryId/:exerciseId" component={Exercise} />
-                    <Route exact path="/page/:slug" component={Page} />
-                    <Route path="/" component={PageNotFound} />
+                    <Route path="/" element={<Home activeLanguage={activeLanguage} />} />
+                    <Route path="/terms-of-use" element={<SimpleSinglePage />} />
+                    <Route path="/teacher-notes" element={<SimpleSinglePage />} />
+                    <Route path="/login" element={<UserLogin />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/my-account" element={<MyAccount />} />
+                    <Route path="/subscription" element={<Subscription />} />
+                    <Route path="/word-categories" element={<WordCategories />} />
+                    <Route path="/subcategories/:categoryId" element={<Subcategories />} />
+                    <Route path="/groups/:subcategoryId/" element={<Groups />} />
+                    <Route path="/group/:subcategoryId/:groupId" element={<Group />} />
+                    <Route path="/exercise/:subcategoryId/:groupId/:exerciseId" element={<Exercise />} />
+                    <Route path="/test/:subcategoryId/:exerciseId" element={<Exercise />} />
+                    <Route path="/page/:slug" element={<Page />} />
+                    <Route path="/" element={<PageNotFound />} />
                   </Routes>
                   <Footer />
                 </main>

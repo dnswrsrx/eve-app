@@ -1,21 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
-import { MatchProps, CollectionNames } from '../../models/models';
+import { CollectionNames } from '../../models/models';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 import './Exercise.scss';
 
-interface ExerciseProps {
-  match: MatchProps,
-}
+const Exercise = (): JSX.Element => {
+  let { subcategoryId, groupId, exerciseId } = useParams();
 
-const Exercise = ({ match }: ExerciseProps): JSX.Element => {
-  const subcategoryId = match.params.subcategoryId;
-  const groupId = match.params.groupId;
-  const exerciseId = match.params.exerciseId;
+  subcategoryId = subcategoryId || '';
+  groupId = groupId || '';
+  exerciseId = exerciseId || '';
 
   useFirestoreConnect(
     groupId
@@ -33,7 +31,7 @@ const Exercise = ({ match }: ExerciseProps): JSX.Element => {
     ]
   );
 
-  const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId], isEqual);
+  const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId || ''], isEqual);
   
   if(!isLoaded(exercise)) return <Loading />;
 

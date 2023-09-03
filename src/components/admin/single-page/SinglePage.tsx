@@ -1,6 +1,6 @@
 import React from 'react';
-import { MatchProps, PageTypes } from '../../models/models';
-import { Link } from 'react-router-dom';
+import { PageTypes } from '../../models/models';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
@@ -9,20 +9,17 @@ import Loading from '../../general/loading/Loading';
 import SinglePageForm from './single-page-form/SinglePageForm';
 import './SinglePage.scss';
 
-interface SinglePageProps {
-  match: MatchProps,
-}
-
-const SinglePage = ({ match } : SinglePageProps): JSX.Element => {
-  const pageId = match.params.pageId;
-  const type: string = match.params.type;
+const SinglePage = (): JSX.Element => {
+  let { pageId, type } = useParams();
+  pageId = pageId || '';
+  type = type || ''
   const collectionName = getCollectionName(type);
 
   useFirestoreConnect([
     { collection: collectionName, doc: pageId, storeAs: pageId },
   ]);
 
-  const pageData = useSelector(({ firestore: { data } }: any) => data[pageId], isEqual);
+  const pageData = useSelector(({ firestore: { data } }: any) => data[pageId || ''], isEqual);
 
   if(!isLoaded(pageData)) return <Loading />;
 

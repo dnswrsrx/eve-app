@@ -42,19 +42,19 @@ const Admin = (): JSX.Element => {
     <main className="admin-dashboard">
       <Header />
       <Routes>
-        <Route exact path="/admin-dashboard" component={Home} />
-        <Route exact path="/admin-dashboard/home-languages" component={EditHome} />
-        <Route exact path="/admin-dashboard/word-categories" component={WordCategories} />
-        <Route exact path="/admin-dashboard/terms-of-use" component={SimpleSinglePage} />
-        <Route exact path="/admin-dashboard/teacher-notes" component={SimpleSinglePage} />
-        <Route exact path="/admin-dashboard/top-level-categories/:categoryId" component={Subcategories} />
-        <Route exact path="/admin-dashboard/subcategories/:subcategoryId" component={Groups} />
-        <Route exact path="/admin-dashboard/group/:subcategoryId/:groupId" component={Group} />
-        <Route exact path="/admin-dashboard/exercise/:subcategoryId/:groupId/:exerciseId" component={Exercise} />
-        <Route exact path="/admin-dashboard/test/:subcategoryId/:exerciseId" component={Exercise} />
-        <Route exact path="/admin-dashboard/pages" component={EditPages} />
-        <Route exact path="/admin-dashboard/edit-single/:type/:pageId" component={SinglePage} />
-        <Route path="/admin-dashboard" component={PageNotFound} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home-languages" element={<EditHome />} />
+        <Route path="/word-categories" element={<WordCategories />} />
+        <Route path="/terms-of-use" element={<SimpleSinglePage />} />
+        <Route path="/teacher-notes" element={<SimpleSinglePage />} />
+        <Route path="/top-level-categories/:categoryId" element={<Subcategories />} />
+        <Route path="/subcategories/:subcategoryId" element={<Groups />} />
+        <Route path="/group/:subcategoryId/:groupId" element={<Group />} />
+        <Route path="/exercise/:subcategoryId/:groupId/:exerciseId" element={<Exercise />} />
+        <Route path="/test/:subcategoryId/:exerciseId" element={<Exercise />} />
+        <Route path="/pages" element={<EditPages />} />
+        <Route path="/edit-single/:type/:pageId" element={<SinglePage />} />
+        <Route path="/" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </main>

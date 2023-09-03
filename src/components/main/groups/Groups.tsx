@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
-import { CollectionNames, MatchProps, Group } from '../../models/models';
+import { CollectionNames, Group } from '../../models/models';
 import useSubscription from '../utils/UserSubscriptionHook';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
@@ -12,12 +12,9 @@ import './Groups.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
-interface SubcategoriesProps {
-  match: MatchProps,
-}
-
-const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
-  const subcategoryId = match.params.subcategoryId;
+const Subcategories = (): JSX.Element => {
+  let { subcategoryId } = useParams();
+  subcategoryId = subcategoryId || '';
 
   useFirestoreConnect([
     { collection: 'top-level-categories', storeAs: 'topLevels' },
@@ -36,7 +33,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
     }
   ]);
 
-  const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId], isEqual);
+  const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId || ''], isEqual);
   const groups = useSelector(({ firestore: { ordered } }: any) => ordered[`groups-${subcategoryId}`], isEqual);
   const topLevels = useSelector(( {firestore: { data }}: any ) => data['topLevels']);
   const topLevelName = subcategory && topLevels && topLevels[subcategory.parent]?.name;
@@ -66,7 +63,7 @@ const Subcategories = ({ match }: SubcategoriesProps): JSX.Element => {
   const renderGroups = (): JSX.Element => {
     return groups.map((group: Group): JSX.Element => (
       <GroupCard
-        subcategoryId={subcategoryId}
+        subcategoryId={subcategoryId || ''}
         group={group}
         notSubscribed={!isSubscribed}
         key={group.id}
