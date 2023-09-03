@@ -7,7 +7,7 @@ import './RegisterForm.scss';
 const RegisterForm = (): JSX.Element => {
   const [authError, setAuthError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit, getValues, errors } = useForm();
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm();
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
@@ -28,33 +28,30 @@ const RegisterForm = (): JSX.Element => {
         <input
           id="email"
           className={ errors.email ? 'register-form__input error' : 'register-form__input' }
-          name="email"
           type="text"
-          ref={register({ required: 'Please enter an email address.' })}
+          {...register('email', { required: 'Please enter an email address.' })}
         />
-        { errors.email && <p className="register-form__error error">{ errors.email.message }</p> }
+        { errors.email?.message && <p className="register-form__error error">{ errors.email.message.toString() }</p> }
       </div>
       <div className="register-form__row">
         <label htmlFor="password">Password:</label>
         <input
           id="password"
           className={ errors.password ? 'register-form__input error' : 'register-form__input' }
-          name="password"
           type="password"
-          ref={register({ required: 'Please enter a password.' })}
+          {...register('password', { required: 'Please enter a password.' })}
         />
-        { errors.password && <p className="register-form__error error">{ errors.password.message }</p> }
+        { errors.password?.message && <p className="register-form__error error">{ errors.password.message.toString() }</p> }
       </div>
       <div className="register-form__row">
         <label htmlFor="confirm">Confirm Password:</label>
         <input
           id="confirm"
           className={ errors.confirm ? 'register-form__input error' : 'register-form__input' }
-          name="confirm"
           type="password"
-          ref={register({ validate: (value) => value === getValues('password') || 'Please enter matching passwords.' })}
+          {...register('confirm', { validate: (value) => value === getValues('password') || 'Please enter matching passwords.' })}
         />
-        { errors.confirm && <p className="register-form__error error">{ errors.confirm.message }</p> }
+        { errors.confirm?.message && <p className="register-form__error error">{ errors.confirm.message.toString() }</p> }
       </div>
       { authError && <p className="register-form__error error">{ authError }</p> }
       <div className="register-form__row">

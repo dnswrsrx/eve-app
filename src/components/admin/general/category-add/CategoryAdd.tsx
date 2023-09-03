@@ -16,7 +16,7 @@ interface CategoryAddProps {
 const CategoryAdd = ({ type, successMessage, setSuccessMessage, parentId, uniqueIdentifiers }: CategoryAddProps): JSX.Element => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [addError, setAddError] = useState<string>('');
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const collectionName = getCollectionName(type);
   const categoriesCollection = firebase.firestore().collection(collectionName);
 
@@ -65,10 +65,9 @@ const CategoryAdd = ({ type, successMessage, setSuccessMessage, parentId, unique
           <label htmlFor="name">Name: </label>
           <input
             id="name"
-            name="name"
             className={`category-add__field ${errors.name ? 'error' : ''}`}
             type="text"
-            ref={register({ required: 'Please enter a name.' })}
+            {...register("name", { required: 'Please enter a name.' })}
           />
         </div>
         <div className="category-add__submit-row">
@@ -76,7 +75,7 @@ const CategoryAdd = ({ type, successMessage, setSuccessMessage, parentId, unique
           <button className="category-add__submit" type="submit" disabled={submitting}>Add</button>
         </div>
       </div>
-      { errors.name && <p className="category-add__error error">{ errors.name.message }</p> }
+      { errors.name?.message && <p className="category-add__error error">{ errors.name.message.toString() }</p> }
       { successMessage && <p className="category-add__success success">{ successMessage }</p> }
       { addError && <p className="category-add__error error">{ addError }</p> }
     </form>

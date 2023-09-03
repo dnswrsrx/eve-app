@@ -19,7 +19,7 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
     shuffle(Array.from(new Set(questions.map(({ answer }) => answer))))
       .map((a: string, index: number) => <option key={index} value={a}>{a}</option>)
   );
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
@@ -108,17 +108,16 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
               <div className="exercise-form-main__field-container">
                 <label htmlFor={`field-${index}`}>{ (index + 1) + '. ' + question }</label>
                 <select
-                  name={`field-${index}`}
                   id={`field-${index}`}
                   className="exercise-form-main__select-field"
                   defaultValue=""
-                  ref={register()}
+                  {...register(`field-${index}`)}
                 >
                   <option value="" disabled>Select a Word</option>
                   { options.current }
                 </select>
               </div>
-              { errors[`field-${index}`] && <p className="exercise-form-main__error error">{ errors[`field-${index}`].message }</p> }
+              { errors[`field-${index}`]?.message && <p className="exercise-form-main__error error">{ errors[`field-${index}`]?.message?.toString() }</p> }
               {
                 resultArray.length
                   ? <p className="exercise-form-main__result-message">{ getResultMessage(index) }</p>

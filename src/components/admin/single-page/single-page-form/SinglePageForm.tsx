@@ -63,10 +63,9 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
                 <label className="single-page-form__label" htmlFor={'banner-heading'}>Banner Heading: </label>
                 <input
                   id="banner-heading"
-                  name="banner-heading"
                   className="single-page-form__field"
                   type="text"
-                  ref={register()}
+                  {...register('banner-heading')}
                   defaultValue={page.bannerHeading || ''}
                 />
               </div>

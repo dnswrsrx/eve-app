@@ -11,7 +11,7 @@ const ForgotPassword = (): JSX.Element => {
 
   const [resetResponse, setResetResponse] = useState<string>('');
   const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   if (auth.uid) return <Navigate to='/' />;
 
@@ -37,13 +37,12 @@ const ForgotPassword = (): JSX.Element => {
             <input
               id="email"
               className={ errors.email ? 'register-form__input error' : 'register-form__input' }
-              name="email"
               type="text"
-              ref={register({ required: 'Please enter an email address.' })}
+              {...register('email', { required: 'Please enter an email address.' })}
             />
-            { errors.email && <p className="register-form__error error">{ errors.email.message }</p> }
+            { errors.email?.message && <p className="register-form__error error">{ errors.email.message.toString() }</p> }
           </div>
-          { resetResponse && 
+          { resetResponse &&
             resetResponse === 'success'
               ? <p className="register-form_success success">A password reset link has been sent. Please check your email.</p>
               : <p className="register-form__error error">{ resetResponse }</p>

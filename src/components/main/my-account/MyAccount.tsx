@@ -15,7 +15,7 @@ const MyAccount = (): JSX.Element => {
   const [authError, setAuthError] = useState('');
   const [authSuccess, setAuthSuccess] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit, getValues, errors, watch, reset, formState: { isDirty } } = useForm();
+  const { register, handleSubmit, getValues, formState: { errors }, watch, reset, formState: { isDirty } } = useForm();
 
   const subscription = useSubscription();
   const { cartOrPortal, loadingCartOrPortal, error } = useCartOrPortalHook();
@@ -105,11 +105,10 @@ const MyAccount = (): JSX.Element => {
                   id="password"
                   className={ errors.password ? 'account-page__input error' : 'account-page__input' }
                   autoComplete="off"
-                  name="password"
                   type="password"
-                  ref={register()}
+                  {...register('password')}
                 />
-                { errors.password && <p className="account-page__error error">{ errors.changePassword.message }</p> }
+                { errors.password?.message && <p className="account-page__error error">{ errors.password.message?.toString() }</p> }
               </div>
               <div className="account-page__row">
                 <label className="account-page__form-label" htmlFor="displayName">New Password:</label>
@@ -117,11 +116,10 @@ const MyAccount = (): JSX.Element => {
                   id="changePassword"
                   className={ errors.changePassword ? 'account-page__input error' : 'account-page__input' }
                   autoComplete="new-password"
-                  name="changePassword"
                   type="password"
-                  ref={register()}
+                  {...register('changePassword')}
                 />
-                { errors.changePassword && <p className="account-page__error error">{ errors.changePassword.message }</p> }
+                { errors.changePassword?.message && <p className="account-page__error error">{ errors.changePassword.message.toString() }</p> }
               </div>
               <div className="account-page__row">
                 <label className="account-page__form-label" htmlFor="changePassword">Confirm New Password:</label>
@@ -129,11 +127,10 @@ const MyAccount = (): JSX.Element => {
                   id="confirmPassword"
                   className={ errors.confirmPassword ? 'account-page__input error' : 'account-page__input' }
                   autoComplete="new-password"
-                  name="confirmPassword"
                   type="password"
-                  ref={register({ validate: (value) => value === getValues('changePassword') || 'Please enter matching passwords.' })}
+                  {...register('confirmPassword', { validate: (value) => value === getValues('changePassword') || 'Please enter matching passwords.' })}
                 />
-                { errors.confirmPassword && <p className="account-page__error error">{ errors.confirmPassword.message }</p> }
+                { errors.confirmPassword?.message && <p className="account-page__error error">{ errors.confirmPassword.message.toString() }</p> }
               </div>
               { authError && <p className="account-page__error error">{ authError }</p> }
               { authSuccess && <p className="account-page__success success">{ authSuccess }</p> }

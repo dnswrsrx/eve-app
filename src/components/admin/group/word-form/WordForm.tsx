@@ -26,7 +26,7 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
 
   const customDefinition = useRef<string>(wordList[word]?.customDefinition || '');
 
-  const { register, handleSubmit, errors, getValues, reset, setValue, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, getValues, reset, setValue, watch } = useForm();
   const groupCollection = firebase.firestore().collection(CollectionNames.Subcategories).doc(subcategoryId).collection(CollectionNames.Groups).doc(groupId);
 
   const formWord = watch('word');
@@ -169,14 +169,13 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         <label htmlFor="word">Word: </label>
         <input
           id="word"
-          name="word"
           className={`word-form__field ${errors.word ? 'error' : ''}`}
           type="text"
-          ref={register({ required: 'Please enter a word.' })}
+          {...register("word", { required: 'Please enter a word.' })}
           defaultValue={word}
         />
       </div>
-      { errors.word && <p className="word-form__error error">{ errors.word.message }</p> }
+      { errors.word?.message && <p className="word-form__error error">{ errors.word.message.toString() }</p> }
       { submitError && <p className="category-edit__error error">{ submitError }</p> }
       <div className="word-form__field-row">
         <label htmlFor="custom-definition">Custom Definition: </label>
@@ -186,10 +185,9 @@ const WordForm = ({ word, setSelectedWord, wordList, setSuccessMessage, subcateg
         <label htmlFor="dictionary-url">Dictionary URL: </label>
         <input
           id="dictionary-url"
-          name="dictionary-url"
           className={`word-form__field ${errors['dictionary-url'] ? 'error' : ''}`}
           type="text"
-          ref={register()}
+          {...register('dictionary-url')}
           defaultValue={wordList[word] && wordList[word].dictionaryUrl}
         />
       </div>

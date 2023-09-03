@@ -20,7 +20,7 @@ const CategoryEdit = ({ type, categoryId, categoryName, categoryClicked, setSucc
   const [updateError, setUpdateError] = useState('');
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [cancelRef, setCancelRef] = useState<HTMLButtonElement | null>(null);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const collectionName = getCollectionName(type);
   const categoriesCollection = firebase.firestore().collection(collectionName);
 
@@ -65,11 +65,10 @@ const CategoryEdit = ({ type, categoryId, categoryName, categoryClicked, setSucc
         <label htmlFor="name">Rename: </label>
         <input
           id="name"
-          name="name"
           className={`category-edit__field ${errors.name ? 'error' : ''}`}
           type="text"
           defaultValue={categoryName}
-          ref={register({ required: 'Please enter a new name.' })}
+          {...register("name", { required: 'Please enter a new name.' })}
         />
       </div>
       <div className="category-edit__submit-options">
@@ -92,7 +91,7 @@ const CategoryEdit = ({ type, categoryId, categoryName, categoryClicked, setSucc
           <FontAwesomeIcon icon={faTimes} />
         </button>
       </div>
-      { errors.name && <p className="category-edit__error error">{ errors.name.message }</p> }
+      { errors.name?.message && <p className="category-edit__error error">{ errors.name.message.toString() }</p> }
       { updateError && <p className="category-edit__error error">{ updateError }</p> }
     </form>
   )

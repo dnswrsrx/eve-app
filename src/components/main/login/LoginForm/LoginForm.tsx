@@ -6,7 +6,7 @@ import './LoginForm.scss';
 const LoginForm = (): JSX.Element => {
   const [authError, setAuthError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data: any) : void => {
     setSubmitting(true);
@@ -26,22 +26,20 @@ const LoginForm = (): JSX.Element => {
         <input
           id="email"
           className={ errors.email ? 'login-form__input error' : 'login-form__input' }
-          name="email"
           type="text"
-          ref={register({ required: 'Please enter an email address.' })}
+          {...register('email', { required: 'Please enter an email address.' })}
         />
-        { errors.email && <p className="login-form__error error">{ errors.email.message }</p> }
+        { errors.email?.message && <p className="login-form__error error">{ errors.email.message.toString() }</p> }
       </div>
       <div className="login-form__row">
         <label htmlFor="password">Password:</label>
         <input
           id="password"
           className={ errors.password ? 'login-form__input error' : 'login-form__input' }
-          name="password"
           type="password"
-          ref={register({ required: 'Please enter your password.' })}
+          {...register('password', { required: 'Please enter your password.' })}
         />
-        { errors.password && <p className="login-form__error error">{ errors.password.message }</p> }
+        { errors.password?.message && <p className="login-form__error error">{ errors.password.message.toString() }</p> }
       </div>
       { authError && <p className="login-form__error error">{ authError }</p> }
       <div className="login-form__row">
