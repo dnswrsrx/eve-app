@@ -9,10 +9,10 @@ import { CollectionNames } from '../../models/models';
 import './Page.scss';
 
 const Page = (): JSX.Element => {
-  const { pageSlug } = useParams();
+  const { slug } = useParams();
 
   useFirestoreConnect([
-    { collection: CollectionNames.Pages, where:['slug', '==', pageSlug], storeAs: 'page' },
+    { collection: CollectionNames.Pages, where:['slug', '==', slug], storeAs: 'page' },
   ]);
 
   const pageContent = useSelector(({ firestore: { ordered } }: any) => ordered['page'], isEqual);
