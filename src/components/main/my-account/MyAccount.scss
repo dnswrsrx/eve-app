@@ -28,6 +28,12 @@
     @include grid-list(1fr, 0);
   }
 
+  &__verification {
+    @include primary-button;
+    margin-top: 0.5rem;
+    max-width: 15rem;
+  }
+
   &__input {
     @include form-input;
     max-width: 15rem;

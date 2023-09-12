@@ -17,6 +17,10 @@ const MyAccount = (): JSX.Element => {
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, getValues, formState: { errors }, watch, reset, formState: { isDirty } } = useForm();
 
+  const [verificationError, setVerificationError] = useState(false);
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
+  const [verificationSubmitting, setVerificationSubmitting] = useState(false);
+
   const subscription = useSubscription();
   const { cartOrPortal, loadingCartOrPortal, error } = useCartOrPortalHook();
 
@@ -69,6 +73,17 @@ const MyAccount = (): JSX.Element => {
     }
   }
 
+  const resendVerification = (): void => {
+    setVerificationSubmitting(true);
+    firebase.auth().currentUser?.sendEmailVerification()
+      .then(() => setVerificationSuccess(true))
+      .catch(e => {
+        console.log(e);
+        setVerificationError(true);
+      })
+      .finally(() => setVerificationSubmitting(false))
+  }
+
   return (
     <section className="account-page">
       <div className="account-page__wrapper page-wrapper">
@@ -90,7 +105,17 @@ const MyAccount = (): JSX.Element => {
               </div>
               <div className="account-page__row">
                 <h3 className="account-page__row-heading">Email Verified:</h3>
-                <p>{auth.emailVerified ? 'Verified' : 'Not Verified'}</p>
+                {
+                  verificationSuccess
+                    ? <p className="success">Email verification re-sent</p>
+                    : <p>{auth.emailVerified ? 'Verified' : 'Not Verified'}</p>
+                }
+
+                { verificationError && <p className="error">Something went wrong. Please refresh the page and try again.</p> }
+                { !auth.emailVerified && !verificationSuccess && (
+                    <button type="button" className="account-page__verification" onClick={resendVerification} disabled={verificationSubmitting}>
+                      { verificationSubmitting ? <span className="account-page__spinner" aria-hidden="true"></span> : 'Re-send Verification' }
+                    </button> )}
               </div>
               <div className="account-page__row">
                 <h3 className="account-page__row-heading">Member Since:</h3>
