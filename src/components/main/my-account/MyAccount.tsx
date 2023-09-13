@@ -4,13 +4,14 @@ import { Navigate } from 'react-router-dom';
 import firebase from '../../../config/firebaseConfig';
 import useSubscription from '../utils/UserSubscriptionHook';
 import useCartOrPortalHook from '../utils/subscribe/CartOrPortalHook';
-import { AuthContext } from '../Main';
+import { AuthContext, UserInfoContext } from '../Main';
 import './MyAccount.scss';
 
 
 const MyAccount = (): JSX.Element => {
 
   const auth = useContext(AuthContext);
+  const userInfo = useContext(UserInfoContext);
 
   const [authError, setAuthError] = useState('');
   const [authSuccess, setAuthSuccess] = useState('');
@@ -74,14 +75,16 @@ const MyAccount = (): JSX.Element => {
   }
 
   const resendVerification = (): void => {
-    setVerificationSubmitting(true);
-    firebase.auth().currentUser?.sendEmailVerification()
-      .then(() => setVerificationSuccess(true))
-      .catch(e => {
-        console.log(e);
-        setVerificationError(true);
-      })
-      .finally(() => setVerificationSubmitting(false))
+    if (!userInfo?.isAdmin) {
+      setVerificationSubmitting(true);
+      firebase.auth().currentUser?.sendEmailVerification()
+        .then(() => setVerificationSuccess(true))
+        .catch(e => {
+          console.log(e);
+          setVerificationError(true);
+        })
+        .finally(() => setVerificationSubmitting(false))
+    }
   }
 
   return (
@@ -112,7 +115,7 @@ const MyAccount = (): JSX.Element => {
                 }
 
                 { verificationError && <p className="error">Something went wrong. Please refresh the page and try again.</p> }
-                { !auth.emailVerified && !verificationSuccess && (
+                { !auth.emailVerified && !verificationSuccess && !userInfo?.isAdmin && (
                     <button type="button" className="account-page__verification" onClick={resendVerification} disabled={verificationSubmitting}>
                       { verificationSubmitting ? <span className="account-page__spinner" aria-hidden="true"></span> : 'Re-send Verification' }
                     </button> )}
