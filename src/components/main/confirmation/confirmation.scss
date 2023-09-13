@@ -1,0 +1,11 @@
+@import '../../../style/theme.scss';
+
+.confirmation {
+  &__wrapper {
+    @include admin-wrapper;
+  }
+
+  &__header {
+    font-size: 30px;
+  }
+}

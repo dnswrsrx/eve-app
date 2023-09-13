@@ -22,6 +22,7 @@ import Group from './group/Group';
 import Exercise from './exercise/Exercise';
 import Page from './page/Page';
 import Loading from '../general/loading/Loading';
+import Confirmation from './confirmation';
 
 import { CollectionNames, HomeLanguage, UserInfo, CurrentSubscription, AccessCodeInfo, Subscribers } from '../models/models';
 
@@ -111,6 +112,7 @@ const Main = (): JSX.Element => {
                     <Route path="/exercise/:subcategoryId/:groupId/:exerciseId" element={<Exercise />} />
                     <Route path="/test/:subcategoryId/:exerciseId" element={<Exercise />} />
                     <Route path="/page/:slug" element={<Page />} />
+                    <Route path="/confirmation" element={<Confirmation />} />
                     <Route path="/" element={<PageNotFound />} />
                   </Routes>
                   <Footer />
