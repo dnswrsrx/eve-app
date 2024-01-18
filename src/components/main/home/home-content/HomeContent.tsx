@@ -37,7 +37,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
         </div>
         <h2>This website has been created especially for you!</h2>
         <h3>
-           Start growing your English vocabulary today, with over 2300 carefully chosen words and over 840 exercises.
+           Start growing your English vocabulary today, with over 2500 carefully chosen words and over 900 exercises.
         </h3>
 
         <h3>
