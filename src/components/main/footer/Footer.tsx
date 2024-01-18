@@ -10,6 +10,9 @@ const Footer = (): JSX.Element => {
           <a rel="noopener noreferrer" className="main-footer__link" href="/teacher-notes">Note to Teachers</a>
         </div>
         <div className="main-footer__link-container">
+          <p>&copy; English Vocabulary Exercises {new Date().getFullYear()}</p>
+        </div>
+        <div className="main-footer__link-container">
           <a rel="noopener noreferrer" target="_blank" className="main-footer__link" href="http://www.cpr4esl.com/">Gerry's Vocabulary Teacher</a>
           <a rel="noopener noreferrer" target="_blank" className="main-footer__link" href="https://www.facebook.com/pages/English-Vocabulary-Exercises/179726835407325">Facebook</a>
         </div>
