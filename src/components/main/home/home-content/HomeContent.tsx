@@ -19,7 +19,7 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
   const products = useContext(ProductsContext);
   const individualProducts = products.filter((p: Product) => p.name !== 'Institutional Pricing');
 
-  if (!activeLanguage || activeLanguage.name === 'English') {
+  if (activeLanguage?.name === 'English') {
     return (
       <div className="home-content-container page-wrapper">
         <h1 className="home-content-container__banner-heading anchor">Welcome to English Vocabulary Exercises</h1>
@@ -35,14 +35,8 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
             <img className="home-content-container__banner-image" src='/images/education.svg' alt="someone standing on a book and tossing a graduation cap"/>
           </div>
         </div>
-        <h2>This website has been created especially for you!</h2>
-        <h3>
-           Start growing your English vocabulary today, with over 2500 carefully chosen words and over 900 exercises.
-        </h3>
 
-        <h3>
-          New content added regularly.
-        </h3>
+        {activeLanguage.bannerText.split('\n').map(e => <div dangerouslySetInnerHTML={{ __html: e }}></div>)}
 
         <Link className="home-content-container__start-today" to="/subscription">Get Started and Subscribe!</Link>
 
@@ -81,12 +75,12 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
   return (
     <div className="home-content-container page-wrapper">
       <div className="home-content-container__banner-wrapper">
-        <h1 className="home-content-container__banner-heading">{ activeLanguage.bannerHeading }</h1>
-        <div className="home-content-container__banner-text" dangerouslySetInnerHTML={{ __html: activeLanguage.bannerText }}></div>
+        <h1 className="home-content-container__banner-heading">{ activeLanguage?.bannerHeading }</h1>
+        <div className="home-content-container__banner-text" dangerouslySetInnerHTML={{ __html: activeLanguage?.bannerText || '' }}></div>
       </div>
       <Ads slot="8767665789" />
       <div className="home-content-container__banner-wrapper">
-        <div className="home-content-container__main-content" dangerouslySetInnerHTML={{ __html: activeLanguage.mainContent }}></div>
+        <div className="home-content-container__main-content" dangerouslySetInnerHTML={{ __html: activeLanguage?.mainContent || '' }}></div>
       </div>
       <Ads slot="1252137845" />
     </div>
