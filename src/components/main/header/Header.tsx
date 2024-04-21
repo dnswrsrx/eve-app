@@ -108,7 +108,7 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
               }
             </li>
             { auth.uid && <li><Link to='/' onClick={logOut}>Log Out</Link></li> }
-            { window.location.pathname.length === 1 &&
+            {/*}{ window.location.pathname.length === 1 &&
               <li className="header__language">
                 <Link to="#" onClick={toggleLanguageMenu} className="header__language-icon"><FontAwesomeIcon icon={faGlobe} /> &#9662;</Link>
                 { homeLanguages &&
@@ -117,7 +117,7 @@ const Header = ({ homeLanguages, setActiveLanguage }: HeaderProps): JSX.Element 
                   </ul>
                 }
               </li>
-            }
+            }{*/}
           </ul>
         </nav>
         <button className="header__burger-button" onClick={toggleMobileMenu}>

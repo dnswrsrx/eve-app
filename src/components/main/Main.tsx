@@ -49,7 +49,7 @@ const Main = (): JSX.Element => {
   auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
 
   useFirestoreConnect([
-    { collection: CollectionNames.HomeLanguages, orderBy: ['createdAt', 'asc']  },
+    // { collection: CollectionNames.HomeLanguages, orderBy: ['createdAt', 'asc'] },
     { collection: CollectionNames.Products, where: ['active', '==', true] },
     { collection: CollectionNames.Users, doc: `${auth?.uid}`, storeAs: 'userInfo' },
     { collection: CollectionNames.Users, doc: `${auth?.uid}`, where: ['status', '==', 'active'], subcollections: [{ collection: 'subscriptions' }], storeAs: 'currentSubscription', limit: 1 },
@@ -57,11 +57,11 @@ const Main = (): JSX.Element => {
 
   const homeLanguages = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.HomeLanguages], isEqual);
 
-  const [activeLanguage, setActiveLanguage] = useState<HomeLanguage|null>(null);
+  const [activeLanguage, setActiveLanguage] = useState<HomeLanguage|null>({name: 'English', bannerText: '', bannerHeading: ''} as HomeLanguage);
 
-  useEffect(() => {
-    if (homeLanguages && homeLanguages.length) setActiveLanguage(homeLanguages[0])
-  }, [homeLanguages])
+  // useEffect(() => {
+  //   if (homeLanguages && homeLanguages.length) setActiveLanguage(homeLanguages[0])
+  // }, [homeLanguages])
 
   const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
 

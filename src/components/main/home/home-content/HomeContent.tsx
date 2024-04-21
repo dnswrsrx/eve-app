@@ -36,7 +36,23 @@ const HomeContent = ({ activeLanguage }: HomeContentProps): JSX.Element => {
           </div>
         </div>
 
-        {activeLanguage.bannerText.split('\n').map(e => <div dangerouslySetInnerHTML={{ __html: e }}></div>)}
+        <div>
+          <h2 style={{textAlign: 'center'}}>This website has been created especially for&nbsp;<strong>you</strong>!</h2>
+          <h3 style={{textAlign: 'center'}}>Start growing your English vocabulary today, with over 2700 carefully chosen words in over 900 exercises.</h3>
+          <h3 style={{textAlign: 'center'}}>New content added regularly!</h3>
+          <br />
+          <h4 style={{textAlign: 'center'}}>
+            In January 2024, we added to General Vocabulary:
+          </h4>
+          <h5 style={{textAlign: 'center'}}>
+            How's the Weather?
+            <br />
+            Korean Elementary School English Vocabulary
+          </h5>
+        </div>
+        <br />
+
+        {/*}{activeLanguage.bannerText.split('\n').map(e => <div dangerouslySetInnerHTML={{ __html: e }}></div>)}{*/}
 
         <Link className="home-content-container__start-today" to="/subscription">Get Started and Subscribe!</Link>
 
