@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FirebaseReducer, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
@@ -24,7 +24,7 @@ import Page from './page/Page';
 import Loading from '../general/loading/Loading';
 import Confirmation from './confirmation';
 
-import { CollectionNames, HomeLanguage, UserInfo, CurrentSubscription, AccessCodeInfo, Subscribers } from '../models/models';
+import { CollectionNames, UserInfo, CurrentSubscription, AccessCodeInfo, Subscribers } from '../models/models';
 
 
 export const ProductsContext = createContext([]);
@@ -49,19 +49,10 @@ const Main = (): JSX.Element => {
   auth = useSelector((state: RootState) => state.firebase.auth, isEqual);
 
   useFirestoreConnect([
-    // { collection: CollectionNames.HomeLanguages, orderBy: ['createdAt', 'asc'] },
     { collection: CollectionNames.Products, where: ['active', '==', true] },
     { collection: CollectionNames.Users, doc: `${auth?.uid}`, storeAs: 'userInfo' },
     { collection: CollectionNames.Users, doc: `${auth?.uid}`, where: ['status', '==', 'active'], subcollections: [{ collection: 'subscriptions' }], storeAs: 'currentSubscription', limit: 1 },
   ])
-
-  const homeLanguages = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.HomeLanguages], isEqual);
-
-  const [activeLanguage, setActiveLanguage] = useState<HomeLanguage|null>({name: 'English', bannerText: '', bannerHeading: ''} as HomeLanguage);
-
-  // useEffect(() => {
-  //   if (homeLanguages && homeLanguages.length) setActiveLanguage(homeLanguages[0])
-  // }, [homeLanguages])
 
   const products = useSelector(({ firestore: { ordered } }: any) => ordered[CollectionNames.Products]);
 
@@ -78,7 +69,7 @@ const Main = (): JSX.Element => {
 
   if (!isLoaded(products) || !auth.isLoaded || !isLoaded(userInfo) || !isLoaded(currentSubscription) || !isLoaded(accessCode) || !isLoaded(accessCodeSubscribers)) return (
     <main>
-      <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
+      <Header />
       <Loading />
       <Footer />
     </main>
@@ -96,9 +87,9 @@ const Main = (): JSX.Element => {
             <AccessCodeContext.Provider value={accessCode}>
               <AccessCodeSubscribersContext.Provider value={accessCodeSubscribers}>
                 <main>
-                  <Header homeLanguages={homeLanguages} setActiveLanguage={setActiveLanguage}/>
+                  <Header />
                   <Routes>
-                    <Route path="/" element={<Home activeLanguage={activeLanguage} />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/terms-of-use" element={<SimpleSinglePage />} />
                     <Route path="/teacher-notes" element={<SimpleSinglePage />} />
                     <Route path="/login" element={<UserLogin />} />
