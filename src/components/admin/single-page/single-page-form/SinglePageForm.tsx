@@ -21,7 +21,7 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
 
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit } = useForm();
 
   const collectionName = getCollectionName(type);
   const pageCollection = firebase.firestore().collection(collectionName).doc(pageId);
@@ -32,9 +32,7 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
     let updatedDoc;
     if(type === PageTypes.Language) {
       updatedDoc = {
-        bannerHeading: data['banner-heading'],
         bannerText: bannerText.current,
-        mainContent: mainContent.current,
       }
     }
     else {
@@ -43,7 +41,7 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
       }
     }
     pageCollection.update(updatedDoc).then((): void => {
-      setSuccessMessage(`${page.name} page has been saved.`);
+      setSuccessMessage(`${page.name || 'Home'} page has been saved.`);
       setSubmitError('');
       setSubmitting(false);
     }).catch((error: { message: string }): void => {
@@ -56,29 +54,18 @@ const SinglePageForm = ({ pageId, page, type }: SinglePageFormProps): JSX.Elemen
   return (
     <form className="single-page-form" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="single-page-form__heading">Edit Fields</h2>
-      {
-        type === PageTypes.Language
-          ? <>
-              <div className="single-page-form__form-row">
-                <label className="single-page-form__label" htmlFor={'banner-heading'}>Banner Heading: </label>
-                <input
-                  id="banner-heading"
-                  className="single-page-form__field"
-                  type="text"
-                  {...register('banner-heading')}
-                  defaultValue={page.bannerHeading || ''}
-                />
-              </div>
-              <div className="single-page-form__form-row">
-                <h3 className="single-page-form__label">Banner Text: </h3>
-                <CustomEditor contentReference={bannerText} height={300} />
-              </div>
-            </>
-          : <></>
-      }
       <div className="single-page-form__form-row">
-        <h3 className="single-page-form__label">Main Content: </h3>
-        <CustomEditor contentReference={mainContent} height={450} />
+        {
+          type === PageTypes.Language
+            ? <>
+                  <h3 className="single-page-form__label">Banner Text: </h3>
+                  <CustomEditor contentReference={bannerText} height={300} />
+              </>
+            : <>
+                <h3 className="single-page-form__label">Main Content: </h3>
+                <CustomEditor contentReference={mainContent} height={450} />
+              </>
+        }
       </div>
       { submitError && <p className="single-page-form__error error">{ submitError }</p> }
       { successMessage && <p className="single-page-form__success-message success">{ successMessage }</p> }
