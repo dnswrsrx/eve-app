@@ -9,7 +9,7 @@ interface CustomEditorProps {
 const CustomEditor = ({ contentReference, height }: CustomEditorProps): JSX.Element => {
   return (
     <Editor
-      apiKey={process.env.REACT_APP_TINY_MCE_KEY}
+      tinymceScriptSrc="/tinymce/tinymce.min.js"
       initialValue={contentReference.current}
       init={{
         height,
