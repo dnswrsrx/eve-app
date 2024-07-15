@@ -67,7 +67,7 @@ const Exercise = (): JSX.Element => {
             {groupId ? 'Exercise' : 'Test'} { exercise.number }
           </h1>
           <Link to={groupId ? `/group/${subcategoryId}/${groupId}` : `/groups/${subcategoryId}`}>
-            Back to {groupId ? 'Group' : 'Sublist'}
+            Back to {groupId ? `Group ${group.number || ''}` : 'Sublist'}
           </Link>
         </div>
         <p className="exercise__description">
