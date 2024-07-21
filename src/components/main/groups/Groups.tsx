@@ -11,6 +11,7 @@ import Exercises from '../exercises/Exercises';
 import './Groups.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
+import Ads from '../ads/Ads';
 
 const Subcategories = (): JSX.Element => {
   let { subcategoryId } = useParams();
@@ -110,6 +111,7 @@ const Subcategories = (): JSX.Element => {
           )
         }
       </div>
+      <Ads slot="3488411459" />
     </section>
   )
 }

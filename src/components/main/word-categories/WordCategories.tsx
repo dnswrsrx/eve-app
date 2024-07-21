@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 import { CollectionNames, Category } from '../../models/models';
 import Loading from '../../general/loading/Loading';
 import CategoryCard from './category-card/CategoryCard';
+import Ads from '../ads/Ads';
 import './WordCategories.scss';
 
 const WordCategories = (): JSX.Element => {
@@ -39,6 +40,7 @@ const WordCategories = (): JSX.Element => {
             : <p>There are no categories to display.</p>
         }
       </div>
+      <Ads slot="6473651538" />
     </section>
   )
 }

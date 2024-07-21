@@ -59,7 +59,7 @@ const Home = (): JSX.Element => {
         <h3><FontAwesomeIcon icon={faStar}/> Try free exercises in the <Link to="/subcategories/0zwuF8q0eHklNDFZJAH9">General</Link> and <Link to="/subcategories/VQvdu2OoscCzjxPk1C5s">Academic</Link> categories</h3>
       </div>
 
-      <Ads slot="8767665789" />
+      <Ads slot="1016492488" />
 
       <h2 className="anchor">There are two main categories to learn and practise your new vocabulary:</h2>
       <h2 className="anchor">General Vocabulary & Academic Vocabulary.</h2>
@@ -82,7 +82,7 @@ const Home = (): JSX.Element => {
         <img src="/images/meeting.svg" alt="Meeting" />
       </div>
 
-      <Ads slot="1252137845" />
+      <Ads slot="7321180411" />
     </section>
   )
 }

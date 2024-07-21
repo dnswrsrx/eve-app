@@ -8,6 +8,7 @@ import firebase from '../../../config/firebaseConfig';
 import useSubscription from '../utils/UserSubscriptionHook';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
+import Ads from '../ads/Ads';
 
 const Exercise = (): JSX.Element => {
   let { subcategoryId, groupId, exerciseId } = useParams();
@@ -79,6 +80,7 @@ const Exercise = (): JSX.Element => {
             : <p>No questions have been added to this {groupId ? 'exercise' : 'test'} yet.</p>
         }
       </div>
+      <Ads slot="5645970816" />
     </section>
   )
 }

@@ -9,6 +9,7 @@ import useSubscription from '../utils/UserSubscriptionHook';
 import Loading from '../../general/loading/Loading';
 import WordList from './word-list/WordList';
 import Exercises from '../exercises/Exercises';
+import Ads from '../ads/Ads';
 import './Group.scss';
 
 const Group = (): JSX.Element => {
@@ -83,7 +84,6 @@ const Group = (): JSX.Element => {
           Select a word to see a definition or select an exercise to practise the vocabulary in context.
           { isSubscribed ? '' : ` Consider subscribing for full access to ${category}.`}
         </p>
-        
         {
           wordList.length
             ? <WordList wordInfo={group.words} wordList={wordList} />
@@ -100,6 +100,7 @@ const Group = (): JSX.Element => {
                 <p>There are no exercises to display in this group.</p>
               </>
         }
+        <Ads slot="5400258929" />
       </div>
     </section>
   )

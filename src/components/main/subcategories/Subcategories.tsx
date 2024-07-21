@@ -13,6 +13,7 @@ import Loading from '../../general/loading/Loading';
 import { UserInfoContext } from '../Main';
 import useSubscription from '../utils/UserSubscriptionHook';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
+import Ads from '../ads/Ads';
 import './Subcategories.scss';
 
 const Subcategories = (): JSX.Element => {
@@ -102,6 +103,7 @@ const Subcategories = (): JSX.Element => {
             ? renderSubcategories()
             : <p>There are no subcategories to display.</p>
         }
+        <Ads slot="9626428481" />
       </div>
     </section>
   )
