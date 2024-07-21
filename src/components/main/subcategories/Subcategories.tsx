@@ -80,32 +80,34 @@ const Subcategories = (): JSX.Element => {
   }
 
   return (
-    <section className="subcategories">
-      <div className="subcategories__wrapper page-wrapper">
-        <div className="subcategories__header">
-          <h1 className="subcategories__heading">
-            Subcategories of {topLevelCategory.name}
-          </h1>
-          <Link to={'/word-categories'}>
-            Back to Word Categories
-          </Link>
+    <>
+      <section className="subcategories">
+        <div className="subcategories__wrapper page-wrapper">
+          <div className="subcategories__header">
+            <h1 className="subcategories__heading">
+              Subcategories of {topLevelCategory.name}
+            </h1>
+            <Link to={'/word-categories'}>
+              Back to Word Categories
+            </Link>
+          </div>
+          { isSubscribed ? <p>Select a subcategory!</p>
+            : <>
+                <p>
+                  As you are not subscribed to {topLevelCategory.name}, only the subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups.
+                  Explore the subcategories: each contains groups of words, their definitions, and exercises.
+                </p>
+              </>
+          }
+          {
+            subcategories.length
+              ? renderSubcategories()
+              : <p>There are no subcategories to display.</p>
+          }
         </div>
-        { isSubscribed ? <p>Select a subcategory!</p>
-          : <>
-              <p>
-                As you are not subscribed to {topLevelCategory.name}, only the subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups.
-                Explore the subcategories: each contains groups of words, their definitions, and exercises.
-              </p>
-            </>
-        }
-        {
-          subcategories.length
-            ? renderSubcategories()
-            : <p>There are no subcategories to display.</p>
-        }
-        <Ads slot="9626428481" />
-      </div>
-    </section>
+      </section>
+      <Ads slot="9626428481" />
+    </>
   )
 }
 

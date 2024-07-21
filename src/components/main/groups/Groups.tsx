@@ -73,46 +73,48 @@ const Subcategories = (): JSX.Element => {
   }
 
   return (
-    <section className="groups">
-      <div className="groups__wrapper page-wrapper">
-        <div className="groups__header">
-          <h1 className="groups__heading">
-            Groups in {subcategory.name}
-          </h1>
-          <Link to={`/subcategories/${subcategory.parent}`}>
-            Back to Subcategories
-          </Link>
-        </div>
-        {
-          isSubscribed
-            ? <p>Select a group to begin work on the exercises!</p>
-            : <p>
-                As you are not subscribed to {topLevelName}, only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available.
-                Each group contains words, their definitions, and exercises.
-              </p>
-        }
-        { groups.length
-            ? <ul className="groups__list">{ renderGroups() }</ul>
-            : <p>There are no groups to display.</p>
-        }
-        { subcategory.name.includes('Academic') && tests && (
-          isSubscribed
-            ? <Exercises exercises={tests} subcategoryId={subcategoryId} groupId={null}/>
-            : <>
-                <h1>Achievement Tests</h1>
-                <p>
-                  {
-                    isSubscribed
-                      ? 'Once you have completed the exercises in each group, check your knowledge of all the vocabulary with the following Achievement Tests'
-                      : `Subscribe to ${topLevelName} to access the tests for this sublist.`
-                  }
+    <>
+      <section className="groups">
+        <div className="groups__wrapper page-wrapper">
+          <div className="groups__header">
+            <h1 className="groups__heading">
+              Groups in {subcategory.name}
+            </h1>
+            <Link to={`/subcategories/${subcategory.parent}`}>
+              Back to Subcategories
+            </Link>
+          </div>
+          {
+            isSubscribed
+              ? <p>Select a group to begin work on the exercises!</p>
+              : <p>
+                  As you are not subscribed to {topLevelName}, only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available.
+                  Each group contains words, their definitions, and exercises.
                 </p>
-              </>
-          )
-        }
-      </div>
+          }
+          { groups.length
+              ? <ul className="groups__list">{ renderGroups() }</ul>
+              : <p>There are no groups to display.</p>
+          }
+          { subcategory.name.includes('Academic') && tests && (
+            isSubscribed
+              ? <Exercises exercises={tests} subcategoryId={subcategoryId} groupId={null}/>
+              : <>
+                  <h1>Achievement Tests</h1>
+                  <p>
+                    {
+                      isSubscribed
+                        ? 'Once you have completed the exercises in each group, check your knowledge of all the vocabulary with the following Achievement Tests'
+                        : `Subscribe to ${topLevelName} to access the tests for this sublist.`
+                    }
+                  </p>
+                </>
+            )
+          }
+        </div>
+      </section>
       <Ads slot="3488411459" />
-    </section>
+    </>
   )
 }
 

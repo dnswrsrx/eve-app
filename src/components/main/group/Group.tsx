@@ -70,39 +70,41 @@ const Group = (): JSX.Element => {
   const wordList = Object.keys(group.words).sort();
 
   return (
-    <section className="group">
-      <div className="group__wrapper page-wrapper">
-        <div className="group__header">
-          <h1 className="group__heading">
-            Group {group.number} in {subcategory.name}
-          </h1>
-          <Link to={`/groups/${subcategoryId}`}>
-            Back to {subcategory.name}
-          </Link>
+    <>
+      <section className="group">
+        <div className="group__wrapper page-wrapper">
+          <div className="group__header">
+            <h1 className="group__heading">
+              Group {group.number} in {subcategory.name}
+            </h1>
+            <Link to={`/groups/${subcategoryId}`}>
+              Back to {subcategory.name}
+            </Link>
+          </div>
+          <p>
+            Select a word to see a definition or select an exercise to practise the vocabulary in context.
+            { isSubscribed ? '' : ` Consider subscribing for full access to ${category}.`}
+          </p>
+          {
+            wordList.length
+              ? <WordList wordInfo={group.words} wordList={wordList} />
+              : <>
+                  <h2>Word List</h2>
+                  <p>There are no words to display in this group.</p>
+                </>
+          }
+          {
+            exercises.length
+              ? <Exercises exercises={exercises} subcategoryId={subcategoryId} groupId={groupId} />
+              : <>
+                  <h2>Exercises</h2>
+                  <p>There are no exercises to display in this group.</p>
+                </>
+          }
         </div>
-        <p>
-          Select a word to see a definition or select an exercise to practise the vocabulary in context.
-          { isSubscribed ? '' : ` Consider subscribing for full access to ${category}.`}
-        </p>
-        {
-          wordList.length
-            ? <WordList wordInfo={group.words} wordList={wordList} />
-            : <>
-                <h2>Word List</h2>
-                <p>There are no words to display in this group.</p>
-              </>
-        }
-        {
-          exercises.length
-            ? <Exercises exercises={exercises} subcategoryId={subcategoryId} groupId={groupId} />
-            : <>
-                <h2>Exercises</h2>
-                <p>There are no exercises to display in this group.</p>
-              </>
-        }
-        <Ads slot="5400258929" />
-      </div>
-    </section>
+      </section>
+      <Ads slot="5400258929" />
+    </>
   )
 }
 

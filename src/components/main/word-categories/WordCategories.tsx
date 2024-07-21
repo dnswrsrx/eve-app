@@ -26,22 +26,24 @@ const WordCategories = (): JSX.Element => {
   }
 
   return (
-    <section className="word-categories">
-      <div className="word-categories__wrapper page-wrapper">
-        <h1 className="word-categories__heading">Word Categories</h1>
-        <p className="word-categories__description">
-          Please select a category.
-        </p>
-        {
-          topLevelCategories.length
-            ? <ul className="word-categories__category-list">
-                { renderCategories() }
-              </ul>
-            : <p>There are no categories to display.</p>
-        }
-      </div>
+    <>
+      <section className="word-categories">
+        <div className="word-categories__wrapper page-wrapper">
+          <h1 className="word-categories__heading">Word Categories</h1>
+          <p className="word-categories__description">
+            Please select a category.
+          </p>
+          {
+            topLevelCategories.length
+              ? <ul className="word-categories__category-list">
+                  { renderCategories() }
+                </ul>
+              : <p>There are no categories to display.</p>
+          }
+        </div>
+      </section>
       <Ads slot="6473651538" />
-    </section>
+    </>
   )
 }
 
