@@ -16,6 +16,7 @@
     "@tippyjs/react": "^4.2.6",
     "@types/lodash": "^4.14.197",
     "@types/react-beautiful-dnd": "^13.1.4",
+    "caniuse-lite": "^1.0.30001642",
     "firebase": "^10.3.1",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
