@@ -42,7 +42,7 @@ const Home = (): JSX.Element => {
         {
           (isLoaded(bannerText) && bannerText?.bannerText.length) ?
             <>
-              { bannerText.bannerText.split('\n').map((e: string) => <div dangerouslySetInnerHTML={{ __html: e }}></div>) }
+              { bannerText.bannerText.split('\n').map((e: string, i: number) => <div key={i} dangerouslySetInnerHTML={{ __html: e }}></div>) }
             </>
             :
             <>
