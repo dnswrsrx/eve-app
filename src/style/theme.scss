@@ -92,7 +92,7 @@ $small-radius: 6px;
   &:disabled {
     color: #999;
     background-color: #EEE;
-    cursor: default;
+    cursor: not-allowed;
   }
 
   &:hover {
