@@ -1,7 +1,7 @@
 @import '../../../../style/theme.scss';
 
 .word-list {
-  @include center-container(700px);
+  @include center-container(800px);
   display: grid;
   row-gap: 1rem;
 
