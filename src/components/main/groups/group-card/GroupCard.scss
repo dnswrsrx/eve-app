@@ -1,5 +1,9 @@
 @import '../../../../style/theme.scss';
 
+div.group-card-main {
+  cursor: not-allowed;
+}
+
 .group-card-main {
   @include secondary-card;
   display: flex;
