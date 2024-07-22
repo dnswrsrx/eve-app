@@ -203,8 +203,6 @@ $small-radius: 6px;
   padding: 2.5rem 5rem;
   display: grid;
   row-gap: 1.5rem;
-  min-height: calc(100vh - #{$header-height} - #{$footer-height});
-  align-content: start;
 
   @include breakpoint($lg) {
     padding: 2rem 3rem;

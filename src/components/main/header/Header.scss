@@ -3,6 +3,7 @@
 .header {
   background-color: $header-color;
   height: $header-height;
+  width: 100%;
 
   &__wrapper {
     display: flex;

@@ -1,9 +1,8 @@
 @import '../../../style/theme.scss';
 
 .login-page {
-  &__wrapper {
-    @include admin-wrapper;
-  }
+  @include admin-wrapper;
+  width: 100%;
 
   &__link-container {
     @include center-container(500px);

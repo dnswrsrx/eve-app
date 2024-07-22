@@ -11,16 +11,14 @@ const Login = (): JSX.Element => {
   if (auth.uid) return <Navigate to='/' />;
 
   return (
-    <section className="login-page">
-      <div className="login-page__wrapper page-wrapper">
-        <LoginForm />
-        <div className="login-page__link-container">
-          <div className="login-page__link">
-            <Link to="/subscription">Don't have an account? Register here.</Link>
-          </div>
-          <div className="login-page__link">
-            <Link to="/forgot-password">Forgot your password?</Link>
-          </div>
+    <section className="login-page page-wrapper">
+      <LoginForm />
+      <div className="login-page__link-container">
+        <div className="login-page__link">
+          <Link to="/subscription">Don't have an account? Register here.</Link>
+        </div>
+        <div className="login-page__link">
+          <Link to="/forgot-password">Forgot your password?</Link>
         </div>
       </div>
     </section>

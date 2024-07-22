@@ -1,6 +1,7 @@
 @import '../../../style/theme.scss';
 
 .ssp {
+  width: 100%;
   &__wrapper {
     @include admin-wrapper;
   }

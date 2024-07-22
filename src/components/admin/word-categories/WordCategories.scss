@@ -1,6 +1,7 @@
 @import '../../../style/theme.scss';
 
 .categories-admin {
+  width: 100%;
   &__wrapper {
     @include admin-wrapper;
   }
