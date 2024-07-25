@@ -39,8 +39,8 @@ const WordCategories = (): JSX.Element => {
               </ul>
             : <p>There are no categories to display.</p>
         }
+        <Ads slot="6473651538" />
       </div>
-      <Ads slot="6473651538" />
     </section>
   )
 }

@@ -79,8 +79,8 @@ const Exercise = (): JSX.Element => {
             ? <ExerciseForm exerciseId={exerciseId} questions={exercise.questions} />
             : <p>No questions have been added to this {groupId ? 'exercise' : 'test'} yet.</p>
         }
+        <Ads slot="5645970816" />
       </div>
-      <Ads slot="5645970816" />
     </section>
   )
 }

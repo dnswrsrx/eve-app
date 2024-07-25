@@ -110,8 +110,8 @@ const Subcategories = (): JSX.Element => {
               </>
           )
         }
+        <Ads slot="3488411459" />
       </div>
-      <Ads slot="3488411459" />
     </section>
   )
 }
