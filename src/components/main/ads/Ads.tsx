@@ -15,7 +15,12 @@ const Ads = ({ slot }: AdsProp): JSX.Element => {
   const isSubscribed = useSubscription();
 
   useEffect(() => {
-    const elements = [document.querySelector('div#root') as HTMLElement, document.querySelector('div#root > main') as HTMLElement]
+    const elements = [
+      document.querySelector('div#root') as HTMLElement,
+      document.querySelector('div#root > main') as HTMLElement,
+      document.querySelector('div#root > main > section') as HTMLElement,
+      document.querySelector('div#root > main > section > div') as HTMLElement,
+    ]
 
     const observer = new MutationObserver((mutations, observer) => {
       mutations.forEach(m => {
