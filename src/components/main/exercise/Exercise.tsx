@@ -61,29 +61,27 @@ const Exercise = (): JSX.Element => {
   }
 
   return (
-    <>
-      <section className="group">
-        <div className="group__wrapper page-wrapper">
-          <div className="group__header">
-            <h1 className="group__heading">
-              {groupId ? 'Exercise' : 'Test'} { exercise.number }
-            </h1>
-            <Link to={groupId ? `/group/${subcategoryId}/${groupId}` : `/groups/${subcategoryId}`}>
-              Back to {groupId ? `Group ${group.number || ''}` : 'Sublist'}
-            </Link>
-          </div>
-          <p className="exercise__description">
-            Please select the words that best complete the following sentences.
-          </p>
-          {
-            exercise.questions.length
-              ? <ExerciseForm exerciseId={exerciseId} questions={exercise.questions} />
-              : <p>No questions have been added to this {groupId ? 'exercise' : 'test'} yet.</p>
-          }
+    <section className="group">
+      <div className="group__wrapper page-wrapper">
+        <div className="group__header">
+          <h1 className="group__heading">
+            {groupId ? 'Exercise' : 'Test'} { exercise.number }
+          </h1>
+          <Link to={groupId ? `/group/${subcategoryId}/${groupId}` : `/groups/${subcategoryId}`}>
+            Back to {groupId ? `Group ${group.number || ''}` : 'Sublist'}
+          </Link>
         </div>
-      </section>
+        <p className="exercise__description">
+          Please select the words that best complete the following sentences.
+        </p>
+        {
+          exercise.questions.length
+            ? <ExerciseForm exerciseId={exerciseId} questions={exercise.questions} />
+            : <p>No questions have been added to this {groupId ? 'exercise' : 'test'} yet.</p>
+        }
+      </div>
       <Ads slot="5645970816" />
-    </>
+    </section>
   )
 }
 
