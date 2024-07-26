@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
-import Ads from '../ads/Ads';
 import SubscribeToProduct from '../utils/subscribe/SubscribeToProduct';
 import { ProductsContext } from '../Main';
 import { CollectionNames, Product } from '../../models/models';
@@ -59,8 +58,6 @@ const Home = (): JSX.Element => {
         <h3><FontAwesomeIcon icon={faStar}/> Try free exercises in the <Link to="/subcategories/0zwuF8q0eHklNDFZJAH9">General</Link> and <Link to="/subcategories/VQvdu2OoscCzjxPk1C5s">Academic</Link> categories</h3>
       </div>
 
-      <Ads slot="1016492488" />
-
       <h2 className="anchor">There are two main categories to learn and practise your new vocabulary:</h2>
       <h2 className="anchor">General Vocabulary & Academic Vocabulary.</h2>
 
@@ -81,8 +78,6 @@ const Home = (): JSX.Element => {
         <h3>Visit our <a href="/subscription">subscription page</a> for institutional rates!</h3>
         <img src="/images/meeting.svg" alt="Meeting" />
       </div>
-
-      <Ads slot="7321180411" />
     </section>
   )
 }
