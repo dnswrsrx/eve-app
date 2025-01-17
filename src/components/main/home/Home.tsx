@@ -4,7 +4,7 @@ import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faStar} from '@fortawesome/free-solid-svg-icons';
+import {faStar, faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
 
 import SubscribeToProduct from '../utils/subscribe/SubscribeToProduct';
 import { ProductsContext } from '../Main';
@@ -22,6 +22,15 @@ const Home = (): JSX.Element => {
 
   return (
     <section className="home page-wrapper">
+      <div className="home__maintenance">
+        <h3>
+          <span><FontAwesomeIcon icon={faExclamationTriangle} /></span>
+          We will be doing some site maintenance at 12pm on Saturday, 18th of January 2025 (Pacific Standard Time).
+          There will be some disruption accessing the site and it may take up to 24 hours for the site to return.
+          We apologize for the inconvenience that will be caused.
+        </h3>
+      </div>
+
       <h1 className="home__banner-heading anchor">Welcome to English Vocabulary Exercises</h1>
       <div className="home__banner-text">
         <div className="home__banner-questions">
