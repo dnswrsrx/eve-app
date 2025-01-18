@@ -25,9 +25,8 @@ const Home = (): JSX.Element => {
       <div className="home__maintenance">
         <h3>
           <span><FontAwesomeIcon icon={faExclamationTriangle} /></span>
-          We will be doing some site maintenance at 12pm on Saturday, 18th of January 2025 (Pacific Standard Time).
-          There will be some disruption accessing the site and it may take up to 24 hours for the site to return.
-          We apologize for the inconvenience that will be caused.
+          The site is now back after some maintenance!
+          We apologize for the inconvenience caused and thank you for your continued support.
         </h3>
       </div>
 
