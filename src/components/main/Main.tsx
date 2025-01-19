@@ -104,7 +104,7 @@ const Main = (): JSX.Element => {
                     <Route path="/test/:subcategoryId/:exerciseId" element={<Exercise />} />
                     <Route path="/page/:slug" element={<Page />} />
                     <Route path="/confirmation" element={<Confirmation />} />
-                    <Route path="/" element={<PageNotFound />} />
+                    <Route path="*" element={<PageNotFound />} />
                   </Routes>
                   <Footer />
                 </main>
