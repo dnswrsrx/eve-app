@@ -22,13 +22,13 @@ const Home = (): JSX.Element => {
 
   return (
     <section className="home page-wrapper">
-      <div className="home__maintenance">
-        <h3>
-          <span><FontAwesomeIcon icon={faExclamationTriangle} /></span>
-          The site is now back after some maintenance!
-          We apologize for the inconvenience caused and thank you for your continued support.
-        </h3>
-      </div>
+      {/* <div className="home__maintenance"> */}
+      {/*   <h3> */}
+      {/*     <span><FontAwesomeIcon icon={faExclamationTriangle} /></span> */}
+      {/*     The site is now back after some maintenance! */}
+      {/*     We apologize for the inconvenience caused and thank you for your continued support. */}
+      {/*   </h3> */}
+      {/* </div> */}
 
       <h1 className="home__banner-heading anchor">Welcome to English Vocabulary Exercises</h1>
       <div className="home__banner-text">
