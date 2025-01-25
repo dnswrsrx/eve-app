@@ -39,7 +39,7 @@ const Home = (): JSX.Element => {
           <h3>Looking to improve your reading and writing?</h3>
           <img className="home__banner-image" src="/images/study.svg" alt="writing"/>
 
-          <h3>Need to score well on English tests, including the IELTS, TOEFL, and TOEIC?</h3>
+          <h3>Need to improve your vocabulary for English tests, including the IELTS, TOEFL, and TOEIC?</h3>
           <img className="home__banner-image" src='/images/education.svg' alt="someone standing on a book and tossing a graduation cap"/>
         </div>
       </div>
