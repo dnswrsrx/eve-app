@@ -69,7 +69,7 @@ const Exercise = (): JSX.Element => {
         />
         <meta property="og:title" content={`${groupId ? 'Exercise' : 'Test'} ${exercise.number} ${groupId ? `- Group ${group.number}` : ''} - ${subcategory.name} - English Vocabulary Exercises`} />
         <meta property="og:description" content={`${groupId ? 'Exercise' : 'Test'} ${exercise.number} ${groupId?`of group ${group.number}` : ''} of the ${subcategory.name} subcategory.`} />
-        <title>{groupId ? 'Exercise' : 'Test'} {exercise.number.toString()} {groupId ? `- Group {group.number.toString()}` : ''} - {subcategory.name} - English Vocabulary Exercises</title>
+        <title>{groupId ? 'Exercise' : 'Test'} {exercise.number.toString()} {groupId ? `- Group ${group.number.toString()}` : ''} - {subcategory.name} - English Vocabulary Exercises</title>
       </Helmet>
 
       <div className="group__wrapper page-wrapper">
