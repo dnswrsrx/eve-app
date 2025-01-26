@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import firebase from '../../../config/firebaseConfig';
@@ -29,6 +30,15 @@ const ForgotPassword = (): JSX.Element => {
 
   return (
     <section className="register-page page-wrapper">
+      <Helmet>
+        <meta name="description"
+          content="Password reset page for English Vocabulary Exercises."
+        />
+        <meta property="og:title" content="Forgot Password - English Vocabulary Exercises" />
+        <meta property="og:description" content="Password reset page for English Vocabulary Exercises." />
+        <title>Forgot Password - English Vocabulary Exercises</title>
+      </Helmet>
+
       <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
         <h2 className="register-form__heading">Reset Your Password</h2>
         <div className="register-form__row">

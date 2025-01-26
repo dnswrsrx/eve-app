@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import firebase from '../../../config/firebaseConfig';
@@ -89,6 +90,14 @@ const MyAccount = (): JSX.Element => {
 
   return (
     <section className="account-page">
+      <Helmet>
+        <meta name="description"
+          content="Account management page of English Vocabulary Exercises. You may update your password and manage your subscription if you have one."
+        />
+        <meta property="og:title" content="My Account - English Vocabulary Exercises" />
+        <meta property="og:description" content="Account management page of English Vocabulary Exercises. You may update your password and manage your subscription if you have one." />
+        <title>My Account - English Vocabulary Exercises</title>
+      </Helmet>
       <div className="account-page__wrapper page-wrapper">
         <h1 className="account-page__heading">{'Welcome Back' + (auth.displayName ? ` ${auth.displayName}` : '!')}</h1>
         <div className="account-page__overview">

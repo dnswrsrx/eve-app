@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../Main';
@@ -12,6 +13,15 @@ const Login = (): JSX.Element => {
 
   return (
     <section className="login-page page-wrapper">
+      <Helmet>
+        <meta name="description"
+          content="Login page for English Vocabulary Exercises."
+        />
+        <meta property="og:title" content="Log In - English Vocabulary Exercises" />
+        <meta property="og:description" content="Login page for English Vocabulary Exercises." />
+        <title>Log In - English Vocabulary Exercises</title>
+      </Helmet>
+
       <LoginForm />
       <div className="login-page__link-container">
         <div className="login-page__link">

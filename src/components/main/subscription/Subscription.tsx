@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 
 import Instructions from './Instructions/Instructions';
 import RegisterForm from './RegisterForm/RegisterForm';
@@ -22,6 +23,15 @@ const Subscription = (): JSX.Element => {
 
   return (
     <section className="subscription-page">
+      <Helmet>
+        <meta name="description"
+          content="Subscription and sign-up page for English Vocabulary Exercises. There are pricing and description for the three forms of subscription."
+        />
+        <meta property="og:title" content="Subscription - English Vocabulary Exercises" />
+        <meta property="og:description" content="Subscription and sign-up page for English Vocabulary Exercises. There are pricing and description for the three forms of subscription." />
+        <title>Subscription - English Vocabulary Exercises</title>
+      </Helmet>
+
       <div className="subscription-page__wrapper page-wrapper">
         <h1 className="subscription-page__heading">Subscription</h1>
 

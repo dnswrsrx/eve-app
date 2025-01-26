@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
@@ -27,6 +28,15 @@ const WordCategories = (): JSX.Element => {
 
   return (
     <section className="word-categories">
+      <Helmet>
+        <meta name="description"
+          content="Word categories for English Vocabulary Exercises. There are two main categories the words and exercises are broadly organised in."
+        />
+        <meta property="og:title" content="Word Categories - English Vocabulary Exercises" />
+        <meta property="og:description" content="Word categories for English Vocabulary Exercises. There are two main categories the words and exercises are broadly organised in." />
+        <title>Word Categories - English Vocabulary Exercises</title>
+      </Helmet>
+
       <div className="word-categories__wrapper page-wrapper">
         <h1 className="word-categories__heading">Word Categories</h1>
         <p className="word-categories__description">

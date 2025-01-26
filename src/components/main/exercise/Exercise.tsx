@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames } from '../../models/models';
@@ -62,6 +63,15 @@ const Exercise = (): JSX.Element => {
 
   return (
     <section className="group">
+      <Helmet>
+        <meta name="description"
+          content={`${groupId ? 'Exercise' : 'Test'} ${exercise.number} ${groupId?`of group ${group.number}` : ''} of the ${subcategory.name} subcategory.`}
+        />
+        <meta property="og:title" content={`${groupId ? 'Exercise' : 'Test'} ${exercise.number} ${groupId ? `- Group ${group.number}` : ''} - ${subcategory.name} - English Vocabulary Exercises`} />
+        <meta property="og:description" content={`${groupId ? 'Exercise' : 'Test'} ${exercise.number} ${groupId?`of group ${group.number}` : ''} of the ${subcategory.name} subcategory.`} />
+        <title>{groupId ? 'Exercise' : 'Test'} {exercise.number.toString()} {groupId ? `- Group {group.number.toString()}` : ''} - {subcategory.name} - English Vocabulary Exercises</title>
+      </Helmet>
+
       <div className="group__wrapper page-wrapper">
         <div className="group__header">
           <h1 className="group__heading">

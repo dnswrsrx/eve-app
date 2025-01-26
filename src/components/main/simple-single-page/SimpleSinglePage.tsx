@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { isEqual } from 'lodash';
 
@@ -24,8 +25,18 @@ const SimpleSinglePage = (): JSX.Element => {
 
   if (!pageContent || !pageContent[0]) return <PageNotFound />;
 
+  const isTermsPage = window.location.pathname === '/terms-of-use';
+
   return (
     <div className="ssp">
+      <Helmet>
+        <meta name="description"
+          content={isTermsPage ? "Terms of use for English Vocabulary Exercises. Contains info about the services the site uses and some additional terms regarding subscriptions." : "Curated collection of fill-in-the-blank exercises to expand your English vocabulary. The vocabulary are broadly categorised into general and academic use-cases."}
+        />
+        <meta property="og:title" content={`${isTermsPage ? 'Terms of Use - ' : ''}English Vocabulary Exercises`} />
+        <meta property="og:description" content={isTermsPage ? "Terms of use for English Vocabulary Exercises. Contains info about the services the site uses and some additional terms regarding subscriptions." : "Curated collection of fill-in-the-blank exercises to expand your English vocabulary. The vocabulary are broadly categorised into general and academic use-cases."} />
+        <title>{isTermsPage ? 'Terms of Use - ' : ''}English Vocabulary Exercises</title>
+      </Helmet>
       <div className="ssp__wrapper page-wrapper">
         <div className="ssp__main-content" dangerouslySetInnerHTML={{ __html: pageContent[0].mainContent }}></div>
       </div>

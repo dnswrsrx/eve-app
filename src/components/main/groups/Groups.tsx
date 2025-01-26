@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, Group } from '../../models/models';
@@ -74,6 +75,15 @@ const Subcategories = (): JSX.Element => {
 
   return (
     <section className="groups">
+      <Helmet>
+        <meta name="description"
+          content={`Groups of the ${subcategory.name} subcategory.`}
+        />
+        <meta property="og:title" content={`${subcategory.name} - English Vocabulary Exercises`} />
+        <meta property="og:description" content={`Groups of the ${subcategory.name} word category.`} />
+        <title>{subcategory.name} - English Vocabulary Exercises</title>
+      </Helmet>
+
       <div className="groups__wrapper page-wrapper">
         <div className="groups__header">
           <h1 className="groups__heading">

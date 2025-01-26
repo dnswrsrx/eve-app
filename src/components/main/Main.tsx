@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FirebaseReducer, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { isEqual } from 'lodash';
+import { Helmet } from 'react-helmet';
 
 import { RootState } from '../../store/reducers/rootReducer';
 
@@ -86,6 +87,13 @@ const Main = (): JSX.Element => {
           <ProductsContext.Provider value={products}>
             <AccessCodeContext.Provider value={accessCode}>
               <AccessCodeSubscribersContext.Provider value={accessCodeSubscribers}>
+                <Helmet>
+                  <meta name="description"
+                        content="Curated collection of fill-in-the-blank exercises to expand your English vocabulary. The vocabulary are broadly categorised into general and academic use-cases."
+                  />
+                  <meta property="og:title" content="English Vocabulary Exercises" />
+                  <meta property="og:description" content="Curated collection of fill-in-the-blank exercises to expand your English vocabulary. The vocabulary are broadly categorised into general and academic use-cases." />
+                </Helmet>
                 <main>
                   <Header />
                   <Routes>

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, Category } from '../../models/models';
@@ -81,6 +82,15 @@ const Subcategories = (): JSX.Element => {
 
   return (
     <section className="subcategories">
+      <Helmet>
+        <meta name="description"
+          content={`Subcategories of the ${topLevelCategory.name} word category.`}
+        />
+        <meta property="og:title" content={`${topLevelCategory.name} - English Vocabulary Exercises`} />
+        <meta property="og:description" content={`Subcategories of the ${topLevelCategory.name} word category.`} />
+        <title>{topLevelCategory.name} - English Vocabulary Exercises</title>
+      </Helmet>
+
       <div className="subcategories__wrapper page-wrapper">
         <div className="subcategories__header">
           <h1 className="subcategories__heading">
