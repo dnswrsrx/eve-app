@@ -29,6 +29,7 @@ const Subscription = (): JSX.Element => {
         />
         <meta property="og:title" content="Subscription - English Vocabulary Exercises" />
         <meta property="og:description" content="Subscription and sign-up page for English Vocabulary Exercises. There are pricing and description for the three forms of subscription." />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>Subscription - English Vocabulary Exercises</title>
       </Helmet>
 

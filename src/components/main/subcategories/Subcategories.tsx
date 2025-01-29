@@ -88,6 +88,7 @@ const Subcategories = (): JSX.Element => {
         />
         <meta property="og:title" content={`${topLevelCategory.name} - English Vocabulary Exercises`} />
         <meta property="og:description" content={`Subcategories of the ${topLevelCategory.name} word category.`} />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>{topLevelCategory.name} - English Vocabulary Exercises</title>
       </Helmet>
 

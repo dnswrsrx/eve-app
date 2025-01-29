@@ -36,6 +36,7 @@ const ForgotPassword = (): JSX.Element => {
         />
         <meta property="og:title" content="Forgot Password - English Vocabulary Exercises" />
         <meta property="og:description" content="Password reset page for English Vocabulary Exercises." />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>Forgot Password - English Vocabulary Exercises</title>
       </Helmet>
 

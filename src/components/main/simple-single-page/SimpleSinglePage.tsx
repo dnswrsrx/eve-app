@@ -35,6 +35,7 @@ const SimpleSinglePage = (): JSX.Element => {
         />
         <meta property="og:title" content={`${isTermsPage ? 'Terms of Use - ' : ''}English Vocabulary Exercises`} />
         <meta property="og:description" content={isTermsPage ? "Terms of use for English Vocabulary Exercises. Contains info about the services the site uses and some additional terms regarding subscriptions." : "Curated collection of fill-in-the-blank exercises to expand your English vocabulary. The vocabulary are broadly categorised into general and academic use-cases."} />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>{isTermsPage ? 'Terms of Use - ' : ''}English Vocabulary Exercises</title>
       </Helmet>
       <div className="ssp__wrapper page-wrapper">

@@ -19,6 +19,7 @@ const Login = (): JSX.Element => {
         />
         <meta property="og:title" content="Log In - English Vocabulary Exercises" />
         <meta property="og:description" content="Login page for English Vocabulary Exercises." />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>Log In - English Vocabulary Exercises</title>
       </Helmet>
 

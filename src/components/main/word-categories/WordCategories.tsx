@@ -34,6 +34,7 @@ const WordCategories = (): JSX.Element => {
         />
         <meta property="og:title" content="Word Categories - English Vocabulary Exercises" />
         <meta property="og:description" content="Word categories for English Vocabulary Exercises. There are two main categories the words and exercises are broadly organised in." />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>Word Categories - English Vocabulary Exercises</title>
       </Helmet>
 

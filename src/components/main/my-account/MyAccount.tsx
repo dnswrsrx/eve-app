@@ -96,6 +96,7 @@ const MyAccount = (): JSX.Element => {
         />
         <meta property="og:title" content="My Account - English Vocabulary Exercises" />
         <meta property="og:description" content="Account management page of English Vocabulary Exercises. You may update your password and manage your subscription if you have one." />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>My Account - English Vocabulary Exercises</title>
       </Helmet>
       <div className="account-page__wrapper page-wrapper">

@@ -93,6 +93,7 @@ const Main = (): JSX.Element => {
                   />
                   <meta property="og:title" content="English Vocabulary Exercises" />
                   <meta property="og:description" content="Curated collection of fill-in-the-blank exercises to expand your English vocabulary. The vocabulary are broadly categorised into general and academic use-cases." />
+                  <link rel="canonical" href='https://www.englishvocabularyexercises.com' />
                 </Helmet>
                 <main>
                   <Header />

@@ -78,6 +78,7 @@ const Group = (): JSX.Element => {
         />
         <meta property="og:title" content={`Group ${group.number} - ${subcategory.name} - English Vocabulary Exercises`} />
         <meta property="og:description" content={`Group ${group.number} of the ${subcategory.name} word category.`} />
+        <link rel="canonical" href={`https://www.englishvocabularyexercises.com${window.location.pathname}`} />
         <title>Group {group.number.toString()} - {subcategory.name} - English Vocabulary Exercises</title>
       </Helmet>
 
