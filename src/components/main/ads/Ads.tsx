@@ -9,6 +9,8 @@ interface AdsProp {
   slot: string
 }
 
+const adsURL = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8556217605588205'
+
 const Ads = ({ slot }: AdsProp): JSX.Element => {
 
   const auth = useContext(AuthContext);
@@ -39,11 +41,22 @@ const Ads = ({ slot }: AdsProp): JSX.Element => {
       elements.forEach((e: HTMLElement) => e.style.height = "100%")
     }, 1000)
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect()
+      if (document.querySelector(`script[src="${adsURL}"]`)) {
+        document.querySelector(`script[src="${adsURL}"]`)!.remove()
+      }
+    };
   }, [])
 
   if (!pathsToHideAds.includes(window.location.pathname)) {
     if (!auth.uid || !isSubscribed) {
+      if (!document.querySelector(`script[src="${adsURL}"]`)) {
+        const script = document.createElement('script');
+        script.src = adsURL
+        script.crossOrigin = 'anonymous'
+        document.querySelector('body')?.appendChild(script)
+      }
       return <Adsense client="ca-pub-8556217605588205" slot={slot} format="auto" responsive="true" />
     }
   }
