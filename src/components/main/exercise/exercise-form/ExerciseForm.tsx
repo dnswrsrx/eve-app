@@ -111,6 +111,7 @@ const ExerciseForm = ({ exerciseId, questions}: ExerciseFormProps): JSX.Element 
                   id={`field-${index}`}
                   className="exercise-form-main__select-field"
                   defaultValue=""
+                  disabled={getResultClass(index) === 'correct'}
                   {...register(`field-${index}`)}
                 >
                   <option value="" disabled>Select a Word</option>
