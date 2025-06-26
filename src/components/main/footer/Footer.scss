@@ -15,13 +15,13 @@
   }
 
   &__link-container {
-    @include grid-list(auto auto auto);
+    @include grid-list(auto auto auto, 2rem);
     margin: auto 0;
   }
 
   @include breakpoint($sm) {
     height: auto;
-    
+
     &__link-container {
       grid-template-columns: 1fr;
       width: 100%;
