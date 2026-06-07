@@ -6,7 +6,6 @@ import { CollectionNames } from '../../models/models';
 import firebase from '../../../config/firebaseConfig';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
-import useSubscription from '../utils/UserSubscriptionHook';
 import Loading from '../../general/loading/Loading';
 import WordList from './word-list/WordList';
 import Exercises from '../exercises/Exercises';
@@ -44,8 +43,6 @@ const Group = (): JSX.Element => {
     }
   }, [subcategory])
 
-  const isSubscribed = useSubscription(category);
-
   if(!isLoaded(subcategory) || !isLoaded(group) || !isLoaded(exercises)) return <Loading />;
 
   if(!subcategory || !group) {
@@ -64,9 +61,6 @@ const Group = (): JSX.Element => {
       </section>
     )
   }
-
-  // Redirect back to groups if viewing a non-free group as an unsubscribed user
-  if (!isSubscribed && !group.free) return <Navigate to={`/groups/${subcategoryId}` }/>;
 
   const wordList = Object.keys(group.words).sort();
 
@@ -91,10 +85,7 @@ const Group = (): JSX.Element => {
             Back to {subcategory.name}
           </Link>
         </div>
-        <p>
-          Select a word to see a definition or select an exercise to practise the vocabulary in context.
-          { isSubscribed ? '' : ` Consider subscribing for full access to ${category}.`}
-        </p>
+        <p>Select a word to see a definition or select an exercise to practise the vocabulary in context.</p>
         {
           wordList.length
             ? <WordList wordInfo={group.words} wordList={wordList} />

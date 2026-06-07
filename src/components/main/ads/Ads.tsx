@@ -1,7 +1,5 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Adsense } from '@ctrl/react-adsense';
-import { AuthContext } from '../Main';
-import useSubscription from '../utils/UserSubscriptionHook';
 import './Ads.scss';
 
 const pathsToHideAds = ['/my-account', '/subscription', '/login', '/forgot-password'];
@@ -13,9 +11,6 @@ interface AdsProp {
 const adsURL = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8556217605588205'
 
 const Ads = ({ slot }: AdsProp): JSX.Element => {
-
-  const auth = useContext(AuthContext);
-  const isSubscribed = useSubscription();
 
   useEffect(() => {
     const elements = [
@@ -51,18 +46,16 @@ const Ads = ({ slot }: AdsProp): JSX.Element => {
   }, [])
 
   if (!pathsToHideAds.includes(window.location.pathname)) {
-    if (!auth.uid || !isSubscribed) {
-      if (window.location.hostname.startsWith('localhost') || window.location.hostname.startsWith('127.0.0.1')) {
-        return <div className="local-ads"></div>
-      } else {
-        if (!document.querySelector(`script[src="${adsURL}"]`)) {
-          const script = document.createElement('script');
-          script.src = adsURL
-          script.crossOrigin = 'anonymous'
-          document.querySelector('body')?.appendChild(script)
-        }
-        return <Adsense client="ca-pub-8556217605588205" slot={slot} format="auto" responsive="true" />
+    if (window.location.hostname.startsWith('localhost') || window.location.hostname.startsWith('127.0.0.1')) {
+      return <div className="local-ads"></div>
+    } else {
+      if (!document.querySelector(`script[src="${adsURL}"]`)) {
+        const script = document.createElement('script');
+        script.src = adsURL
+        script.crossOrigin = 'anonymous'
+        document.querySelector('body')?.appendChild(script)
       }
+      return <Adsense client="ca-pub-8556217605588205" slot={slot} format="auto" responsive="true" />
     }
   }
 

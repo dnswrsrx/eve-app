@@ -6,7 +6,6 @@ import { CollectionNames } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import firebase from '../../../config/firebaseConfig';
-import useSubscription from '../utils/UserSubscriptionHook';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 import Ads from '../ads/Ads';
@@ -52,12 +51,11 @@ const Exercise = (): JSX.Element => {
     }
   }, [subcategory])
 
-  const isSubscribed = useSubscription(category);
 
   if (!isLoaded(exercise)) return <Loading />;
 
-  // Redirect back to groups if viewing exercise/test of a non-free group/subcategory
-  if (!isSubscribed && (!groupId || (group && !group.free))) {
+  // Redirect back to groups no groupId
+  if (!groupId) {
     window.location.assign(`/groups/${subcategoryId}`);
   }
 

@@ -3,15 +3,12 @@ import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames, Group } from '../../models/models';
-import useSubscription from '../utils/UserSubscriptionHook';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import Loading from '../../general/loading/Loading';
 import GroupCard from './group-card/GroupCard';
 import Exercises from '../exercises/Exercises';
 import './Groups.scss';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faStar} from '@fortawesome/free-solid-svg-icons';
 import Ads from '../ads/Ads';
 
 const Subcategories = (): JSX.Element => {
@@ -38,9 +35,7 @@ const Subcategories = (): JSX.Element => {
   const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId || ''], isEqual);
   const groups = useSelector(({ firestore: { ordered } }: any) => ordered[`groups-${subcategoryId}`], isEqual);
   const topLevels = useSelector(( {firestore: { data }}: any ) => data['topLevels']);
-  const topLevelName = subcategory && topLevels && topLevels[subcategory.parent]?.name;
-  const isSubscribed = useSubscription(topLevelName);
-  
+
   const tests = useSelector(({ firestore: { ordered } }: any) => ordered[`tests-${subcategoryId}`], isEqual);
 
   if ([subcategory, groups, topLevels, tests].some(v => !isLoaded(v))) return <Loading />;
@@ -67,7 +62,6 @@ const Subcategories = (): JSX.Element => {
       <GroupCard
         subcategoryId={subcategoryId || ''}
         group={group}
-        notSubscribed={!isSubscribed}
         key={group.id}
       />
     ))
@@ -94,33 +88,13 @@ const Subcategories = (): JSX.Element => {
             Back to Subcategories
           </Link>
         </div>
-        {
-          isSubscribed
-            ? <p>Select a group to begin work on the exercises!</p>
-            : <p>
-                As you are not subscribed to {topLevelName}, only groups with the star (<FontAwesomeIcon icon={faStar}/>) are available.
-                Each group contains words, their definitions, and exercises.
-              </p>
-        }
+        <p>Select a group to begin work on the exercises!</p>
+
         { groups.length
             ? <ul className="groups__list">{ renderGroups() }</ul>
             : <p>There are no groups to display.</p>
         }
-        { subcategory.name.includes('Academic') && tests && (
-          isSubscribed
-            ? <Exercises exercises={tests} subcategoryId={subcategoryId} groupId={null}/>
-            : <>
-                <h1>Achievement Tests</h1>
-                <p>
-                  {
-                    isSubscribed
-                      ? 'Once you have completed the exercises in each group, check your knowledge of all the vocabulary with the following Achievement Tests'
-                      : `Subscribe to ${topLevelName} to access the tests for this sublist.`
-                  }
-                </p>
-              </>
-          )
-        }
+        { subcategory.name.includes('Academic') && tests && <Exercises exercises={tests} subcategoryId={subcategoryId} groupId={null}/> }
         <Ads slot="3488411459" />
       </div>
     </section>

@@ -6,13 +6,9 @@ import { CollectionNames, Category } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faStar} from '@fortawesome/free-solid-svg-icons';
-
 import { sortAWLSubcategories } from '../../../utils/utils';
 import Loading from '../../general/loading/Loading';
 import { UserInfoContext } from '../Main';
-import useSubscription from '../utils/UserSubscriptionHook';
 import SubcategoryCard from './subcategory-card/SubcategoryCard';
 import Ads from '../ads/Ads';
 import './Subcategories.scss';
@@ -28,7 +24,6 @@ const Subcategories = (): JSX.Element => {
 
   const topLevelCategory = useSelector(({ firestore: { data } }: any) => data[categoryId || ''], isEqual);
   const subcategories = useSelector(({ firestore: { ordered } }: any) => ordered[`subcategories-${categoryId}`], isEqual);
-  const isSubscribed = useSubscription(topLevelCategory && topLevelCategory.name);
 
   const userInfo = useContext(UserInfoContext);
 
@@ -53,7 +48,7 @@ const Subcategories = (): JSX.Element => {
                 .filter((subcategory: Category) => userInfo?.isAdmin || !subcategory?.name?.includes('[test]'))
                 .map((subcategory: Category): JSX.Element => (
                   <li key={subcategory.id}>
-                    <SubcategoryCard subcategory={subcategory} notSubscribed={!isSubscribed} />
+                    <SubcategoryCard subcategory={subcategory} />
                   </li>
                 ))
             }
@@ -101,14 +96,7 @@ const Subcategories = (): JSX.Element => {
             Back to Word Categories
           </Link>
         </div>
-        { isSubscribed ? <p>Select a subcategory!</p>
-          : <>
-              <p>
-                As you are not subscribed to {topLevelCategory.name}, only the subcategories with the star (<FontAwesomeIcon icon={faStar} />) contain free groups.
-                Explore the subcategories: each contains groups of words, their definitions, and exercises.
-              </p>
-            </>
-        }
+        <p>Select a subcategory!</p>
         {
           subcategories.length
             ? renderSubcategories()

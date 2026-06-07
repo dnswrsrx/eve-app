@@ -1,19 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-
 import { Group } from '../../../models/models';
 import './GroupCard.scss';
 
 interface GroupCardProps {
   subcategoryId: string,
   group: Group,
-  notSubscribed: boolean
 }
 
-const GroupCard = ({ subcategoryId, group, notSubscribed }: GroupCardProps) => {
+const GroupCard = ({ subcategoryId, group }: GroupCardProps) => {
   const wordList = Object.keys(group.words).sort();
 
   const renderWords = (): JSX.Element[] => {
@@ -25,14 +21,9 @@ const GroupCard = ({ subcategoryId, group, notSubscribed }: GroupCardProps) => {
   const renderCard = (): JSX.Element => {
     return (
       <>
-        <div className="group-card-main__card-header">
-          <h2 className="group-card-main__heading">
-            Group {group.number}
-          </h2>
-          { notSubscribed && group.free &&
-            <h2 className="group-card-main__free"><FontAwesomeIcon icon={faStar} /> Free</h2>
-          }
-        </div>
+        <h2 className="group-card-main__heading">
+          Group {group.number}
+        </h2>
         {
           wordList.length
             ? <ul className="group-card-main__word-list">
@@ -46,11 +37,7 @@ const GroupCard = ({ subcategoryId, group, notSubscribed }: GroupCardProps) => {
 
   return (
     <li>
-      {
-        notSubscribed && !group.free
-          ? <div className="group-card-main">{ renderCard() }</div>
-          : <Link to={`/group/${subcategoryId}/${group.id}`} className="group-card-main">{ renderCard() }</Link>
-      }
+      <Link to={`/group/${subcategoryId}/${group.id}`} className="group-card-main">{ renderCard() }</Link>
     </li>
   )
 }
