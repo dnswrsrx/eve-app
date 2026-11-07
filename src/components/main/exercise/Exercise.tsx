@@ -55,7 +55,7 @@ const Exercise = (): JSX.Element => {
   if (!isLoaded(exercise)) return <Loading />;
 
   // Redirect back to groups no groupId
-  if (!groupId) {
+  if (!groupId && !exerciseId) {
     window.location.assign(`/groups/${subcategoryId}`);
   }
 
