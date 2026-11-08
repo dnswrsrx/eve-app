@@ -4,7 +4,7 @@ import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faStar, faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
+import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
 
 import SubscribeToProduct from '../utils/subscribe/SubscribeToProduct';
 import { ProductsContext } from '../Main';
@@ -22,13 +22,29 @@ const Home = (): JSX.Element => {
 
   return (
     <section className="home page-wrapper">
-      {/* <div className="home__maintenance"> */}
-      {/*   <h3> */}
-      {/*     <span><FontAwesomeIcon icon={faExclamationTriangle} /></span> */}
-      {/*     The site is now back after some maintenance! */}
-      {/*     We apologize for the inconvenience caused and thank you for your continued support. */}
-      {/*   </h3> */}
-      {/* </div> */}
+      <div className="home__maintenance">
+        <h3>
+          <p>
+            <span><FontAwesomeIcon icon={faExclamationTriangle} /></span>
+            I have recently decided to make the site free and available to everyone.
+            If you have an ongoing subscription, it will not be renewed and
+            you will not be billed at the end of your current period.
+          </p>
+          <br />
+          <p>
+            To obtain a refund of the prorated amount for the remaining time of your subscription,
+            first cancel the subscription on your customer portal
+            which you can access via the Manage your subscription button in My Account.
+            Then contact me by email which can be found on the <Link to="/terms-of-use">Terms of Use page</Link>.
+          </p>
+          {/* <br /> */}
+          {/* <p> */}
+          {/*   The site will continue to run as long as I have the means */}
+          {/*   to keep it up. <Link to='/support'>Consider supporting me</Link> with */}
+          {/*   one-off contributions! */}
+          {/* </p> */}
+        </h3>
+      </div>
 
       <h1 className="home__banner-heading anchor">Welcome to English Vocabulary Exercises</h1>
       <div className="home__banner-text">
@@ -60,11 +76,7 @@ const Home = (): JSX.Element => {
       </div>
       <br />
 
-      <Link className="home__start-today" to="/subscription">Get Started and Subscribe!</Link>
-
-      <div className="home__try">
-        <h3><FontAwesomeIcon icon={faStar}/> Try free exercises in the <Link to="/subcategories/0zwuF8q0eHklNDFZJAH9">General</Link> and <Link to="/subcategories/VQvdu2OoscCzjxPk1C5s">Academic</Link> categories</h3>
-      </div>
+      {/* <Link className="home__start-today" to="/support">Consider Supporting</Link> */}
 
       <h2 className="anchor">There are two main categories to learn and practise your new vocabulary:</h2>
       <h2 className="anchor">General Vocabulary & Academic Vocabulary.</h2>
@@ -80,11 +92,6 @@ const Home = (): JSX.Element => {
             product={p}
             />
             })}
-      </div>
-
-      <div className="subscribe__institutional">
-        <h3>Visit our <a href="/subscription">subscription page</a> for institutional rates!</h3>
-        <img src="/images/meeting.svg" alt="Meeting" />
       </div>
     </section>
   )

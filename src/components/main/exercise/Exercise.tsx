@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames } from '../../models/models';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
-import firebase from '../../../config/firebaseConfig';
 import Loading from '../../general/loading/Loading';
 import ExerciseForm from './exercise-form/ExerciseForm';
 import Ads from '../ads/Ads';
@@ -41,17 +40,7 @@ const Exercise = (): JSX.Element => {
   const group = useSelector(({ firestore: { data } }: any) => data[groupId || ''], isEqual);
   const exercise = useSelector(({ firestore: { data } }: any) => data[exerciseId || ''], isEqual);
 
-  const [category, setCategory] = useState(null);
-  useEffect(() => {
-    if (subcategory && subcategory.parent) {
-      firebase.firestore().collection(CollectionNames.Categories).doc(subcategory.parent)
-        .onSnapshot(observer => {
-          setCategory(observer.data()?.name)
-        })
-    }
-  }, [subcategory])
-
-
+  
   if (!isLoaded(exercise)) return <Loading />;
 
   // Redirect back to groups no groupId

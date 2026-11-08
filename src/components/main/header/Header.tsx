@@ -62,11 +62,11 @@ const Header = (): JSX.Element => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="header__nav-list">
-            <li>
-              <NavLink to="/subscription">
-                { auth.uid ? 'Subscription' : 'Sign Up and Subscribe' }
-              </NavLink>
-            </li>
+            {/* <li> */}
+            {/*   <NavLink to="/subscription"> */}
+            {/*     { auth.uid ? 'Subscription' : 'Sign Up and Subscribe' } */}
+            {/*   </NavLink> */}
+            {/* </li> */}
             <li>
               <NavLink to="/word-categories" className={underWordCategories}>Word Categories</NavLink>
             </li>

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { CollectionNames } from '../../models/models';
-import firebase from '../../../config/firebaseConfig';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import Loading from '../../general/loading/Loading';
@@ -32,16 +31,6 @@ const Group = (): JSX.Element => {
   const subcategory = useSelector(({ firestore: { data } }: any) => data[subcategoryId || ''], isEqual);
   const group = useSelector(({ firestore: { data } }: any) => data[groupId || ''], isEqual);
   const exercises = useSelector(({ firestore: { ordered } }: any) => ordered[`exercises-${groupId}`], isEqual);
-
-  const [category, setCategory] = useState(null);
-  useEffect(() => {
-    if (subcategory && subcategory.parent) {
-      firebase.firestore().collection(CollectionNames.Categories).doc(subcategory.parent)
-        .onSnapshot(observer => {
-          setCategory(observer.data()?.name)
-        })
-    }
-  }, [subcategory])
 
   if(!isLoaded(subcategory) || !isLoaded(group) || !isLoaded(exercises)) return <Loading />;
 

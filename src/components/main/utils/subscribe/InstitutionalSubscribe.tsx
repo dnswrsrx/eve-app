@@ -1,18 +1,15 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { FirebaseReducer, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 
-import { CollectionNames, Product, Price } from '../../../models/models';
+import { CollectionNames, Product } from '../../../models/models';
 
 import { ProductsContext } from '../../Main';
-
-import useCartOrPortal from '../../utils/subscribe/CartOrPortalHook';
 
 import './InstitutionalSubscribe.scss';
 
 
 interface SubscribeToProductProps {
-  auth?: FirebaseReducer.AuthState|null,
   subscription: string|null
 }
 
@@ -42,9 +39,7 @@ const calculateCost = (unitsAsString: string): string => {
 }
 
 
-const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps): JSX.Element => {
-
-  const { cartOrPortal, loadingCartOrPortal, error } = useCartOrPortal();
+const InstitutionalSubscribe = ({ subscription }: SubscribeToProductProps): JSX.Element => {
 
   const products = useContext(ProductsContext);
   const product: Product = products.filter((p: Product) => p.name.includes('Institutional'))[0];
@@ -65,15 +60,6 @@ const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps)
   const [cost, setCost] = useState('0');
 
   if (!isLoaded(prices)) return <></>;
-
-  const [priceID, price]: [string|null, Price|null] = Object.entries(prices).length ? Object.entries(prices)[0] as [string|null, Price|null] : [null, null];
-
-  const purchase = (): void => {
-     if (cartOrPortal) {
-       const name = subscription && subscription.includes('Institutional') ? null : product.name
-       cartOrPortal(name)(priceID, quantityInput.current?.value);
-     }
-   }
 
   return (
     <div className="institutional">
@@ -122,17 +108,6 @@ const InstitutionalSubscribe = ({ auth, subscription }: SubscribeToProductProps)
           <p>Total: ${cost}</p>
         </div>
       }
-      {
-        price && (!subscription || subscription.includes('Institutional ')) &&
-          <button
-            disabled={!auth?.uid || !!loadingCartOrPortal || (!subscription && parseInt(cost) <= 0)}
-            onClick={purchase}
-          >
-            { !subscription ? 'Purchase' : 'Manage your subscription' }
-            { !!loadingCartOrPortal && <span className="institutional__spinner"></span> }
-          </button>
-      }
-      { error && <p className="error">An error occured. Please refresh the page and try again.</p> }
     </div>
   )
 }

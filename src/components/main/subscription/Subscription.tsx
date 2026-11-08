@@ -70,7 +70,7 @@ const Subscription = (): JSX.Element => {
         }
 
         <div className="subscription-page__actions">
-          <InstitutionalSubscribe auth={auth} subscription={subscription} />
+          <InstitutionalSubscribe subscription={subscription} />
           {(!subscription || subscription.includes('Institutional')) && <AccessCode auth={auth} subscription={subscription} />}
         </div>
       </div>

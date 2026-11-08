@@ -1,22 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { AuthContext } from '../../Main';
-import { CollectionNames, Product, Price } from '../../../models/models';
-import useSubscription from '../UserSubscriptionHook';
+import { CollectionNames, Product } from '../../../models/models';
 import './Subscribe.scss';
 
 
 interface SubscribeToProductProps {
   product: Product,
-  cartOrPortal?: Function|null,
-  loadingCartPortal?: string|null,
 }
 
 
-const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: SubscribeToProductProps) => {
-
-  const auth = useContext(AuthContext);
+const SubscribeToProduct = ({ product }: SubscribeToProductProps) => {
 
   useFirestoreConnect([{
     collection: CollectionNames.Products,
@@ -27,25 +21,8 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
   }]);
 
   const prices = useSelector(( {firestore: { data }}: any ) => data[`prices-${product.id}`]) || {};
-  
-  const subscription = useSubscription();
-  const isSubscribed = Boolean(subscription && subscription === product.name);
-
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {if (loadingCartPortal === null) setLoading(false)}, [loadingCartPortal]);
 
   if (!isLoaded(prices)) return <></>
-
-  const [priceID, price]: [string|null, Price|null] = Object.entries(prices).length ? Object.entries(prices)[0] as [string|null, Price|null] : [null, null];
-  const amount = (price?.unit_amount || 0) / 100;
-
-  const manageSubscription = (priceID: string) => {
-    setLoading(true);
-    if (cartOrPortal) {
-      cartOrPortal(priceID);
-    }
-  }
 
   const images = window.location.pathname === '/' && (
     product.name.includes('Academic Vocabulary')
@@ -61,9 +38,6 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
             ? product.name.replace('General Vocabulary + ', '')
             : product.name
         }
-        { window.location.pathname === '/' && product.name.includes('Academic Vocabulary') &&
-          <small> (+ General Vocabulary)</small>
-        }
       </h3>
 
       { images &&
@@ -73,26 +47,6 @@ const SubscribeToProduct = ({ product, cartOrPortal, loadingCartPortal }: Subscr
       }
 
       { (window.location.pathname.includes('/subscription') || window.location.pathname === '/') && product.description && <p>{product.description}</p> }
-
-      {
-        window.location.pathname === '/' || (subscription || '').includes('Institutional')
-          ? <p className="subscribe__text bold">${amount} USD/year</p>
-          : price
-              ? <button
-                  className="subscribe__subscribe"
-                  onClick={() => manageSubscription(priceID || '')}
-                  disabled={Boolean(loadingCartPortal) || loading || !auth.uid || !auth.emailVerified || isSubscribed }
-                >
-                  { loading
-                      ? `Loading ${isSubscribed ? 'portal' : 'cart'}...`
-                      : !subscription
-                        ? `Subscribe for $${amount} USD/year`
-                        : `${isSubscribed ? 'Currently subscribed' : 'Update subscription'} ($${amount} USD/year)`
-                  }
-                  { loading && <span className="subscribe__spinner"></span> }
-                </button>
-              : <p className="subscribe__text bold">${amount} USD/year</p>
-      }
     </div>
   )
 }
