@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faExclamationTriangle} from '@fortawesome/free-solid-svg-icons';
-
 import SubscribeToProduct from '../utils/subscribe/SubscribeToProduct';
 import { ProductsContext } from '../Main';
 import { CollectionNames, Product } from '../../models/models';
@@ -23,27 +20,29 @@ const Home = (): JSX.Element => {
   return (
     <section className="home page-wrapper">
       <div className="home__maintenance">
-        <h3>
-          <p>
-            <span><FontAwesomeIcon icon={faExclamationTriangle} /></span>
-            I have recently decided to make the site free and available to everyone.
-            If you have an ongoing subscription, it will not be renewed and
-            you will not be billed at the end of your current period.
-          </p>
-          <br />
-          <p>
-            To obtain a refund of the prorated amount for the remaining time of your subscription,
-            first cancel the subscription on your customer portal
-            which you can access via the Manage your subscription button in My Account.
-            Then contact me by email which can be found on the <Link to="/terms-of-use">Terms of Use page</Link>.
-          </p>
-          {/* <br /> */}
-          {/* <p> */}
-          {/*   The site will continue to run as long as I have the means */}
-          {/*   to keep it up. <Link to='/support'>Consider supporting me</Link> with */}
-          {/*   one-off contributions! */}
-          {/* </p> */}
-        </h3>
+        <p>
+          We have recently decided to make this website totally FREE and available to everyone.
+        </p>
+        <p>
+          If you have a subscription, it will not be renewed and
+          there will be no more payments.
+        </p>
+        <p>
+          For a refund of the prorated amount for the remaining time of your subscription:
+        </p>
+        <ol>
+          <li>Log into the vocabulary website.</li>
+          <li>Click on My Account.</li>
+          <li>Click on Manage Your Subscription.</li>
+          <li>Click on Cancel Subscription.</li>
+          <li>Send me an email, saying "I would like a refund." You can find my email address on the <Link to="/terms-of-use">Terms of Use page</Link>.</li>
+        </ol>
+        <p>
+          If you do not need a refund, the funds will be used to continue to grow this website.
+        </p>
+        <p>
+          ALL THE EXERCISES ON THIS SITE WILL NOW BE FREE FOR EVERYONE.
+        </p>
       </div>
 
       <h1 className="home__banner-heading anchor">Welcome to English Vocabulary Exercises</h1>
