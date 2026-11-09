@@ -26,9 +26,6 @@ const Login = (): JSX.Element => {
       <LoginForm />
       <div className="login-page__link-container">
         <div className="login-page__link">
-          <Link to="/subscription">Don't have an account? Register here.</Link>
-        </div>
-        <div className="login-page__link">
           <Link to="/forgot-password">Forgot your password?</Link>
         </div>
       </div>

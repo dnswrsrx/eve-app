@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 
-import Instructions from './Instructions/Instructions';
-import RegisterForm from './RegisterForm/RegisterForm';
 import AccessCode from './AccessCode/AccessCode';
 
 import useSubscription from '../utils/UserSubscriptionHook';
@@ -61,13 +59,6 @@ const Subscription = (): JSX.Element => {
         }
 
         <Subscribe />
-
-        { (!auth.uid || !subscription) &&
-          <div className="subscription-page__actions">
-            <Instructions auth={auth} subscription={subscription} />
-            {!auth.uid && <RegisterForm /> }
-          </div>
-        }
 
         <div className="subscription-page__actions">
           <InstitutionalSubscribe subscription={subscription} />
