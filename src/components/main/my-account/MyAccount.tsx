@@ -177,7 +177,7 @@ const MyAccount = (): JSX.Element => {
             <button className="account-page__submit" type="submit" disabled={submitting || !password || !newPassword || !confirmation }>Update Password</button>
           </form>
 
-          { subscription && !subscription.includes('Institutional-') &&
+          { subscription &&
           <div className="account-page__portal">
             <h2>Subscription</h2>
             <p>
