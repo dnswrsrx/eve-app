@@ -59,7 +59,7 @@ const Subscription = (): JSX.Element => {
         <Subscribe />
 
         <div className="subscription-page__actions">
-          <InstitutionalSubscribe subscription={subscription} />
+          <InstitutionalSubscribe />
         </div>
       </div>
     </section>

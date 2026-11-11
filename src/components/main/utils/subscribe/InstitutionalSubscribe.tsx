@@ -9,11 +9,6 @@ import { ProductsContext } from '../../Main';
 import './InstitutionalSubscribe.scss';
 
 
-interface SubscribeToProductProps {
-  subscription: string|null
-}
-
-
 const TIERS = [
   { perUnit: 8, max: 4 },
   { perUnit: 7, max: 20 },
@@ -39,7 +34,7 @@ const calculateCost = (unitsAsString: string): string => {
 }
 
 
-const InstitutionalSubscribe = ({ subscription }: SubscribeToProductProps): JSX.Element => {
+const InstitutionalSubscribe = (): JSX.Element => {
 
   const products = useContext(ProductsContext);
   const product: Product = products.filter((p: Product) => p.name.includes('Institutional'))[0];
@@ -102,12 +97,10 @@ const InstitutionalSubscribe = ({ subscription }: SubscribeToProductProps): JSX.
           </p>
         </article>
       </div>
-      { !subscription &&
-        <div className="institutional__units">
-          <input type="number" ref={quantityInput} min="1" placeholder="Number of units" onChange={e => setCost(calculateCost(e.currentTarget.value))}/>
-          <p>Total: ${cost}</p>
-        </div>
-      }
+      <div className="institutional__units">
+        <input type="number" ref={quantityInput} min="1" placeholder="Number of units" onChange={e => setCost(calculateCost(e.currentTarget.value))}/>
+        <p>Total: ${cost}</p>
+      </div>
     </div>
   )
 }
