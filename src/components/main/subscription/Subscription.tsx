@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 
-import AccessCode from './AccessCode/AccessCode';
-
 import useSubscription from '../utils/UserSubscriptionHook';
 import { AuthContext } from '../Main';
 
@@ -62,7 +60,6 @@ const Subscription = (): JSX.Element => {
 
         <div className="subscription-page__actions">
           <InstitutionalSubscribe subscription={subscription} />
-          {(!subscription || subscription.includes('Institutional')) && <AccessCode auth={auth} subscription={subscription} />}
         </div>
       </div>
     </section>
