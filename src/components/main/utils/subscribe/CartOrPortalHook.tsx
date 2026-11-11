@@ -23,7 +23,7 @@ const useCartOrPortalHook = (): hookSignature => {
   const subscription = useSubscription();
 
   const customerPortal = () => {
-    const getPortalLink = firebase.app().functions('us-central1').httpsCallable('ext-firestore-stripe-payments-createPortalLink');
+    const getPortalLink = firebase.app().functions('us-central1').httpsCallable('create_portal_link');
 
     setLoadingCartOrPortal('portal');
 
