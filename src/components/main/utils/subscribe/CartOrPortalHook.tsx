@@ -27,7 +27,7 @@ const useCartOrPortalHook = (): hookSignature => {
 
     setLoadingCartOrPortal('portal');
 
-    getPortalLink({ returnUrl: window.location.origin }).then(({data}) => {
+    getPortalLink({ returnUrl: window.location.href }).then(({data}) => {
       window.location.assign(data.url);
     }).catch(e => {
       console.log(e);
