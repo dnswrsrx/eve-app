@@ -28,10 +28,18 @@ const Home = (): JSX.Element => {
           there will be no more payments.
         </p>
         <p>
-          For a refund of the prorated amount for the remaining time of your subscription,
-          please send me an email, saying "I would like a refund."
-          You can find my email address on the <Link to="/terms-of-use">Terms of Use page</Link>.
+          For a refund of the prorated amount for the remaining time of your subscription:
         </p>
+        <ol>
+          <li>Log into the vocabulary website.</li>
+          <li>Click on My Account.</li>
+          <li>Click on Cancel Subscription.</li>
+          <li>
+            Send me an email, saying "I would like a refund."
+            You can find my email address on the <Link to="/terms-of-use">Terms of Use page</Link>.
+          </li>
+        </ol>
+
         <p>
           If you do not need a refund, the funds will be used to continue to grow this website.
         </p>

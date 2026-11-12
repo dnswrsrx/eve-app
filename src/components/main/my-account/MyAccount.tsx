@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import firebase from '../../../config/firebaseConfig';
@@ -26,6 +27,8 @@ const MyAccount = (): JSX.Element => {
   const subscription = useSubscription();
   const { cartOrPortal, loadingCartOrPortal, error } = useCartOrPortalHook();
 
+  const [cancelStatus, setCancelStatus] = useState(false);
+
   const createdDate = new Date(parseInt(auth.createdAt));
 
   const password = watch('password');
@@ -40,6 +43,14 @@ const MyAccount = (): JSX.Element => {
   }, [isDirty])
 
   if (!auth.uid) return <Navigate to='/' />;
+
+  const cancelNow = (subscription: string) => {
+    setCancelStatus(true);
+    const canceller = firebase.app().functions('us-central1').httpsCallable('cancel_now')
+    canceller({subscriptionid: subscription}).then().catch(e => {
+      console.log(e)
+    })
+  }
 
   const onSubmit = (data: any) : void => {
 
@@ -178,7 +189,31 @@ const MyAccount = (): JSX.Element => {
           </form>
 
           <div className="account-page__portal">
+            <h2>Subscription</h2>
+            { subscription
+              ? <>
+                <p>
+                  You have an active subscription.
+                  If you would like to cancel immediately and obtain a refund,
+                  please click Cancel Subscription.
+                </p>
+                <button
+                  className="account-page__manage"
+                  disabled={cancelStatus}
+                  onClick={() => cancelNow(subscription)}
+                >
+                  { cancelStatus ? 'Cancelling...' : 'Cancel Subscription' }
+                  { cancelStatus && <span className="account-page__spinner"></span>}
+                </button>
+              </>
+              : <>
+                <p>You do not have an active subscription.</p>
+                <p>If you have just cancelled your subscription and would like a refund, please send me an email saying "I would like a refund." You can find my email address on the <Link to="/terms-of-use">Terms of Use page</Link>.</p>
+              </>
+            }
+          </div>
 
+          <div className="account-page__portal">
             <h2>Customer Portal</h2>
             <p>
               Navigate to your Customer Portal to view your invoice history.

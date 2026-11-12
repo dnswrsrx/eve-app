@@ -245,6 +245,7 @@ export interface SubscriptionItem {
 }
 
 export interface CurrentSubscription {
+  id: string,
   status: string,
   quantity: number,
   items: SubscriptionItem[],
