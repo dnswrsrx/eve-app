@@ -177,28 +177,24 @@ const MyAccount = (): JSX.Element => {
             <button className="account-page__submit" type="submit" disabled={submitting || !password || !newPassword || !confirmation }>Update Password</button>
           </form>
 
-          { subscription &&
           <div className="account-page__portal">
-            <h2>Subscription</h2>
+
+            <h2>Customer Portal</h2>
             <p>
-              Navigate to your Customer Portal to manage your subscription.
-              You may switch or cancel your subscription, and update your payment details.
-              If you have an Institutional Subscription, you may update your quantities as well.
+              Navigate to your Customer Portal to view your invoice history.
             </p>
 
             <button
               className="account-page__manage"
               disabled={!!loadingCartOrPortal}
-              onClick={cartOrPortal()}
+              onClick={cartOrPortal(subscription)}
             >
-              { !!loadingCartOrPortal ? 'Loading portal...' : 'Manage your subscription' }
+              { !!loadingCartOrPortal ? 'Loading portal...' : 'Go to the Portal' }
               { !!loadingCartOrPortal && <span className="account-page__spinner"></span>}
-
             </button>
 
             { error && <p className="error">Failed to load the Customer Portal. Please refresh the page and try again.</p> }
           </div>
-          }
         </div>
       </div>
     </section>

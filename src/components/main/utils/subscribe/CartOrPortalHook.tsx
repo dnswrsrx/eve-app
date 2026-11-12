@@ -2,7 +2,6 @@ import { useState, useContext } from 'react';
 import firebase from '../../../../config/firebaseConfig';
 import stripePromise from '../../../../config/stripeConfig';
 import { AuthContext } from '../../Main';
-import useSubscription from '../UserSubscriptionHook';
 
 
 interface hookSignature {
@@ -19,8 +18,6 @@ const useCartOrPortalHook = (): hookSignature => {
 
   const [error, setError] = useState<'cart'|'portal'|null>(null);
   const [loadingCartOrPortal, setLoadingCartOrPortal] = useState<'cart'|'portal'|null>(null);
-
-  const subscription = useSubscription();
 
   const customerPortal = () => {
     const getPortalLink = firebase.app().functions('us-central1').httpsCallable('create_portal_link');
@@ -78,10 +75,9 @@ const useCartOrPortalHook = (): hookSignature => {
     }
   }
 
-  const cartOrPortal = (productName: string): Function => {
+  const cartOrPortal = (): Function => {
     if (user && auth.uid && auth.emailVerified) {
-      if (!subscription) return checkout;
-      if (subscription !== productName) return customerPortal;
+      return customerPortal;
     }
     return () => {};
   }
