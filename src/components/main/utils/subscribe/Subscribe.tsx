@@ -11,7 +11,7 @@ const Subscribe = (): JSX.Element => {
 
   return (
     <div className="subscribe">
-      <p>These are the current subscription tiers.</p>
+      <p>These were previously the current subscription tiers.</p>
 
       <div className="subscribe__products">
         { individualProducts.map((p: Product, index: number) => {

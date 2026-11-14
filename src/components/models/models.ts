@@ -21,7 +21,6 @@ export enum CollectionNames {
   Tests = 'tests',
   Exercises = 'exercises',
   HomeLanguages = 'home-languages',
-  StudyGuides = 'weekly-study-guides',
   Pages = 'pages',
   Contact = 'contact-page',
   Products = 'products',
@@ -29,29 +28,7 @@ export enum CollectionNames {
   AccessCodes = 'access-codes',
 }
 
-export enum DefaultStudyGuide {
-  GeneralVocab = '<table class="se-table-layout-auto"><tbody><tr><th><div><br></div></th><th><div>Exercises</div></th></tr><tr><td><div><strong>englishvocabularyexercises.com</strong></div></td><td><div><br></div><br></td></tr><tr><td><div><strong>Picture Dictionary</strong></div></td><td><div><br></div></td></tr><tr><td><div><strong>Phrasal Verbs</strong></div></td><td><div><div><br></div><br></div></td></tr><tr><td><div><strong>Idioms</strong>​</div></td><td><div><br></div></td></tr></tbody></table><p><br></p>',
-  AcademicVocab = '<table><tbody><tr><th><div><br></div></th><th><div>Exercises</div></th></tr><tr><td><div><strong>englishvocabularyexercises.com</strong></div></td><td><div><br></div><br></td></tr></tbody></table><p><br></p><p><br></p>',
-  Reading = '<table><tbody><tr><th><div>Difficulty</div></th><th><div>Exercises</div></th></tr><tr><td><div><strong>Less Difficult</strong></div></td><td><div><br></div><br></td></tr><tr><td><div><strong>More Difficult</strong></div></td><td><p><br></p><br></td></tr></tbody></table><p><br></p>',
-  Listening = '<table><tbody><tr><th><div>Level</div></th><th><div>Topic</div></th></tr><tr><td><div><strong>High Beginner</strong></div></td><td><div><br></div></td></tr><tr><td><div><strong>Intermediate</strong></div></td><td><div><br></div></td></tr><tr><td><div><strong>Low Advanced</strong></div></td><td><div><br></div></td></tr></tbody></table><p><br></p>',
-  Pronunciation = '<table><tbody><tr><th><div>Subject</div></th><th><div>Exercises</div></th></tr><tr><td><div><strong>General Sounds Contrast</strong></div></td><td><div><br></div></td></tr><tr><td><div>​<strong>Sounds of English</strong>​</div></td><td><div><br></div></td></tr><tr><td><div><div><strong>Syllable Stress</strong><br></div></div></td><td><div><br></div></td></tr></tbody></table><p><br></p>',
-  Grammar = '<table><tbody><tr><th><div>Exercises</div></th></tr><tr><td><div><br></div></td></tr></tbody></table><p><br></p>',
-  Speaking = '<table><tbody><tr><th><div>Activity</div></th><th><div>Topic</div></th></tr><tr><td><div><strong>Important phrases to learn</strong></div></td><td><div><strong></strong><br></div><br></td></tr><tr><td><div><strong>Personal discussion topic to talk about</strong></div></td><td><div><div><br></div></div></td></tr><tr><td><div><strong>Opinion Topic to Talk About</strong></div></td><td><p><br></p></td></tr></tbody></table><p><br></p>',
-  TestPrep = '<table><tbody><tr><th><div>Test</div></th><th><div>Exercises</div></th></tr><tr><td><div><strong>TOEFL</strong></div></td><td><div><br></div></td></tr><tr><td><div><strong>TOEIC</strong></div></td><td><div><br></div></td></tr><tr><td><div><strong>IELTS</strong></div></td><td><div><div><br></div></div></td></tr></tbody></table><p><br></p>',
-}
-
 /* Types and Interfaces */
-
-export interface ParamsProps {
-  categoryId: string,
-  subcategoryId: string,
-  groupId: string,
-  exerciseId: string,
-  pageId: string,
-  guideId: string,
-  type: PageTypes,
-  slug: string,
-}
 
 export interface Category {
   id: string,
@@ -125,52 +102,11 @@ export interface HomeLanguage {
   createdAt: Timestamp,
 }
 
-export interface StudyGuide {
-  id?: string,
-  startDate: Timestamp,
-  endDate: Timestamp,
-  generalVocabContent: string,
-  academicVocabContent: string,
-  readingContent: string,
-  listeningContent: string,
-  pronunciationContent: string,
-  grammarContent: string,
-  speakingContent: string,
-  testPrepContent: string,
-  createdAt: Timestamp,
-}
-
-export interface StudyGuideDocument {
-  startDate: Timestamp,
-  endDate: Timestamp,
-  generalVocabContent: string,
-  academicVocabContent: string,
-  readingContent: string,
-  listeningContent: string,
-  pronunciationContent: string,
-  grammarContent: string,
-  speakingContent: string,
-  testPrepContent: string,
-  createdAt?: Date,
-}
-
 export interface StudyGuideSection {
   id: string,
   name: string,
   picture: string,
 }
-
-export interface SelectedMonth {
-  year: number,
-  month: number,
-}
-
-export interface FilterDates {
-  startDate: Date,
-  endDate: Date,
-}
-
-export type FilterFunction = (selectedMonth: FilterDates) => void;
 
 export interface Phonetic {
   text: string,

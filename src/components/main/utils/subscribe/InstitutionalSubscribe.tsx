@@ -93,7 +93,7 @@ const InstitutionalSubscribe = (): JSX.Element => {
 
         <article>
           <p>
-            Purchase multiple subscriptions and provide access to others. Useful if you have a class or are part of an institution. Subscriptions include both General and Academic categories of vocabulary.
+            Multiple subscriptions to provide access to others. Useful if you have a class or are part of an institution. Subscriptions included both General and Academic categories of vocabulary.
           </p>
         </article>
       </div>
